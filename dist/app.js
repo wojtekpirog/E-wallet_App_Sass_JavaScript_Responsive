@@ -2,6 +2,8 @@ let tasksContainerElement; // Lista `<ul>` z zadaniami
 let taskNameInputElement; // Pole `<input>` z nazwą zadania
 let addTaskButtonElement; // Przycisk `Add`
 let categoriesContainerElement; // Lista `<ul>` z kategoriami
+// Zmienna globalna typu `Category`
+let selectedCategory;
 // Dodanie pytajnika po nazwie property zmieni to property na "optional property"
 // Tablica z obiektami representującymi zadania
 const tasks = [];
@@ -21,8 +23,6 @@ const prepareDOMElements = () => {
 const prepareDOMEvents = () => {
     addTaskButtonElement.addEventListener("click", (event) => {
         event.preventDefault();
-        const selectedRadioElement = document.querySelector("input[type=\"radio\"]:checked");
-        const selectedCategory = selectedRadioElement.value;
         addTask({ title: taskNameInputElement.value, isDone: false, category: selectedCategory });
         renderTasks();
     });
@@ -35,6 +35,9 @@ const renderCategories = () => {
         radioInputElement.id = `category-${category}`;
         radioInputElement.name = "category";
         radioInputElement.value = category;
+        radioInputElement.addEventListener("change", () => {
+            selectedCategory = category;
+        });
         const labelElement = document.createElement("label");
         labelElement.setAttribute("for", `category-${category}`);
         labelElement.innerText = category;

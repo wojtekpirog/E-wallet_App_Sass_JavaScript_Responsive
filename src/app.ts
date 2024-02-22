@@ -5,7 +5,8 @@ let categoriesContainerElement: HTMLUListElement; // Lista `<ul>` z kategoriami
 
 // Alias typów
 type Category = "general" | "work" | "gym" | "hobby";
-
+// Zmienna globalna typu `Category`
+let selectedCategory: Category;
 // Interfejs reprezentujący zadanie
 interface Task {
   title: string;
@@ -36,8 +37,6 @@ const prepareDOMElements = () => {
 const prepareDOMEvents = () => {
   addTaskButtonElement.addEventListener("click", (event: Event) => {
     event.preventDefault();
-    const selectedRadioElement: HTMLInputElement = document.querySelector("input[type=\"radio\"]:checked");    
-    const selectedCategory: Category = selectedRadioElement.value as Category;
     addTask({ title: taskNameInputElement.value, isDone: false, category: selectedCategory });
     renderTasks();
   });
@@ -52,6 +51,9 @@ const renderCategories = () => {
     radioInputElement.id = `category-${category}`;
     radioInputElement.name = "category";
     radioInputElement.value = category;
+    radioInputElement.addEventListener("change", () => {
+      selectedCategory = category;
+    });
 
     const labelElement: HTMLLabelElement = document.createElement("label");
     labelElement.setAttribute("for", `category-${category}`);
