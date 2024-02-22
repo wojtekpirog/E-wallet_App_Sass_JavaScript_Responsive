@@ -1,0 +1,34 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.container input {
+  outline: none;
+  padding: 5px;
+}
+
+.work {
+  color: darkslateblue;
+  list-style-type: circle;
+}
+
+.gym {
+  color: tomato;
+  list-style-type: square;
+}
+
+.hobby {
+  color: lightblue;
+  list-style-type: decimal;
+}
+
+.categories {
+  list-style-type: none;
+  padding-left: 0;
+}

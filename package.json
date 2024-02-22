@@ -1,0 +1,6 @@
+{
+  "description": "",
+  "scripts": {
+    "compile": "tsc --watch"
+  }
+}
