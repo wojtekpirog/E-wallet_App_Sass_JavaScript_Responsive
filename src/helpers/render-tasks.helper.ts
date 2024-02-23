@@ -1,6 +1,6 @@
 import { Task } from "../types/types";
 
-export const renderTasks = (tasks: Task[],tasksContainerElement: HTMLUListElement) => {
+const renderTasks = (tasks: Task[], tasksContainerElement: HTMLUListElement) => {
   tasksContainerElement.innerHTML = "";
   tasks.forEach((task, index) => {
     const taskElement: HTMLLIElement = document.createElement("li");
@@ -29,3 +29,5 @@ export const renderTasks = (tasks: Task[],tasksContainerElement: HTMLUListElemen
     tasksContainerElement.appendChild(taskElement);
   });
 };
+
+export default renderTasks;

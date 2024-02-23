@@ -1,6 +1,6 @@
 import { Task, Category } from "./types/types";
-import { renderTasks } from "./helpers/render-tasks.helper.js";
-import { renderCategories } from "./helpers/render-categories.helper.js";
+import renderTasks from "./helpers/render-tasks.helper.js";
+import renderCategories from "./helpers/render-categories.helper.js";
 
 let tasksContainerElement: HTMLUListElement; // Lista `<ul>` z zadaniami
 let taskNameInputElement: HTMLInputElement; // Pole `<input>` z nazwą zadania
@@ -19,7 +19,6 @@ const categories: Category[] = ["general", "work", "gym", "hobby"];
 const main = () => {
   prepareDOMElements();
   prepareDOMEvents();
-  renderCategories(categories, categoriesContainerElement, selectedCategory);
 }
 
 const prepareDOMElements = () => {
@@ -41,4 +40,9 @@ const addTask = (task: Task) => {
   tasks.push(task);
 };
 
+const updateSelectedCategory = (newCategory: Category) => {
+  selectedCategory = newCategory;
+}
+
 document.addEventListener("DOMContentLoaded", main);
+renderCategories(categories, categoriesContainerElement, updateSelectedCategory);

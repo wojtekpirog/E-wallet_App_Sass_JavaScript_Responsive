@@ -1,6 +1,10 @@
 import { Category } from "../types/types";
 
-export const renderCategories = (categories: Category[], categoriesContainerElement: HTMLUListElement, selectedCategory: Category) => {
+const renderCategories = (
+  categories: Category[],
+  categoriesContainerElement: HTMLUListElement,
+  updateSelectedCategory: (category: Category) => void
+) => {
   categories.forEach((category) => {
     const categoryElement = document.createElement("li");
     const radioInputElement = document.createElement("input");
@@ -9,7 +13,7 @@ export const renderCategories = (categories: Category[], categoriesContainerElem
     radioInputElement.name = "category";
     radioInputElement.value = category;
     radioInputElement.addEventListener("change", () => {
-      selectedCategory = category;
+      updateSelectedCategory(category);
     });
     const labelElement = document.createElement("label");
     labelElement.setAttribute("for", `category-${category}`);
@@ -19,3 +23,6 @@ export const renderCategories = (categories: Category[], categoriesContainerElem
     categoriesContainerElement.appendChild(categoryElement);
   });
 };
+
+export default renderCategories;
+ 
