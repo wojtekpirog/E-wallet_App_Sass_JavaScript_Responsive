@@ -1,5 +1,6 @@
-import { renderTasks } from "./helpers/render-tasks.helper.js";
-import { renderCategories } from "./helpers/render-categories.helper.js";
+import { Category } from "./types/types.js";
+import renderTasks from "./helpers/render-tasks.helper.js";
+import renderCategories from "./helpers/render-categories.helper.js";
 let tasksContainerElement; // Lista `<ul>` z zadaniami
 let taskNameInputElement; // Pole `<input>` z nazwą zadania
 let addTaskButtonElement; // Przycisk `Add`
@@ -8,12 +9,11 @@ let categoriesContainerElement; // Lista `<ul>` z kategoriami
 let selectedCategory;
 // Tablica z obiektami representującymi zadania
 const tasks = [];
-// Tablica z nazwami kategorii
-const categories = ["general", "work", "gym", "hobby"];
+const categories = [Category.GENERAL, Category.WORK, Category.GYM, Category.HOBBY, Category.SOCIAL, Category.OTHER];
 const main = () => {
     prepareDOMElements();
     prepareDOMEvents();
-    renderCategories(categories, categoriesContainerElement, selectedCategory);
+    renderCategories(categories, categoriesContainerElement, updateSelectedCategory);
 };
 const prepareDOMElements = () => {
     tasksContainerElement = document.querySelector(".tasks");
@@ -30,5 +30,8 @@ const prepareDOMEvents = () => {
 };
 const addTask = (task) => {
     tasks.push(task);
+};
+const updateSelectedCategory = (newCategory) => {
+    selectedCategory = newCategory;
 };
 document.addEventListener("DOMContentLoaded", main);

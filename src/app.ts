@@ -1,4 +1,6 @@
-import { Task, Category } from "./types/types";
+import { Task } from "./types/types";
+import { Category } from "./types/types.js";
+import { TaskClass } from "./classes/task";
 import renderTasks from "./helpers/render-tasks.helper.js";
 import renderCategories from "./helpers/render-categories.helper.js";
 
@@ -13,12 +15,16 @@ let selectedCategory: Category;
 // Tablica z obiektami representującymi zadania
 const tasks: Task[] = [];
 
-// Tablica z nazwami kategorii
-const categories: Category[] = ["general", "work", "gym", "hobby"];
+const categories: Category[] = [Category.GENERAL, Category.WORK, Category.GYM, Category.HOBBY, Category.SOCIAL, Category.OTHER];
 
 const main = () => {
   prepareDOMElements();
   prepareDOMEvents();
+  renderCategories(
+    categories,
+    categoriesContainerElement,
+    updateSelectedCategory
+  );
 }
 
 const prepareDOMElements = () => {
@@ -45,4 +51,3 @@ const updateSelectedCategory = (newCategory: Category) => {
 }
 
 document.addEventListener("DOMContentLoaded", main);
-renderCategories(categories, categoriesContainerElement, updateSelectedCategory);

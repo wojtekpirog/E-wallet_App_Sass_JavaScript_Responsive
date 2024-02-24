@@ -4,4 +4,13 @@ export interface Task {
   category?: Category;
 }
 
-export type Category = "general" | "work" | "gym" | "hobby";
+export type TaskAsTuple = [string, Category, boolean];
+
+export enum Category {
+  GENERAL = "general",
+  GYM = "gym",
+  WORK = "work",
+  HOBBY = "hobby",
+  SOCIAL = "social",
+  OTHER = "other"
+}

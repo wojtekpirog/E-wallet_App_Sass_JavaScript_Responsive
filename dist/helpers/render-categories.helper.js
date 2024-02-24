@@ -1,4 +1,29 @@
-export const renderCategories = (categories, categoriesContainerElement, selectedCategory) => {
+import { Category } from "../types/types.js";
+const handleCategoryChange = (category) => {
+    if (category === Category.GENERAL) {
+        console.log("Zadanie general");
+    }
+    else if (category === Category.GYM) {
+        console.log("Zadanie gym - pora iść na siłkę 💪");
+    }
+    else if (category === Category.WORK) {
+        console.log("Zadanie work - praca popłaca 💼");
+    }
+    else if (category === Category.HOBBY) {
+        console.log("Zadanie hobby - hobby 🎨");
+    }
+    else if (category === Category.SOCIAL) {
+        console.log("Zadanie social - social 💬");
+    }
+    else if (category === Category.OTHER) {
+        console.log("Zadanie other - inne");
+    }
+    else {
+        const typeNever = category;
+        console.log(`Type never: ${typeNever}`);
+    }
+};
+const renderCategories = (categories, categoriesContainerElement, updateSelectedCategory) => {
     categories.forEach((category) => {
         const categoryElement = document.createElement("li");
         const radioInputElement = document.createElement("input");
@@ -7,7 +32,8 @@ export const renderCategories = (categories, categoriesContainerElement, selecte
         radioInputElement.name = "category";
         radioInputElement.value = category;
         radioInputElement.addEventListener("change", () => {
-            selectedCategory = category;
+            updateSelectedCategory(category);
+            handleCategoryChange(category);
         });
         const labelElement = document.createElement("label");
         labelElement.setAttribute("for", `category-${category}`);
@@ -17,3 +43,4 @@ export const renderCategories = (categories, categoriesContainerElement, selecte
         categoriesContainerElement.appendChild(categoryElement);
     });
 };
+export default renderCategories;
