@@ -1,6 +1,5 @@
-import { Task } from "./types/types";
+import { Task } from "./types/types.js";
 import { Category } from "./types/types.js";
-import { TaskClass } from "./classes/task";
 import renderTasks from "./helpers/render-tasks.helper.js";
 import renderCategories from "./helpers/render-categories.helper.js";
 
@@ -37,7 +36,12 @@ const prepareDOMElements = () => {
 const prepareDOMEvents = () => {
   addTaskButtonElement.addEventListener("click", (event: Event) => {
     event.preventDefault();
-    addTask({ title: taskNameInputElement.value, isDone: false, category: selectedCategory });
+    const newTask: Task = new Task(
+      taskNameInputElement.value,
+      false,
+      selectedCategory
+    );
+    addTask(newTask);
     renderTasks(tasks, tasksContainerElement);
   });
 }

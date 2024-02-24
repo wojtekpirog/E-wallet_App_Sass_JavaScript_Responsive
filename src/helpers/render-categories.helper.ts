@@ -22,7 +22,7 @@ const handleCategoryChange = (category: Category) => {
 const renderCategories = (
   categories: Category[],
   categoriesContainerElement: HTMLUListElement,
-  updateSelectedCategory: (category: Category) => void
+  updateSelectedCategory: (category: Category) => void,
 ) => {
   categories.forEach((category) => {
     const categoryElement = document.createElement("li");
