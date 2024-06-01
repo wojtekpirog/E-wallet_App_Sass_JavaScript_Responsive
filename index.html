@@ -12,10 +12,154 @@
 </head>
 <body>
   <!-- Header -->
-  <header>
+  <header class="header">
     <h1><i class="fa-solid fa-wallet"></i> Wallet</h1>
+    <p class="header__text">Your personal balance manager</p>
   </header>
   <!-- Header -->
+  <!-- Main -->
+  <main>
+    <!-- Transactions -->
+    <section class="transactions">
+      <!-- Section title -->
+      <h2 class="section-title">List of transactions</h2>
+      <!-- Section title -->
+      <!-- Transactions box -->
+      <div class="transactions__list">
+        <!-- Incomes -->
+        <div class="incomes-box">
+          <h3 class="incomes-box__title incomes-box__title">Incomes</h3>
+          <!-- Single income -->
+          <div class="incomes-box__item">
+            <!-- Income name -->
+            <p class="incomes-box__item-name"><i class="fa-solid fa-money-bill-wave"></i> Wypłata</p>
+            <!-- Income name -->
+            <!-- Income amount -->
+            <div class="incomes-box__item-amount">
+              <div class="incomes-box__item-amount-text"><i class="fa-solid fa-plus"></i> 1000zł</div>
+              <button type="button" class="incomes-box__item-amount-btn"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <!-- Income amount -->
+          </div>
+          <!-- Single income -->
+        </div>
+        <!-- Incomes -->
+        <!-- Expenses -->
+        <div class="expenses-box">
+          <h3 class="expenses-box__title expenses-box__title">Expenses</h3>
+          <!-- Single expense -->
+          <div class="expenses-box__item">
+            <!-- Expense name -->
+            <p class="expenses-box__item-name"><i class="fa-solid fa-cart-arrow-down"></i> Zakupy</p>
+            <!-- Expense name -->
+            <!-- Expense amount -->
+            <div class="expenses-box__item-amount">
+              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 300zł</div>
+              <button type="button" class="expenses-box__item-amount-btn"></button>
+            </div>
+            <!-- Expense amount -->
+          </div>
+          <!-- Single expense -->
+          <!-- Single expense -->
+          <div class="expenses-box__item">
+            <!-- Expense name -->
+            <p class="expenses-box__item-name"><i class="fa-solid fa-hamburger"></i> Jedzonko</p>
+            <!-- Expense name -->
+            <!-- Expense amount -->
+            <div class="expenses-box__item-amount">
+              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 100zł</div>
+              <button type="button" class="expenses-box__item-amount-btn"></button>
+            </div>
+            <!-- Expense amount -->
+          </div>
+          <!-- Single expense -->
+          <!-- Single expense -->
+          <div class="expenses-box__item">
+            <!-- Expense name -->
+            <p class="expenses-box__item-name"><i class="fa-solid fa-film"></i> Kino</p>
+            <!-- Expense name -->
+            <!-- Expense amount -->
+            <div class="expenses-box__item-amount">
+              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 50zł</div>
+              <button type="button" class="expenses-box__item-amount-btn"></button>
+            </div>
+            <!-- Expense amount -->
+          </div>
+          <!-- Single expense -->
+        </div>
+        <!-- Expenses -->
+      </div>
+      <!-- Transactions box -->
+    </section>
+    <!-- Transactions -->
+    <!-- Options -->
+    <section class="options">
+      <!-- Section title -->
+      <h2 class="section-title">Balance</h2>
+      <!-- Section title -->
+      <!-- Balance -->
+      <div class="options__balance">0 zł</div>
+      <!-- Balance -->
+      <!-- Controls -->
+      <div class="options__controls">
+        <button type="button" class="options__controls-btn options__controls-btn--add"><i class="fa-solid fa-plus"></i> Add transaction</button>
+        <button type="button" class="options__controls-btn options__controls-btn--deleteAll"><i class="fa-solid fa-trash-alt"></i> Delete all</button>
+      </div>
+      <!-- Controls -->
+      <!-- Style selection -->
+      <div class="options__style-selection">
+        <h2 class="section-title">Select style</h2>
+        <!-- Style buttons -->
+        <div class="options__buttons">
+          <button type="button" class="options__buttons-btn option__buttons-btn--light"></button>
+          <button type="button" class="options__buttons-btn option__buttons-btn--dark"></button>
+        </div>
+        <!-- Style buttons -->
+      </div>
+      <!-- Style selection -->
+    </section>
+    <!-- Options -->
+  </main>
+  <!-- Main -->
+  <!-- Transaction panel (out of main) -->
+  <div class="transaction-panel">
+    <h2 class="transaction-panel__title">Add a new transaction</h2>
+    <!-- Form -->
+    <label for="name" class="transaction-panel__label">Name: </label>
+    <small>(3-30 characters)</small>
+    <input type="text" id="name" name="name" class="transaction-panel__input" minlength="3" max-length="30" required/>
+    <!-- Form -->
+    <!-- Form -->
+    <label for="amount" class="transaction-panel__label">Amount: </label>
+    <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
+    <input type="number" id="amount" name="amount" class="transaction-panel__input" required/>
+    <!-- Form -->
+    <!-- Form -->
+    <label for="category" class="transaction-panel__label">Select category: </label>
+    <small>( [ + ] = income, [ - ] = expense )</small>
+    <!-- Select -->
+    <select id="category" name="category" class="transaction-panel__select" required>
+      <option value="none" disabled selected> - select category - </option>
+      <option value="salary">[ + ] Salary</option>
+      <option value="investment">[ + ] Investment</option>
+      <option value="freelance">[ + ] Freelance</option>
+      <option value="rent">[ - ] Rent</option>
+      <option value="shopping">[ - ] Shopping</option>
+      <option value="food">[ - ] Food</option>
+      <option value="bills">[ - ] Bills</option>
+      <option value="leisure">[ - ] Leisure</option>
+      <option value="other">[ - ] Other</option>
+    </select>
+    <!-- Select -->
+    <!-- Form -->
+    <!-- Buttons -->
+    <div class="transaction-panel__buttons">
+      <button type="button" class="transaction-panel__button transaction-panel__button--save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+      <button type="button" class="transaction-panel__button transaction-panel__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
+    </div>
+    <!-- Buttons -->
+  </div>
+  <!-- Transaction panel (out of main) -->
   <script src=""></script>
 </body>
 </html>

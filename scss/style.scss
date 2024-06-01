@@ -1,4 +1,5 @@
-@use "./utilities";
+@use "./utilities" as utils;
+@use "./reset";
 
 :root {
   --regular-font: "Raleway";
@@ -6,4 +7,9 @@
   --medium-font: "Raleway__medium";
   --semibold-font: "Raleway__semibold";
   --bold-font: "Raleway__bold";
+}
+
+body {
+  background-color: utils.$bgColor;
+  color: utils.$textColor;
 }

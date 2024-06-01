@@ -33,10 +33,32 @@
   font-weight: 700;
   font-display: swap;
 }
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: var(--regular-font);
+}
+
 :root {
   --regular-font: "Raleway";
   --light-font: "Raleway__light";
   --medium-font: "Raleway__medium";
   --semibold-font: "Raleway__semibold";
   --bold-font: "Raleway__bold";
+}
+
+body {
+  background-color: #0d1321;
+  color: #f0ebd8;
 }/*# sourceMappingURL=style.css.map */
