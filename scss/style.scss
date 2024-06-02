@@ -1,5 +1,7 @@
-@use "./utilities" as utils;
 @use "./reset";
+@use "./utilities" as utils;
+@use "./components/" as components;
+@use "./breakpoints/" as breakpoints;
 
 :root {
   --regular-font: "Raleway";

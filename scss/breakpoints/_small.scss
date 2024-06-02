@@ -1,0 +1,12 @@
+@media screen and (min-width: 576px) {
+  .header {
+    height: 260px;
+
+    &__title {
+      font-size: 6.4rem;
+    }
+    &__text {
+      font-size: 2.6rem;
+    }
+  }
+}

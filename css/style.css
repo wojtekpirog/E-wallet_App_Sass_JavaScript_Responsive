@@ -1,3 +1,20 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: var(--regular-font);
+}
+
 @font-face {
   font-family: "Raleway";
   src: url("../../assets/fonts/Raleway-Regular.ttf") format("truetype");
@@ -33,23 +50,33 @@
   font-weight: 700;
   font-display: swap;
 }
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.header {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header__title {
+  margin-bottom: 0.25em;
+  font-size: 4.8rem;
+  font-family: var(--light-font);
+}
+.header__text {
+  font-size: 1.8rem;
 }
 
-html {
-  font-size: 62.5%;
+@media screen and (min-width: 576px) {
+  .header {
+    height: 260px;
+  }
+  .header__title {
+    font-size: 6.4rem;
+  }
+  .header__text {
+    font-size: 2.6rem;
+  }
 }
-
-body {
-  font-size: 1.6rem;
-  font-family: var(--regular-font);
-}
-
 :root {
   --regular-font: "Raleway";
   --light-font: "Raleway__light";
