@@ -1,0 +1,23 @@
+@use "../utilities/" as utils;
+
+@media screen and (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+
+    .transactions {
+      width: 50%;
+
+      .incomes-box, .expenses-box {
+        border: 2px solid utils.$firstColor;
+        border-radius: 10px;
+      }
+    }
+  
+    .options {
+      width: 30%;
+    }
+  }
+}

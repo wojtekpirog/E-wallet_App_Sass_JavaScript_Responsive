@@ -1,0 +1,181 @@
+@use "../utilities/" as utils;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .transactions, .options {
+    width: 90%;
+  }
+
+  .options {
+    &__balance {
+      margin-bottom: .5em;
+      font-size: 6rem;
+      text-align: center;
+    }
+
+    &__controls {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 1em;
+      margin-bottom: 3em;
+
+      &-btn {
+        padding: .5em 1em;
+        border: 2px solid utils.$firstColor;
+        border-radius: 10px;
+        background: none;
+        color: utils.$textColor;
+        font-size: 2rem;
+        transition: border-color 300ms ease, color 300ms ease;
+        cursor: pointer;
+
+        i {
+          margin-right: .25em;
+        }
+
+        &:focus, &:hover {
+          outline: none;
+        }
+
+        &--add {
+          &:focus, &:hover {
+            border-color: utils.$textColor;
+          }
+        }
+
+        &--deleteAll {
+          &:focus, &:hover {
+            border-color: utils.$redColor;
+            color: utils.$redColor;
+          }
+        }
+      }
+    }
+   
+    &__style {
+      &-selection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 3em;
+      }
+
+      &-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      &-button {
+        padding: 2em;
+        border: 2px solid utils.$textColor;
+        border-radius: 50%;
+        transition: transform 300ms ease;
+        cursor: pointer;
+
+        &--dark {
+          background-color: utils.$bgColor;
+        }
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &:focus {
+          outline: none;
+          border-color: utils.$firstColor;  
+        }
+      }
+    }
+  }
+
+  .incomes-box, .expenses-box {
+    margin-bottom: 2em;
+    padding: 1em;
+
+    &__title {
+      margin-bottom: 1em;
+      text-align: center;
+      font-size: 2.4rem;
+      font-family: var(--bold-font);
+    }
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid utils.$firstColor;
+
+      &-name {
+        font-size: 1.8rem;
+        font-family: var(--medium-font);
+
+        i {
+          margin-right: .35em;
+        }
+      }
+
+      &-amount {
+        display: flex;
+        align-items: center;
+
+        &-text {
+          font-size: 1.8rem;
+          font-family: var(--medium-font);
+        }
+
+        &-btn {
+          font-size: 1.8rem;
+          border: none;
+          background: none;
+          color: utils.$firstColor;
+          padding: 1.5em;
+          padding-right: 0;
+          transform: translateY(1px);
+          transition: transform 300ms ease;
+          cursor: pointer;
+
+          &:hover {
+            transform: translateY(1px) scale(1.2);
+          }
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .incomes-box {
+    &__title {
+      color: utils.$greenColor;
+    }
+
+    &__item {
+      &-amount {
+        &-text {
+          color: utils.$greenColor;
+        }
+      }
+    }
+  }
+
+  .expenses-box {
+    &__title {
+      color: utils.$redColor;
+    }
+
+    &__item {
+      &-amount {
+        &-text {
+          color: utils.$redColor;
+        }
+      }
+    }
+  }
+}

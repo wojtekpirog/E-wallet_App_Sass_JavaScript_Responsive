@@ -15,3 +15,10 @@ body {
   background-color: utils.$bgColor;
   color: utils.$textColor;
 }
+
+.section-title {
+  margin-bottom: 1em;
+  text-align: center;
+  font-size: 3rem;
+  font-family: var(--light-font);
+}

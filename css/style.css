@@ -66,6 +66,138 @@ body {
   font-size: 1.8rem;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .transactions, .container .options {
+  width: 90%;
+}
+.container .options__balance {
+  margin-bottom: 0.5em;
+  font-size: 6rem;
+  text-align: center;
+}
+.container .options__controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 3em;
+}
+.container .options__controls-btn {
+  padding: 0.5em 1em;
+  border: 2px solid #748CAB;
+  border-radius: 10px;
+  background: none;
+  color: #f0ebd8;
+  font-size: 2rem;
+  transition: border-color 300ms ease, color 300ms ease;
+  cursor: pointer;
+}
+.container .options__controls-btn i {
+  margin-right: 0.25em;
+}
+.container .options__controls-btn:focus, .container .options__controls-btn:hover {
+  outline: none;
+}
+.container .options__controls-btn--add:focus, .container .options__controls-btn--add:hover {
+  border-color: #f0ebd8;
+}
+.container .options__controls-btn--deleteAll:focus, .container .options__controls-btn--deleteAll:hover {
+  border-color: #bc4749;
+  color: #bc4749;
+}
+.container .options__style-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3em;
+}
+.container .options__style-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.container .options__style-button {
+  padding: 2em;
+  border: 2px solid #f0ebd8;
+  border-radius: 50%;
+  transition: transform 300ms ease;
+  cursor: pointer;
+}
+.container .options__style-button--dark {
+  background-color: #0d1321;
+}
+.container .options__style-button:hover {
+  transform: scale(1.1);
+}
+.container .options__style-button:focus {
+  outline: none;
+  border-color: #748CAB;
+}
+.container .incomes-box, .container .expenses-box {
+  margin-bottom: 2em;
+  padding: 1em;
+}
+.container .incomes-box__title, .container .expenses-box__title {
+  margin-bottom: 1em;
+  text-align: center;
+  font-size: 2.4rem;
+  font-family: var(--bold-font);
+}
+.container .incomes-box__item, .container .expenses-box__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #748CAB;
+}
+.container .incomes-box__item-name, .container .expenses-box__item-name {
+  font-size: 1.8rem;
+  font-family: var(--medium-font);
+}
+.container .incomes-box__item-name i, .container .expenses-box__item-name i {
+  margin-right: 0.35em;
+}
+.container .incomes-box__item-amount, .container .expenses-box__item-amount {
+  display: flex;
+  align-items: center;
+}
+.container .incomes-box__item-amount-text, .container .expenses-box__item-amount-text {
+  font-size: 1.8rem;
+  font-family: var(--medium-font);
+}
+.container .incomes-box__item-amount-btn, .container .expenses-box__item-amount-btn {
+  font-size: 1.8rem;
+  border: none;
+  background: none;
+  color: #748CAB;
+  padding: 1.5em;
+  padding-right: 0;
+  transform: translateY(1px);
+  transition: transform 300ms ease;
+  cursor: pointer;
+}
+.container .incomes-box__item-amount-btn:hover, .container .expenses-box__item-amount-btn:hover {
+  transform: translateY(1px) scale(1.2);
+}
+.container .incomes-box__item:last-child, .container .expenses-box__item:last-child {
+  border-bottom: none;
+}
+.container .incomes-box__title {
+  color: #386641;
+}
+.container .incomes-box__item-amount-text {
+  color: #386641;
+}
+.container .expenses-box__title {
+  color: #bc4749;
+}
+.container .expenses-box__item-amount-text {
+  color: #bc4749;
+}
+
 @media screen and (min-width: 576px) {
   .header {
     height: 260px;
@@ -75,6 +207,27 @@ body {
   }
   .header__text {
     font-size: 2.6rem;
+  }
+  .section-title {
+    font-size: 3.6rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+  }
+  .container .transactions {
+    width: 50%;
+  }
+  .container .transactions .incomes-box, .container .transactions .expenses-box {
+    border: 2px solid #748CAB;
+    border-radius: 10px;
+  }
+  .container .options {
+    width: 30%;
   }
 }
 :root {
@@ -88,4 +241,11 @@ body {
 body {
   background-color: #0d1321;
   color: #f0ebd8;
+}
+
+.section-title {
+  margin-bottom: 1em;
+  text-align: center;
+  font-size: 3rem;
+  font-family: var(--light-font);
 }/*# sourceMappingURL=style.css.map */

@@ -13,112 +13,114 @@
 <body>
   <!-- Header -->
   <header class="header">
-    <h1 class="header__title"><i class="fa-solid fa-wallet"></i> Wallet</h1>
+    <h1 class="header__title"><i class="fa-solid fa-wallet"></i> Łolet</h1>
     <p class="header__text">Your personal balance manager</p>
   </header>
   <!-- Header -->
   <!-- Main -->
   <main>
-    <!-- Transactions -->
-    <section class="transactions">
-      <!-- Section title -->
-      <h2 class="section-title">List of transactions</h2>
-      <!-- Section title -->
-      <!-- Transactions box -->
-      <div class="transactions__list">
-        <!-- Incomes -->
-        <div class="incomes-box">
-          <h3 class="incomes-box__title incomes-box__title">Incomes</h3>
-          <!-- Single income -->
-          <div class="incomes-box__item">
-            <!-- Income name -->
-            <p class="incomes-box__item-name"><i class="fa-solid fa-money-bill-wave"></i> Wypłata</p>
-            <!-- Income name -->
-            <!-- Income amount -->
-            <div class="incomes-box__item-amount">
-              <div class="incomes-box__item-amount-text"><i class="fa-solid fa-plus"></i> 1000zł</div>
-              <button type="button" class="incomes-box__item-amount-btn"><i class="fa-solid fa-trash"></i></button>
+    <div class="container">
+      <!-- Transactions -->
+      <section class="transactions">
+        <!-- Section title -->
+        <h2 class="section-title">List of transactions</h2>
+        <!-- Section title -->
+        <!-- Transactions box -->
+        <div class="transactions__list">
+          <!-- Incomes -->
+          <div class="incomes-box">
+            <h3 class="incomes-box__title">Incomes</h3>
+            <!-- Single income -->
+            <div class="incomes-box__item">
+              <!-- Income name -->
+              <p class="incomes-box__item-name"><i class="fa-solid fa-money-bill-wave"></i> Wypłata</p>
+              <!-- Income name -->
+              <!-- Income amount -->
+              <div class="incomes-box__item-amount">
+                <div class="incomes-box__item-amount-text">1000zł</div>
+                <button type="button" class="incomes-box__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <!-- Income amount -->
             </div>
-            <!-- Income amount -->
+            <!-- Single income -->
           </div>
-          <!-- Single income -->
+          <!-- Incomes -->
+          <!-- Expenses -->
+          <div class="expenses-box">
+            <h3 class="expenses-box__title expenses-box__title">Expenses</h3>
+            <!-- Single expense -->
+            <div class="expenses-box__item">
+              <!-- Expense name -->
+              <p class="expenses-box__item-name"><i class="fa-solid fa-cart-arrow-down"></i> Zakupy</p>
+              <!-- Expense name -->
+              <!-- Expense amount -->
+              <div class="expenses-box__item-amount">
+                <div class="expenses-box__item-amount-text">300zł</div>
+                <button type="button" class="expenses-box__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <!-- Expense amount -->
+            </div>
+            <!-- Single expense -->
+            <!-- Single expense -->
+            <div class="expenses-box__item">
+              <!-- Expense name -->
+              <p class="expenses-box__item-name"><i class="fa-solid fa-hamburger"></i> Jedzonko</p>
+              <!-- Expense name -->
+              <!-- Expense amount -->
+              <div class="expenses-box__item-amount">
+                <div class="expenses-box__item-amount-text">100zł</div>
+                <button type="button" class="expenses-box__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <!-- Expense amount -->
+            </div>
+            <!-- Single expense -->
+            <!-- Single expense -->
+            <div class="expenses-box__item">
+              <!-- Expense name -->
+              <p class="expenses-box__item-name"><i class="fa-solid fa-film"></i> Kino</p>
+              <!-- Expense name -->
+              <!-- Expense amount -->
+              <div class="expenses-box__item-amount">
+                <div class="expenses-box__item-amount-text">50zł</div>
+                <button type="button" class="expenses-box__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <!-- Expense amount -->
+            </div>
+            <!-- Single expense -->
+          </div>
+          <!-- Expenses -->
         </div>
-        <!-- Incomes -->
-        <!-- Expenses -->
-        <div class="expenses-box">
-          <h3 class="expenses-box__title expenses-box__title">Expenses</h3>
-          <!-- Single expense -->
-          <div class="expenses-box__item">
-            <!-- Expense name -->
-            <p class="expenses-box__item-name"><i class="fa-solid fa-cart-arrow-down"></i> Zakupy</p>
-            <!-- Expense name -->
-            <!-- Expense amount -->
-            <div class="expenses-box__item-amount">
-              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 300zł</div>
-              <button type="button" class="expenses-box__item-amount-btn"></button>
-            </div>
-            <!-- Expense amount -->
-          </div>
-          <!-- Single expense -->
-          <!-- Single expense -->
-          <div class="expenses-box__item">
-            <!-- Expense name -->
-            <p class="expenses-box__item-name"><i class="fa-solid fa-hamburger"></i> Jedzonko</p>
-            <!-- Expense name -->
-            <!-- Expense amount -->
-            <div class="expenses-box__item-amount">
-              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 100zł</div>
-              <button type="button" class="expenses-box__item-amount-btn"></button>
-            </div>
-            <!-- Expense amount -->
-          </div>
-          <!-- Single expense -->
-          <!-- Single expense -->
-          <div class="expenses-box__item">
-            <!-- Expense name -->
-            <p class="expenses-box__item-name"><i class="fa-solid fa-film"></i> Kino</p>
-            <!-- Expense name -->
-            <!-- Expense amount -->
-            <div class="expenses-box__item-amount">
-              <div class="expenses-box__item-amount-text"><i class="fa-solid fa-minus"></i> 50zł</div>
-              <button type="button" class="expenses-box__item-amount-btn"></button>
-            </div>
-            <!-- Expense amount -->
-          </div>
-          <!-- Single expense -->
+        <!-- Transactions box -->
+      </section>
+      <!-- Transactions -->
+      <!-- Options -->
+      <section class="options">
+        <!-- Section title -->
+        <h2 class="section-title">Balance</h2>
+        <!-- Section title -->
+        <!-- Balance -->
+        <div class="options__balance">0 zł</div>
+        <!-- Balance -->
+        <!-- Controls -->
+        <div class="options__controls">
+          <button type="button" class="options__controls-btn options__controls-btn--add"><i class="fa-solid fa-plus"></i> Add transaction</button>
+          <button type="button" class="options__controls-btn options__controls-btn--deleteAll"><i class="fa-solid fa-trash-alt"></i> Delete all</button>
         </div>
-        <!-- Expenses -->
-      </div>
-      <!-- Transactions box -->
-    </section>
-    <!-- Transactions -->
-    <!-- Options -->
-    <section class="options">
-      <!-- Section title -->
-      <h2 class="section-title">Balance</h2>
-      <!-- Section title -->
-      <!-- Balance -->
-      <div class="options__balance">0 zł</div>
-      <!-- Balance -->
-      <!-- Controls -->
-      <div class="options__controls">
-        <button type="button" class="options__controls-btn options__controls-btn--add"><i class="fa-solid fa-plus"></i> Add transaction</button>
-        <button type="button" class="options__controls-btn options__controls-btn--deleteAll"><i class="fa-solid fa-trash-alt"></i> Delete all</button>
-      </div>
-      <!-- Controls -->
-      <!-- Style selection -->
-      <div class="options__style-selection">
-        <h2 class="section-title">Select style</h2>
-        <!-- Style buttons -->
-        <div class="options__buttons">
-          <button type="button" class="options__buttons-btn option__buttons-btn--light"></button>
-          <button type="button" class="options__buttons-btn option__buttons-btn--dark"></button>
+        <!-- Controls -->
+        <!-- Style selection -->
+        <div class="options__style-selection">
+          <h2 class="section-title">Select style</h2>
+          <!-- Style buttons -->
+          <div class="options__style-buttons">
+            <button type="button" class="options__style-button option__style-button--light" title="Light"></button>
+            <button type="button" class="options__style-button options__style-button--dark" title="Dark"></button>
+          </div>
+          <!-- Style buttons -->
         </div>
-        <!-- Style buttons -->
-      </div>
-      <!-- Style selection -->
-    </section>
-    <!-- Options -->
+        <!-- Style selection -->
+      </section>
+      <!-- Options -->
+    </div>
   </main>
   <!-- Main -->
   <!-- Transaction panel (out of main) -->
