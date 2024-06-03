@@ -1,0 +1,115 @@
+@use "../utilities/" as utils;
+
+.transaction-panel {
+  display: none;
+
+  &__xmark {
+    position: fixed;
+    top: 1em;
+    left: 1em;
+    padding: 1em;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    z-index: 11;
+    cursor: pointer;
+    
+    i {
+      color: utils.$textColor;
+      font-size: 3rem;
+      transition: transform 300ms ease;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid utils.$textColor;
+    }
+  }
+
+  &__form {
+    @include utils.flexLayout(column, center, center);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right bottom, utils.$secondColor 0%, utils.$thirdColor 75%);
+    z-index: 10;
+  }
+
+  &__label {
+    margin-bottom: .25em;
+    font-size: 2rem;
+  }
+
+  small {
+    width: 90%;
+    margin-bottom: .75em;
+    font-style: italic;
+    text-align: center;
+  }
+
+  &__input, &__select, &__button {
+    padding: .5em 1em;
+    border: 2px solid utils.$textColor;
+    border-radius: 10px;
+    background: none;
+    color: utils.$textColor;
+    font-family: var(--regular-font);
+    font-size: 1.6rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__input, &__box, &__buttons {
+    margin-bottom: 1em;
+    width: 90%;
+    max-width: 600px;
+  }
+
+  &__box {
+    position: relative;
+  }
+  
+  &__select {
+    width: 100%;
+    background-color: utils.$textColor;
+    color: utils.$bgColor;
+    appearance: none;
+    cursor: pointer;
+  }
+  
+  &__arrow {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: .5em 1em;
+    background: linear-gradient(to right bottom, utils.$secondColor 0%, utils.$thirdColor 75%);
+    color: utils.$textColor;
+    border: 2px solid utils.$textColor;
+    border-radius: 0 10px 10px 0;
+    pointer-events: none;
+  }
+
+  &__buttons {
+    @include utils.flexLayout(row, space-evenly, center);
+  }
+
+  &__button {
+    cursor: pointer;
+    transition: background-color 300ms ease, color 300ms ease;
+
+    &:focus, &:hover {
+      background-color: utils.$textColor;
+      color: utils.$bgColor;
+    }
+  }
+}

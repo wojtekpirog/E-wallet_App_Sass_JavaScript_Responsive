@@ -7,10 +7,16 @@
     align-items: flex-start;
     gap: 2em;
 
+    .section-title {
+      font-size: 3.6rem;
+      margin-bottom: 1em;
+    }
+
     .transactions {
       width: 50%;
 
       .incomes-box, .expenses-box {
+        padding: 1em;
         border: 2px solid utils.$firstColor;
         border-radius: 10px;
       }
@@ -18,6 +24,12 @@
   
     .options {
       width: 30%;
+    }
+  }
+
+  .transaction-panel {
+    .section-title {
+      font-size: 3.6rem;
     }
   }
 }

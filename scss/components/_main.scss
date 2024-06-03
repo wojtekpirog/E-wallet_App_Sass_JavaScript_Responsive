@@ -1,9 +1,7 @@
 @use "../utilities/" as utils;
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include utils.flexLayout(column, center, center);
 
   .transactions, .options {
     width: 90%;
@@ -17,19 +15,17 @@
     }
 
     &__controls {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      @include utils.flexLayout(row, space-around, center);
       gap: 1em;
       margin-bottom: 3em;
 
       &-btn {
-        padding: .5em 1em;
+        padding: 1em;
         border: 2px solid utils.$firstColor;
         border-radius: 10px;
         background: none;
         color: utils.$textColor;
-        font-size: 2rem;
+        font-size: 1.4rem;
         transition: border-color 300ms ease, color 300ms ease;
         cursor: pointer;
 
@@ -58,9 +54,7 @@
    
     &__style {
       &-selection {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include utils.flexLayout(column, center, center);
         margin-bottom: 3em;
       }
 
@@ -94,8 +88,8 @@
   }
 
   .incomes-box, .expenses-box {
+    padding: 0 .5em;
     margin-bottom: 2em;
-    padding: 1em;
 
     &__title {
       margin-bottom: 1em;
@@ -105,9 +99,7 @@
     }
 
     &__item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include utils.flexLayout(row, space-between, center);
       border-bottom: 1px solid utils.$firstColor;
 
       &-name {

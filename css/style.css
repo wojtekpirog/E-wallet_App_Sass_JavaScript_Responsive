@@ -69,6 +69,7 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 .container .transactions, .container .options {
@@ -81,18 +82,19 @@ body {
 }
 .container .options__controls {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
   gap: 1em;
   margin-bottom: 3em;
 }
 .container .options__controls-btn {
-  padding: 0.5em 1em;
+  padding: 1em;
   border: 2px solid #748CAB;
   border-radius: 10px;
   background: none;
   color: #f0ebd8;
-  font-size: 2rem;
+  font-size: 1.4rem;
   transition: border-color 300ms ease, color 300ms ease;
   cursor: pointer;
 }
@@ -112,6 +114,7 @@ body {
 .container .options__style-selection {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-bottom: 3em;
 }
@@ -138,8 +141,8 @@ body {
   border-color: #748CAB;
 }
 .container .incomes-box, .container .expenses-box {
+  padding: 0 0.5em;
   margin-bottom: 2em;
-  padding: 1em;
 }
 .container .incomes-box__title, .container .expenses-box__title {
   margin-bottom: 1em;
@@ -149,6 +152,7 @@ body {
 }
 .container .incomes-box__item, .container .expenses-box__item {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #748CAB;
@@ -198,6 +202,123 @@ body {
   color: #bc4749;
 }
 
+.transaction-panel {
+  display: none;
+}
+.transaction-panel__xmark {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  padding: 1em;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  z-index: 11;
+  cursor: pointer;
+}
+.transaction-panel__xmark i {
+  color: #f0ebd8;
+  font-size: 3rem;
+  transition: transform 300ms ease;
+}
+.transaction-panel__xmark i:hover {
+  transform: scale(1.2);
+}
+.transaction-panel__xmark:focus {
+  outline: none;
+  border: 2px solid #f0ebd8;
+}
+.transaction-panel__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right bottom, #3E5C76 0%, #1D2D44 75%);
+  z-index: 10;
+}
+.transaction-panel__label {
+  margin-bottom: 0.25em;
+  font-size: 2rem;
+}
+.transaction-panel small {
+  width: 90%;
+  margin-bottom: 0.75em;
+  font-style: italic;
+  text-align: center;
+}
+.transaction-panel__input, .transaction-panel__select, .transaction-panel__button {
+  padding: 0.5em 1em;
+  border: 2px solid #f0ebd8;
+  border-radius: 10px;
+  background: none;
+  color: #f0ebd8;
+  font-family: var(--regular-font);
+  font-size: 1.6rem;
+}
+.transaction-panel__input:focus, .transaction-panel__select:focus, .transaction-panel__button:focus {
+  outline: none;
+}
+.transaction-panel__input, .transaction-panel__box, .transaction-panel__buttons {
+  margin-bottom: 1em;
+  width: 90%;
+  max-width: 600px;
+}
+.transaction-panel__box {
+  position: relative;
+}
+.transaction-panel__select {
+  width: 100%;
+  background-color: #f0ebd8;
+  color: #0d1321;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+}
+.transaction-panel__arrow {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 0.5em 1em;
+  background: linear-gradient(to right bottom, #3E5C76 0%, #1D2D44 75%);
+  color: #f0ebd8;
+  border: 2px solid #f0ebd8;
+  border-radius: 0 10px 10px 0;
+  pointer-events: none;
+}
+.transaction-panel__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.transaction-panel__button {
+  cursor: pointer;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+.transaction-panel__button:focus, .transaction-panel__button:hover {
+  background-color: #f0ebd8;
+  color: #0d1321;
+}
+
+@media screen and (min-width: 375px) {
+  .transaction-panel__xmark {
+    padding: 2em;
+  }
+  .transaction-panel__xmark i {
+    font-size: 4rem;
+  }
+  .transaction-panel__input, .transaction-panel__box, .transaction-panel__buttons {
+    margin-bottom: 1.2em;
+  }
+}
 @media screen and (min-width: 576px) {
   .header {
     height: 260px;
@@ -209,7 +330,27 @@ body {
     font-size: 2.6rem;
   }
   .section-title {
+    margin-bottom: 1em;
     font-size: 3.6rem;
+  }
+  .transaction-panel__xmark {
+    top: 2em;
+    left: 2em;
+  }
+  .transaction-panel__xmark i {
+    font-size: 5rem;
+  }
+  .transaction-panel__label {
+    font-size: 2.4rem;
+  }
+  .transaction-panel__input, .transaction-panel__select, .transaction-panel__button {
+    font-size: 2rem;
+  }
+  .transaction-panel__arrow {
+    padding: calc(1em - 3px) 1em;
+  }
+  .transaction-panel__input, .transaction-panel__box, .transaction-panel__buttons {
+    margin-bottom: 2em;
   }
 }
 @media screen and (min-width: 768px) {
@@ -219,15 +360,40 @@ body {
     align-items: flex-start;
     gap: 2em;
   }
+  .container .section-title {
+    font-size: 3.6rem;
+    margin-bottom: 1em;
+  }
   .container .transactions {
     width: 50%;
   }
   .container .transactions .incomes-box, .container .transactions .expenses-box {
+    padding: 1em;
     border: 2px solid #748CAB;
     border-radius: 10px;
   }
   .container .options {
     width: 30%;
+  }
+  .transaction-panel .section-title {
+    font-size: 3.6rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .header {
+    height: 340px;
+  }
+  .header__title {
+    font-size: 8rem;
+  }
+  .header__text {
+    font-size: 3.6rem;
+  }
+  .container .section-title {
+    font-size: 4.2rem;
+  }
+  .container .transactions .incomes-box, .container .transactions .expenses-box {
+    padding: 2em;
   }
 }
 :root {
@@ -244,8 +410,8 @@ body {
 }
 
 .section-title {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.6rem;
   font-family: var(--light-font);
 }/*# sourceMappingURL=style.css.map */

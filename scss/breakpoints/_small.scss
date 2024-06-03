@@ -1,3 +1,19 @@
+@media screen and (min-width: 375px) {
+  .transaction-panel {
+    &__xmark {
+      padding: 2em;
+      
+      i {
+        font-size: 4rem;
+      }
+    }
+
+    &__input, &__box, &__buttons {
+      margin-bottom: 1.2em;
+    }
+  }
+}
+
 @media screen and (min-width: 576px) {
   .header {
     height: 260px;
@@ -11,6 +27,34 @@
   }
 
   .section-title {
+    margin-bottom: 1em;
     font-size: 3.6rem;
+  }
+
+  .transaction-panel {
+    &__xmark {
+      top: 2em;
+      left: 2em;
+
+      i {
+        font-size: 5rem;
+      }
+    }
+
+    &__label {
+      font-size: 2.4rem;
+    }
+
+    &__input, &__select, &__button {
+      font-size: 2rem;
+    }
+
+    &__arrow {
+      padding: calc(1em - 3px) 1em;
+    }
+
+    &__input, &__box, &__buttons {
+      margin-bottom: 2em;
+    }
   }
 }
