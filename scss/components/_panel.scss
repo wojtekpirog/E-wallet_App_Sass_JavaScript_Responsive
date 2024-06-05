@@ -47,6 +47,18 @@
   &__form {
     @include utils.flexLayout(column, center, center);
     width: 90%;
+
+    .section-title {
+      margin-bottom: 1.2em;
+      text-transform: uppercase;
+      font-size: 2rem;
+    }
+  }
+
+  &__control-box {
+    @include utils.flexLayout(column, center, center);
+    margin-bottom: 1em;
+    width: 90%;
   }
 
   &__label {
@@ -74,8 +86,7 @@
   }
 
   &__input, &__box, &__buttons {
-    margin-bottom: 1em;
-    width: 90%;
+    width: 100%;
   }
 
   &__box {
@@ -102,6 +113,13 @@
     border: 2px solid utils.$textColor;
     border-radius: 0 10px 10px 0;
     pointer-events: none;
+  }
+
+  &__error {
+    display: none;
+    color: utils.$redColor;
+    font-size: 1.4rem;
+    // align-self: start;
   }
 
   &__buttons {

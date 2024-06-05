@@ -8,8 +8,8 @@
       }
     }
 
-    &__input, &__box, &__buttons {
-      margin-bottom: 1.2em;
+    &__control-box {
+      margin-bottom: 1.5em;
     }
   }
 }
@@ -41,6 +41,16 @@
       }
     }
 
+    &__form {
+      .section-title {
+        margin-bottom: 3rem;
+      }
+    }
+
+    &__control-box {
+      margin-bottom: 2.4em;
+    }
+
     &__label {
       font-size: 2.4rem;
     }
@@ -53,9 +63,13 @@
       padding: calc(1em - 3px) 1em;
     }
 
-    &__input, &__box, &__buttons {
-      margin-bottom: 2em;
-      max-width: 600px;
+    &__input, &__box, &__error &__buttons {
+      width: 80%;
+    }
+
+    &__error {
+      width: 80%;
+      font-size: 2rem;
     }
   }
 }
