@@ -286,17 +286,22 @@ body {
 .transaction-panel__input, .transaction-panel__box, .transaction-panel__buttons {
   width: 100%;
 }
+.transaction-panel__input--error {
+  border-color: #bc4749;
+}
 .transaction-panel__box {
   position: relative;
 }
 .transaction-panel__select {
   width: 100%;
-  background-color: #f0ebd8;
-  color: #0d1321;
+  color: #f0ebd8;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
   cursor: pointer;
+}
+.transaction-panel__select-option-text {
+  color: #1D2D44;
 }
 .transaction-panel__arrow {
   display: block;
@@ -313,6 +318,7 @@ body {
 }
 .transaction-panel__error {
   display: none;
+  margin-top: 0.15em;
   color: #bc4749;
   font-size: 1.4rem;
 }

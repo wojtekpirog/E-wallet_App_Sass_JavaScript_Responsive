@@ -89,16 +89,25 @@
     width: 100%;
   }
 
+  &__input {
+    &--error {
+      border-color: utils.$redColor;
+    }
+  }
+
   &__box {
     position: relative;
   }
   
   &__select {
     width: 100%;
-    background-color: utils.$textColor;
-    color: utils.$bgColor;
+    color: utils.$textColor;
     appearance: none;
     cursor: pointer;
+
+    &-option-text {
+      color: utils.$thirdColor;
+    }
   }
   
   &__arrow {
@@ -117,9 +126,9 @@
 
   &__error {
     display: none;
+    margin-top: .15em;
     color: utils.$redColor;
     font-size: 1.4rem;
-    // align-self: start;
   }
 
   &__buttons {

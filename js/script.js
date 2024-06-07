@@ -18,8 +18,7 @@ let closePanelBtn;
 let rootElement = document.documentElement;
 let ID = 0;
 let categoryIcon;
-let selectedCategory;
-let moneyArray = [0];
+let moneyArray = [0]; 
 
 const main = () => {
   getElements();
@@ -48,6 +47,7 @@ const getElements = function() {
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
+  deleteAllBtn.addEventListener("click", deleteAllTransactions);
   closePanelBtn.addEventListener("click", closeTransactionPanel);
   saveBtn.addEventListener("click", handleFormSubmit);
   cancelBtn.addEventListener("click", closeTransactionPanel);
@@ -58,9 +58,9 @@ const openTransactionPanel = () => {
 }
 
 const closeTransactionPanel = () => {
-  transactionPanel.classList.remove("active");
   clearElements();
   clearErrors();
+  transactionPanel.classList.remove("active");
 }
 
 const handleFormSubmit = (event) => {
@@ -76,6 +76,8 @@ const validateInputs = (inputs) => {
   inputs.forEach((input) => {
     if (input.value === "") {
       displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be empty!`);
+    } else if (input.value === "0") {
+      displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be equal to zero!`);
     } else {
       removeError(input);
     }
@@ -103,14 +105,12 @@ const checkForErrors = () => {
   let errorCount = 0;
 
   allErrors.forEach((error) => {
-    error.style.display === "block" && errorCount++;
+    error.style.display === "block" && errorCount ++;
   });
 
   if (errorCount === 0) {
     createNewTransaction();
     closeTransactionPanel();
-  } else {
-    alert("Please fill out all fields correctly!");
   }
 }
 
@@ -118,17 +118,22 @@ const displayError = (formControl, errorMessage) => {
   const error = formControl.parentElement.querySelector(".transaction-panel__error");
   error.textContent = errorMessage;
   error.style.display = "block";
+  formControl.classList.add("transaction-panel__input--error");
 }
 
 const removeError = (formControl) => {
   const error = formControl.parentElement.querySelector(".transaction-panel__error");
   error.style.display = "none";
+  formControl.classList.remove("transaction-panel__input--error");
 }
 
 const clearElements = () => {
   nameInput.value = "";
+  nameInput.classList.remove("transaction-panel__input--error");
   amountInput.value = "";
+  amountInput.classList.remove("transaction-panel__input--error");
   categorySelect.selectedIndex = 0;
+  categorySelect.classList.remove("transaction-panel__input--error");
 }
 
 const clearErrors = () => {
@@ -137,29 +142,89 @@ const clearErrors = () => {
 
 const createNewTransaction = () => {
   const newTransaction = document.createElement("div");
-  newTransaction.className = "transactions__item";
   newTransaction.setAttribute("id", ID);
+  newTransaction.className = "transactions__item";
+  checkCategory();
 
-  newTransaction.innerHTML = `
-    <p class="transactions__item-name">${categoryIcon} ${nameInput.value}</p>
-    <div class="transactions__item-amount">
-      <div class="transactions__item-amount-text">$${amountInput.value}</div>
-      <button type="button" class="transactions__item-amount-btn" onclick="deleteTransaction(${ID})"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  `;
+  const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
+  transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
+  transactionsTemplate.querySelector(".transactions__item-amount-text").textContent = `$ ${amountInput.value}`;
+  transactionsTemplate.querySelector(".transactions__item-amount-btn").setAttribute("onclick", `deleteTransaction(${ID})`);
+  newTransaction.appendChild(transactionsTemplate);
 
-  ID += 1;
+  if (amountInput.value > 0) {
+    newTransaction.classList.add("transactions__item--income");
+    incomesBox.appendChild(newTransaction);
+  } else {
+    newTransaction.classList.add("transactions__item--expense");
+    expensesBox.appendChild(newTransaction);
+  }
+
+  moneyArray.push(parseFloat(amountInput.value));
+  calculateBalance(moneyArray);
+  ID++;
 }
 
-// const createNewTransaction = () => {
-//   const newTransaction = document.createElement("div");
-//   newTransaction.className = "transactions__item";
-//   newTransaction.setAttribute("id", ID);
+const checkCategory = () => {
+  switch (categorySelect.value) {
+    case "salary":
+      categoryIcon = `<i class="fa-solid fa-wallet"></i>`;
+      break;
+    case "investment":
+      categoryIcon = `<i class="fa-solid fa-chart-line"></i>`;
+      break;
+    case "freelance":
+      categoryIcon = `<i class="fa-solid fa-briefcase"></i>`;
+      break;
+    case "rent":
+      categoryIcon = `<i class="fa-solid fa-house"></i>`;
+      break;
+    case "shopping":
+      categoryIcon = `<i class="fa-solid fa-cart-shopping"></i>`;
+      break;
+    case "food":
+      categoryIcon = `<i class="fa-solid fa-utensils"></i>`;
+      break;
+    case "bills":
+      categoryIcon = `<i class="fa-solid fa-credit-card"></i>`;
+      break;
+    case "cinema":
+      categoryIcon = `<i class="fa-solid fa-film"></i>`;
+      break;
+    case "leisure":
+      categoryIcon = `<i class="fa-solid fa-glass-cheers"></i>`;
+      break;
+    case "other":
+      categoryIcon = `<i class="fa-solid fa-pen"></i>`;
+      break;
+  }
+}
 
-//   const transactionItemTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
-//   console.log(transactionItemTemplate);
+const deleteTransaction = (id) => {
+  const transactionToDelete = document.getElementById(id);
+  const amountOfTransaction = parseFloat(transactionToDelete.childNodes[9].innerText.slice(2));
+  const indexOfTransactionToDelete = moneyArray.indexOf(amountOfTransaction);
 
-//   ID += 1;
+  moneyArray.splice(indexOfTransactionToDelete, 1);
+  calculateBalance(moneyArray);
+
+  transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
+}
+
+const calculateBalance = (moneyArray) => {
+  const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);
+  availableMoney.textContent = `$ ${balance}`;
+}
+
+const deleteAllTransactions = () => {
+  incomesBox.innerHTML = '<h3 class="incomes-box__title">Incomes</h3>';
+  expensesBox.innerHTML = '<h3 class="expenses-box__title">Expenses</h3>';
+  moneyArray = [0];
+  availableMoney.textContent = `$ 0`;
+}
+
+// const switchToLightMode = () => {
+
 // }
 
 const setFooterYear = () => {
