@@ -1,0 +1,79 @@
+@use "../utilities/" as utils;
+
+.confirmation-modal {
+  @include utils.flexLayout(column, center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &__shadow {
+    background-color: utils.$modalShadow;
+  }
+
+  &__content {
+    @include utils.flexLayout(column, center, center);
+    width: 90%;
+    max-width: 700px;
+    gap: 2em;
+    padding: 1em;
+    border-radius: 8px;
+    background-color: utils.$lightColor;
+    color: utils.$darkColor;
+    border: 2px solid utils.$secondColor;
+  }
+
+  &__text {
+    font-size: 2rem;
+    text-align: center;
+    font-family: var(--medium-font);
+  }
+
+  &__buttons {
+    @include utils.flexLayout(row, center, center);
+    gap: 2em;
+  }
+
+  &__button {
+    padding: 1em 2em;
+    border: 2px solid;
+    border-radius: 8px;
+    background: none;
+    color: utils.$darkColor;
+    font-size: 1.6rem;
+    font-family: var(--medium-font);
+    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
+    cursor: pointer;
+
+    i {
+      margin-right: .25em;
+    }
+
+    &:hover {
+      color: utils.$lightColor;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: utils.$firstColor;
+    }
+
+    &--confirm {
+      border-color: utils.$redColor;
+      color: utils.$redColor;
+
+      &:hover {
+        border-color: utils.$redColor;
+        background-color: utils.$redColor;
+      }
+    }
+
+    &--cancel {
+      &:hover {
+        border-color: utils.$firstColor;
+        background-color: utils.$firstColor;
+      }
+    }
+  }
+}
