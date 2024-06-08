@@ -55,6 +55,11 @@ body {
   font-weight: 700;
   font-display: swap;
 }
+:export {
+  bgColor: #0d1321;
+  textColor: #f0ebd8;
+}
+
 .header {
   height: 200px;
   display: flex;
@@ -77,6 +82,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+.container .section-title {
+  margin-bottom: 1em;
+  font-family: var(--light-font);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 .container .transactions, .container .options {
   width: 90%;
 }
@@ -91,11 +103,10 @@ body {
   font-size: 1.8rem;
   font-family: var(--medium-font);
 }
-.container .transactions__item-name i {
-  margin-right: 0.35em;
-}
 .container .transactions__item-amount {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 .container .transactions__item-amount-text {
@@ -109,10 +120,23 @@ body {
   color: #748CAB;
   padding: 1.5em;
   padding-right: 0;
+  transform: translateY(2px);
   cursor: pointer;
 }
 .container .transactions__item:last-child {
   border-bottom: none;
+}
+.container .transactions__item--income .transactions__item-name, .container .transactions__item--income .transactions__item-amount-text {
+  color: #386641;
+}
+.container .transactions__item--income .transactions__item-name i, .container .transactions__item--income .transactions__item-amount-text i {
+  color: #f0ebd8;
+}
+.container .transactions__item--expense .transactions__item-name, .container .transactions__item--expense .transactions__item-amount-text {
+  color: #bc4749;
+}
+.container .transactions__item--expense .transactions__item-name i, .container .transactions__item--expense .transactions__item-amount-text i {
+  color: #f0ebd8;
 }
 .container .options__balance {
   margin-bottom: 0.5em;
@@ -121,34 +145,40 @@ body {
 }
 .container .options__controls {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 1em;
   margin-bottom: 3em;
 }
 .container .options__controls-btn {
+  width: 180px;
   padding: 1em;
-  border: 2px solid #748CAB;
-  border-radius: 10px;
+  border: 2px solid #f0ebd8;
+  border-radius: 8px;
   background: none;
   color: #f0ebd8;
-  font-size: 1.4rem;
-  transition: border-color 300ms ease, color 300ms ease;
+  font-size: 1.6rem;
+  transition: background-color 300ms ease, color 300ms ease;
   cursor: pointer;
 }
 .container .options__controls-btn i {
   margin-right: 0.25em;
 }
-.container .options__controls-btn:focus, .container .options__controls-btn:hover {
+.container .options__controls-btn:focus {
   outline: none;
+  border-color: #748CAB;
 }
-.container .options__controls-btn--add:focus, .container .options__controls-btn--add:hover {
-  border-color: #f0ebd8;
+.container .options__controls-btn--add:hover {
+  background-color: #f0ebd8;
+  color: #0d1321;
 }
-.container .options__controls-btn--deleteAll:focus, .container .options__controls-btn--deleteAll:hover {
+.container .options__controls-btn--deleteAll:hover {
   border-color: #bc4749;
   color: #bc4749;
+}
+.container .options__controls-btn--deleteAll:focus {
+  border-color: #bc4749;
 }
 .container .options__style-selection {
   display: flex;
@@ -180,11 +210,13 @@ body {
   border-color: #748CAB;
 }
 .container .incomes-box, .container .expenses-box {
-  padding: 0 0.5em;
   margin-bottom: 2em;
+  padding: 1em;
+  border: 2px solid #748CAB;
+  border-radius: 8px;
 }
 .container .incomes-box__title, .container .expenses-box__title {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   text-align: center;
   font-size: 2.4rem;
   font-family: var(--bold-font);
@@ -192,13 +224,7 @@ body {
 .container .incomes-box__title {
   color: #386641;
 }
-.container .incomes-box__item-amount-text {
-  color: #386641;
-}
 .container .expenses-box__title {
-  color: #bc4749;
-}
-.container .expenses-box__item-amount-text {
   color: #bc4749;
 }
 
@@ -358,8 +384,8 @@ body {
   .header__text {
     font-size: 2.6rem;
   }
-  .section-title {
-    margin-bottom: 1em;
+  .container .section-title {
+    margin-bottom: 0.25em;
     font-size: 3.6rem;
   }
   .transaction-panel__xmark {
@@ -400,16 +426,11 @@ body {
     gap: 2em;
   }
   .container .section-title {
-    font-size: 3.6rem;
+    font-size: 3rem;
     margin-bottom: 1em;
   }
   .container .transactions {
     width: 50%;
-  }
-  .container .transactions .incomes-box, .container .transactions .expenses-box {
-    padding: 1em;
-    border: 2px solid #748CAB;
-    border-radius: 10px;
   }
   .container .options {
     width: 30%;
@@ -434,6 +455,30 @@ body {
   .container .transactions .incomes-box, .container .transactions .expenses-box {
     padding: 2em;
   }
+  .container .options__balance {
+    font-size: 8rem;
+  }
+  .container .options__controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .container .options__controls-btn {
+    width: initial;
+    font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .container .transactions__item-amount-text, .container .transactions__item-amount-btn {
+    font-size: 2rem;
+  }
+  .container .incomes-box__title, .container .expenses-box__title {
+    font-size: 3rem;
+  }
+  .container .options__controls-btn {
+    font-size: 1.6rem;
+  }
 }
 :root {
   --regular-font: "Raleway";
@@ -446,12 +491,6 @@ body {
 body {
   background-color: #0d1321;
   color: #f0ebd8;
-}
-body .section-title {
-  margin-bottom: 0.5em;
-  text-align: center;
-  font-size: 2.6rem;
-  font-family: var(--light-font);
 }
 body .footer {
   display: flex;

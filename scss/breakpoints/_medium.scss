@@ -8,18 +8,12 @@
     gap: 2em;
 
     .section-title {
-      font-size: 3.6rem;
+      font-size: 3rem;
       margin-bottom: 1em;
     }
 
     .transactions {
       width: 50%;
-
-      .incomes-box, .expenses-box {
-        padding: 1em;
-        border: 2px solid utils.$firstColor;
-        border-radius: 10px;
-      }
     }
   
     .options {

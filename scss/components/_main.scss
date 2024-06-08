@@ -3,6 +3,14 @@
 .container {
   @include utils.flexLayout(column, center, center);
 
+  .section-title {
+    margin-bottom: 1em;
+    font-family: var(--light-font);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
   .transactions, .options {
     width: 90%;
   }
@@ -15,15 +23,10 @@
       &-name {
         font-size: 1.8rem;
         font-family: var(--medium-font);
-
-        i {
-          margin-right: .35em;
-        }
       }
 
       &-amount {
-        display: flex;
-        align-items: center;
+        @include utils.flexLayout(row, center, center);
 
         &-text {
           font-size: 1.8rem;
@@ -37,12 +40,33 @@
           color: utils.$firstColor;
           padding: 1.5em;
           padding-right: 0;
+          transform: translateY(2px);
           cursor: pointer;
         }
       }
 
       &:last-child {
         border-bottom: none;
+      }
+
+      &--income {
+        .transactions__item-name, .transactions__item-amount-text {
+          color: utils.$greenColor;
+
+          i {
+            color: utils.$textColor;
+          }
+        }
+      }
+
+      &--expense {
+        .transactions__item-name, .transactions__item-amount-text {
+          color: utils.$redColor;
+
+          i {
+            color: utils.$textColor;
+          }
+        }
       }
     }
   }
@@ -55,38 +79,44 @@
     }
 
     &__controls {
-      @include utils.flexLayout(row, space-around, center);
+      @include utils.flexLayout(column, center, center);
       gap: 1em;
       margin-bottom: 3em;
 
       &-btn {
+        width: 180px;
         padding: 1em;
-        border: 2px solid utils.$firstColor;
-        border-radius: 10px;
+        border: 2px solid utils.$textColor;
+        border-radius: 8px;
         background: none;
         color: utils.$textColor;
-        font-size: 1.4rem;
-        transition: border-color 300ms ease, color 300ms ease;
+        font-size: 1.6rem;
+        transition: background-color 300ms ease, color 300ms ease;
         cursor: pointer;
 
         i {
           margin-right: .25em;
         }
 
-        &:focus, &:hover {
+        &:focus {
           outline: none;
+          border-color: utils.$firstColor;
         }
 
         &--add {
-          &:focus, &:hover {
-            border-color: utils.$textColor;
+          &:hover {
+            background-color: utils.$textColor;
+            color: utils.$bgColor;
           }
         }
 
         &--deleteAll {
-          &:focus, &:hover {
+          &:hover {
             border-color: utils.$redColor;
             color: utils.$redColor;
+          }
+          &:focus {
+            border-color: utils.$redColor;
           }
         }
       }
@@ -128,42 +158,24 @@
   }
 
   .incomes-box, .expenses-box {
-    padding: 0 .5em;
     margin-bottom: 2em;
+    padding: 1em;
+    border: 2px solid utils.$firstColor;
+    border-radius: 8px;
 
     &__title {
-      margin-bottom: 1em;
+      margin-bottom: .5em;
       text-align: center;
       font-size: 2.4rem;
       font-family: var(--bold-font);
     }
   }
 
-  .incomes-box {
-    &__title {
-      color: utils.$greenColor;
-    }
-
-    &__item {
-      &-amount {
-        &-text {
-          color: utils.$greenColor;
-        }
-      }
-    }
+  .incomes-box__title {
+    color: utils.$greenColor;
   }
 
-  .expenses-box {
-    &__title {
-      color: utils.$redColor;
-    }
-
-    &__item {
-      &-amount {
-        &-text {
-          color: utils.$redColor;
-        }
-      }
-    }
+  .expenses-box__title {
+    color: utils.$redColor;
   }
 }

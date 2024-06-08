@@ -15,12 +15,12 @@ body {
   background-color: utils.$bgColor;
   color: utils.$textColor;
 
-  .section-title {
-    margin-bottom: .5em;
-    text-align: center;
-    font-size: 2.6rem;
-    font-family: var(--light-font);
-  }
+  // .section-title {
+  //   margin-bottom: .5em;
+  //   text-align: center;
+  //   font-size: 2.6rem;
+  //   font-family: var(--light-font);
+  // }
 
   .footer {
     @include utils.flexLayout(row, center, center);

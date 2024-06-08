@@ -26,9 +26,11 @@
     }
   }
 
-  .section-title {
-    margin-bottom: 1em;
-    font-size: 3.6rem;
+  .container {
+    .section-title {
+      margin-bottom: .25em;
+      font-size: 3.6rem;
+    }
   }
 
   .transaction-panel {

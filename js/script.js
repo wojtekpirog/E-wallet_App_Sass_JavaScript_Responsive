@@ -34,7 +34,7 @@ const getElements = function() {
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
   deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");
   deleteAllBtn = document.querySelector(".options__controls-btn--deleteAll");
-  lightCircle = document.querySelector(".option__style-button--light");
+  lightCircle = document.querySelector(".options__style-button--light");
   darkCircle = document.querySelector(".option__style-button--dark");
   transactionPanel = document.querySelector(".transaction-panel");
   nameInput = document.querySelector("#name");
@@ -51,6 +51,7 @@ const addEventListeners = () => {
   closePanelBtn.addEventListener("click", closeTransactionPanel);
   saveBtn.addEventListener("click", handleFormSubmit);
   cancelBtn.addEventListener("click", closeTransactionPanel);
+  lightCircle.addEventListener("click", switchToLightMode);
 }
 
 const openTransactionPanel = () => {
@@ -148,7 +149,7 @@ const createNewTransaction = () => {
 
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-text").textContent = `$ ${amountInput.value}`;
+  transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
   transactionsTemplate.querySelector(".transactions__item-amount-btn").setAttribute("onclick", `deleteTransaction(${ID})`);
   newTransaction.appendChild(transactionsTemplate);
 
@@ -223,9 +224,10 @@ const deleteAllTransactions = () => {
   availableMoney.textContent = `$ 0`;
 }
 
-// const switchToLightMode = () => {
-
-// }
+const switchToLightMode = () => {
+  document.body.style.backgroundColor = colors.textColor;
+  console.log("Sima");
+}
 
 const setFooterYear = () => {
   const now = new Date();
