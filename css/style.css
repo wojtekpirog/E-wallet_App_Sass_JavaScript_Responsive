@@ -55,11 +55,6 @@ body {
   font-weight: 700;
   font-display: swap;
 }
-:export {
-  bgColor: #0d1321;
-  textColor: #f0ebd8;
-}
-
 .header {
   height: 200px;
   display: flex;
@@ -130,13 +125,13 @@ body {
   color: #386641;
 }
 .container .transactions__item--income .transactions__item-name i, .container .transactions__item--income .transactions__item-amount-text i {
-  color: #f0ebd8;
+  color: var(--lightColor);
 }
 .container .transactions__item--expense .transactions__item-name, .container .transactions__item--expense .transactions__item-amount-text {
   color: #bc4749;
 }
 .container .transactions__item--expense .transactions__item-name i, .container .transactions__item--expense .transactions__item-amount-text i {
-  color: #f0ebd8;
+  color: var(--lightColor);
 }
 .container .options__balance {
   margin-bottom: 0.5em;
@@ -154,31 +149,31 @@ body {
 .container .options__controls-btn {
   width: 180px;
   padding: 1em;
-  border: 2px solid #f0ebd8;
+  border: 2px solid var(--lightColor);
   border-radius: 8px;
   background: none;
-  color: #f0ebd8;
+  color: var(--lightColor);
   font-size: 1.6rem;
-  transition: background-color 300ms ease, color 300ms ease;
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
   cursor: pointer;
 }
 .container .options__controls-btn i {
   margin-right: 0.25em;
+}
+.container .options__controls-btn:hover {
+  color: var(--darkColor);
 }
 .container .options__controls-btn:focus {
   outline: none;
   border-color: #748CAB;
 }
 .container .options__controls-btn--add:hover {
-  background-color: #f0ebd8;
-  color: #0d1321;
+  border-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 .container .options__controls-btn--deleteAll:hover {
   border-color: #bc4749;
-  color: #bc4749;
-}
-.container .options__controls-btn--deleteAll:focus {
-  border-color: #bc4749;
+  background-color: #bc4749;
 }
 .container .options__style-selection {
   display: flex;
@@ -194,10 +189,13 @@ body {
 }
 .container .options__style-button {
   padding: 2em;
-  border: 2px solid #f0ebd8;
+  border: 2px solid var(--lightColor);
   border-radius: 50%;
   transition: transform 300ms ease;
   cursor: pointer;
+}
+.container .options__style-button--light {
+  background-color: #f0ebd8;
 }
 .container .options__style-button--dark {
   background-color: #0d1321;
@@ -275,6 +273,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 90%;
+  color: #f0ebd8;
 }
 .transaction-panel__form .section-title {
   margin-bottom: 1.2em;
@@ -319,6 +318,7 @@ body {
   position: relative;
 }
 .transaction-panel__select {
+  position: relative;
   width: 100%;
   color: #f0ebd8;
   -webkit-appearance: none;
@@ -330,17 +330,24 @@ body {
   color: #1D2D44;
 }
 .transaction-panel__arrow {
-  display: block;
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
-  padding: 0.5em 1em;
   background: linear-gradient(to right bottom, #3E5C76 0%, #1D2D44 75%);
-  color: #f0ebd8;
   border: 2px solid #f0ebd8;
   border-radius: 0 10px 10px 0;
   pointer-events: none;
+}
+.transaction-panel__arrow i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f0ebd8;
+}
+.transaction-panel__arrow--error {
+  border-color: #bc4749;
 }
 .transaction-panel__error {
   display: none;
@@ -360,7 +367,7 @@ body {
 }
 .transaction-panel__button:focus, .transaction-panel__button:hover {
   background-color: #f0ebd8;
-  color: #0d1321;
+  color: var(--darkColor);
 }
 
 @media screen and (min-width: 375px) {
@@ -385,7 +392,7 @@ body {
     font-size: 2.6rem;
   }
   .container .section-title {
-    margin-bottom: 0.25em;
+    margin-bottom: 1em;
     font-size: 3.6rem;
   }
   .transaction-panel__xmark {
@@ -486,11 +493,13 @@ body {
   --medium-font: "Raleway__medium";
   --semibold-font: "Raleway__semibold";
   --bold-font: "Raleway__bold";
+  --darkColor: #0d1321;
+  --lightColor: #f0ebd8;
 }
 
 body {
-  background-color: #0d1321;
-  color: #f0ebd8;
+  background-color: var(--darkColor);
+  color: var(--lightColor);
 }
 body .footer {
   display: flex;

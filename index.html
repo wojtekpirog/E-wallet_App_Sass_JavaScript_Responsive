@@ -32,37 +32,11 @@
             <!-- Incomes -->
             <div class="incomes-box">
               <h3 class="incomes-box__title">Incomes</h3>
-              <!-- Item template -->
-              <template class="transactions__template">
-                <!-- Income name -->
-                <p class="transactions__item-name"></p>
-                <!-- Income name -->
-                <!-- Income amount -->
-                <div class="transactions__item-amount">
-                  <div class="transactions__item-amount-text"></div>
-                  <button type="button" class="transactions__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <!-- Income amount -->
-              </template>
-              <!-- Item template -->
             </div>
             <!-- Incomes -->
             <!-- Expenses -->
             <div class="expenses-box">
               <h3 class="expenses-box__title">Expenses</h3>
-              <!-- Item template -->
-              <!-- <template class="transactions__template"> -->
-                <!-- Expense name -->
-                <!-- <p class="transactions__item-name"></p> -->
-                <!-- Expense name -->
-                <!-- Expense amount -->
-                <!-- <div class="transactions__item-amount"> -->
-                  <!-- <div class="transactions__item-amount-text">300zł</div> -->
-                  <!-- <button type="button" class="transactions__item-amount-btn"><i class="fa-solid fa-xmark"></i></button> -->
-                <!-- </div> -->
-                <!-- Expense amount -->
-              <!-- </template> -->
-              <!-- Item template -->
             </div>
             <!-- Expenses -->
           </div>
@@ -152,11 +126,13 @@
               <option value="other" class="transaction-panel__select-option-text">[ - ] Other</option>
             </select>
             <!-- Custom arrow -->
-            <i class="fa-solid fa-arrow-down transaction-panel__arrow"></i>
+            <div class="transaction-panel__arrow">
+              <i class="fa-solid fa-arrow-down"></i>
+            </div> 
             <!-- Custom arrow -->
-            <p class="transaction-panel__error">Błąd</p>
             <!-- Select -->
           </div>
+          <p class="transaction-panel__error">Błąd</p>
           <!-- Select box -->
         </div>
         <!-- Buttons -->
@@ -176,6 +152,19 @@
     <!-- Footer -->
   </div>
   <!-- Wrapper -->
+  <!-- Transactions item template -->
+  <template class="transactions__template">
+    <!-- Income name -->
+    <p class="transactions__item-name"></p>
+    <!-- Income name -->
+    <!-- Income amount -->
+    <div class="transactions__item-amount">
+      <div class="transactions__item-amount-text"></div>
+      <button type="button" class="transactions__item-amount-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <!-- Income amount -->
+  </template>
+  <!-- Transactions item template -->
   <script src="./js/script.js"></script>
 </body>
 </html>

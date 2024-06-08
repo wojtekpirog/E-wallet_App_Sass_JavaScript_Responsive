@@ -11,6 +11,7 @@ let transactionPanel;
 let nameInput;
 let amountInput;
 let categorySelect;
+let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
 let closePanelBtn;
@@ -35,11 +36,12 @@ const getElements = function() {
   deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");
   deleteAllBtn = document.querySelector(".options__controls-btn--deleteAll");
   lightCircle = document.querySelector(".options__style-button--light");
-  darkCircle = document.querySelector(".option__style-button--dark");
+  darkCircle = document.querySelector(".options__style-button--dark");
   transactionPanel = document.querySelector(".transaction-panel");
   nameInput = document.querySelector("#name");
   amountInput = document.querySelector("#amount");
   categorySelect = document.querySelector("#category");
+  categorySelectArrow = document.querySelector(".transaction-panel__arrow");
   saveBtn = document.querySelector(".transaction-panel__button--save");
   cancelBtn = document.querySelector(".transaction-panel__button--cancel");
   closePanelBtn = document.querySelector(".transaction-panel__xmark");
@@ -52,6 +54,7 @@ const addEventListeners = () => {
   saveBtn.addEventListener("click", handleFormSubmit);
   cancelBtn.addEventListener("click", closeTransactionPanel);
   lightCircle.addEventListener("click", switchToLightMode);
+  darkCircle.addEventListener("click", switchToDarkMode);
 }
 
 const openTransactionPanel = () => {
@@ -116,14 +119,28 @@ const checkForErrors = () => {
 }
 
 const displayError = (formControl, errorMessage) => {
-  const error = formControl.parentElement.querySelector(".transaction-panel__error");
+  let error = formControl.parentElement.querySelector(".transaction-panel__error");
+  
+  // !error && (error = formControl.parentElement.nextElementSibling);
+  if (!error) {
+    error = formControl.parentElement.nextElementSibling;
+    formControl.nextElementSibling.classList.add("transaction-panel__arrow--error");
+  }
+
   error.textContent = errorMessage;
   error.style.display = "block";
   formControl.classList.add("transaction-panel__input--error");
 }
 
 const removeError = (formControl) => {
-  const error = formControl.parentElement.querySelector(".transaction-panel__error");
+  let error = formControl.parentElement.querySelector(".transaction-panel__error");
+
+  if (!error) {
+    error = formControl.parentElement.nextElementSibling;
+    formControl.nextElementSibling.classList.remove("transaction-panel__arrow--error");
+  }
+
+  error.textContent = "";
   error.style.display = "none";
   formControl.classList.remove("transaction-panel__input--error");
 }
@@ -135,6 +152,7 @@ const clearElements = () => {
   amountInput.classList.remove("transaction-panel__input--error");
   categorySelect.selectedIndex = 0;
   categorySelect.classList.remove("transaction-panel__input--error");
+  categorySelectArrow.classList.remove("transaction-panel__arrow--error");
 }
 
 const clearErrors = () => {
@@ -225,8 +243,13 @@ const deleteAllTransactions = () => {
 }
 
 const switchToLightMode = () => {
-  document.body.style.backgroundColor = colors.textColor;
-  console.log("Sima");
+  rootElement.style.setProperty("--darkColor", "#f0ebd8");
+  rootElement.style.setProperty("--lightColor", "#0d1321");
+}
+
+const switchToDarkMode = () => {
+  rootElement.style.setProperty("--darkColor", "#0d1321");
+  rootElement.style.setProperty("--lightColor", "#f0ebd8");
 }
 
 const setFooterYear = () => {

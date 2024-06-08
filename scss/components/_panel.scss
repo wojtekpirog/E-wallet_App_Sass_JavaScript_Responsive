@@ -1,7 +1,6 @@
 @use "../utilities/" as utils;
 
 .transaction-panel {
-  //display: none;
   @include utils.flexLayout(column, center, center);
   position: fixed;
   top: 0;
@@ -29,7 +28,7 @@
     cursor: pointer;
     
     i {
-      color: utils.$textColor;
+      color: utils.$lightColor;
       font-size: 3rem;
       transition: transform 300ms ease;
 
@@ -40,13 +39,14 @@
 
     &:focus {
       outline: none;
-      border: 2px solid utils.$textColor;
+      border: 2px solid utils.$lightColor;
     }
   }
 
   &__form {
     @include utils.flexLayout(column, center, center);
     width: 90%;
+    color: utils.$lightColor;
 
     .section-title {
       margin-bottom: 1.2em;
@@ -73,10 +73,10 @@
 
   &__input, &__select, &__button {
     padding: .5em 1em;
-    border: 2px solid utils.$textColor;
+    border: 2px solid utils.$lightColor;
     border-radius: 10px;
     background: none;
-    color: utils.$textColor;
+    color: utils.$lightColor;
     font-family: var(--regular-font);
     font-size: 1.6rem;
 
@@ -100,8 +100,9 @@
   }
   
   &__select {
+    position: relative;
     width: 100%;
-    color: utils.$textColor;
+    color: utils.$lightColor;
     appearance: none;
     cursor: pointer;
 
@@ -110,18 +111,28 @@
     }
   }
   
-  &__arrow {
-    display: block;
+  &__arrow {  
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    padding: .5em 1em;
     background: linear-gradient(to right bottom, utils.$secondColor 0%, utils.$thirdColor 75%);
-    color: utils.$textColor;
-    border: 2px solid utils.$textColor;
+    border: 2px solid utils.$lightColor;
     border-radius: 0 10px 10px 0;
     pointer-events: none;
+    
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: utils.$lightColor;
+
+    }
+
+    &--error {
+      border-color: utils.$redColor;
+    }
   }
 
   &__error {
@@ -140,8 +151,8 @@
     transition: background-color 300ms ease, color 300ms ease;
 
     &:focus, &:hover {
-      background-color: utils.$textColor;
-      color: utils.$bgColor;
+      background-color: utils.$lightColor;
+      color: var(--darkColor);
     }
   }
 }

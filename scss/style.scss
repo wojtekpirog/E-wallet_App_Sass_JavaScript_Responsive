@@ -1,5 +1,4 @@
 @use "./reset";
-@use "./utilities" as utils;
 @use "./components/" as components;
 @use "./breakpoints/" as breakpoints;
 
@@ -9,21 +8,20 @@
   --medium-font: "Raleway__medium";
   --semibold-font: "Raleway__semibold";
   --bold-font: "Raleway__bold";
+
+  --darkColor: #0d1321;
+  --lightColor: #f0ebd8;
 }
 
 body {
-  background-color: utils.$bgColor;
-  color: utils.$textColor;
-
-  // .section-title {
-  //   margin-bottom: .5em;
-  //   text-align: center;
-  //   font-size: 2.6rem;
-  //   font-family: var(--light-font);
-  // }
+  background-color: var(--darkColor);
+  color: var(--lightColor);
 
   .footer {
-    @include utils.flexLayout(row, center, center);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     padding: 3em;
     position: absolute;
