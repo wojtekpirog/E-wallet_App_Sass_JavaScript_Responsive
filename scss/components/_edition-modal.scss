@@ -1,0 +1,41 @@
+@use "../utilities/" as utils;
+
+.edition-modal {
+  @include utils.flexLayout(column, center, center);
+  @include utils.modalStyles;
+
+  &__shadow {
+    background-color: utils.$modalShadow;
+  }
+
+  &__form {
+    @include utils.flexLayout(column, center, center);
+    @include utils.modalContentStyles;
+
+    .section-title {
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+
+  &__control-box {
+    @include utils.flexLayout(column, center, center);
+    width: 90%;
+  }
+
+  &__label {
+    margin-bottom: .25em;
+  }
+
+  small {
+    margin-bottom: .75em;
+  }
+
+  &__input, &__select, &__button {
+    @include utils.buttonStyles(.5em, 1em, 1.6rem, utils.$darkColor);
+    color: utils.$darkColor;
+    font-family: var(--regular-font);
+    transition: none;
+    cursor: auto;
+  }
+}

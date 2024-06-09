@@ -74,4 +74,11 @@
       font-size: 2rem;
     }
   }
+
+  .confirmation-modal {
+    &__button {
+      padding: 1em 2em;
+      font-size: 1.6rem;
+    }
+  }
 }

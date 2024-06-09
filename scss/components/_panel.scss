@@ -20,12 +20,9 @@
     position: fixed;
     top: 1em;
     left: 1em;
-    padding: 1em;
-    background: none;
-    border: 2px solid transparent;
-    border-radius: 10px;
+    @include utils.buttonStyles(1em, 1em, 1.6rem, transparent);
+    transition: none;
     z-index: 11;
-    cursor: pointer;
     
     i {
       color: utils.$lightColor;
@@ -72,13 +69,11 @@
   }
 
   &__input, &__select, &__button {
-    padding: .5em 1em;
-    border: 2px solid utils.$lightColor;
-    border-radius: 10px;
-    background: none;
+    @include utils.buttonStyles(.5em, 1em, 1.6rem, utils.$lightColor);
     color: utils.$lightColor;
     font-family: var(--regular-font);
-    font-size: 1.6rem;
+    transition: none;
+    cursor: auto;
 
     &:focus {
       outline: none;

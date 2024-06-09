@@ -14,7 +14,7 @@
 
   .container {
     .section-title {
-      font-size: 4.2rem;
+      font-size: 3.8rem;
     }
 
     .transactions {
@@ -24,12 +24,9 @@
     }
 
     .options {
-      &__balance {
-        font-size: 8rem;
-      }
-      
       &__controls {
-        @include utils.flexLayout(row, space-evenly, center);
+        @include utils.flexLayout(row, center, center);
+        gap: 2em;
 
         &-btn {
           width: initial;

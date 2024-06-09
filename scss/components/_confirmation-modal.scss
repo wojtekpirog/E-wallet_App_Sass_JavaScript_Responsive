@@ -2,11 +2,7 @@
 
 .confirmation-modal {
   @include utils.flexLayout(column, center, center);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @include utils.modalStyles;
 
   &__shadow {
     background-color: utils.$modalShadow;
@@ -14,14 +10,7 @@
 
   &__content {
     @include utils.flexLayout(column, center, center);
-    width: 90%;
-    max-width: 700px;
-    gap: 2em;
-    padding: 1em;
-    border-radius: 8px;
-    background-color: utils.$lightColor;
-    color: utils.$darkColor;
-    border: 2px solid utils.$secondColor;
+    @include utils.modalContentStyles;
   }
 
   &__text {
@@ -36,15 +25,9 @@
   }
 
   &__button {
-    padding: 1em 2em;
-    border: 2px solid;
-    border-radius: 8px;
-    background: none;
+    @include utils.buttonStyles(1em, 1em, 1.4rem, none);
     color: utils.$darkColor;
-    font-size: 1.6rem;
     font-family: var(--medium-font);
-    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
-    cursor: pointer;
 
     i {
       margin-right: .25em;

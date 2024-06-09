@@ -1,4 +1,4 @@
-let footerYear;
+// let footerYear;
 let availableMoney;
 let incomesBox;
 let expensesBox;
@@ -15,6 +15,9 @@ let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
 let closePanelBtn;
+let confirmationModal;
+let confirmButton;
+let doNotConfirmButton;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -24,7 +27,7 @@ let moneyArray = [0];
 const main = () => {
   getElements();
   addEventListeners();
-  setFooterYear();
+  //setFooterYear();
 }
 
 const getElements = function() {
@@ -45,16 +48,21 @@ const getElements = function() {
   saveBtn = document.querySelector(".transaction-panel__button--save");
   cancelBtn = document.querySelector(".transaction-panel__button--cancel");
   closePanelBtn = document.querySelector(".transaction-panel__xmark");
+  confirmationModal = document.querySelector(".confirmation-modal");
+  confirmButton = document.querySelector(".confirmation-modal__button--confirm");
+  doNotConfirmButton = document.querySelector(".confirmation-modal__button--cancel");
 }
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
-  deleteAllBtn.addEventListener("click", deleteAllTransactions);
+  deleteAllBtn.addEventListener("click", showConfirmationModal);
   closePanelBtn.addEventListener("click", closeTransactionPanel);
   saveBtn.addEventListener("click", handleFormSubmit);
   cancelBtn.addEventListener("click", closeTransactionPanel);
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
+  confirmButton.addEventListener("click", deleteAllTransactions);
+  doNotConfirmButton.addEventListener("click", hideConfirmationModal);
 }
 
 const openTransactionPanel = () => {
@@ -168,7 +176,8 @@ const createNewTransaction = () => {
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
   transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-btn").setAttribute("onclick", `deleteTransaction(${ID})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `editTransaction(${ID})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${ID})`);
   newTransaction.appendChild(transactionsTemplate);
 
   if (amountInput.value > 0) {
@@ -221,13 +230,27 @@ const checkCategory = () => {
 
 const deleteTransaction = (id) => {
   const transactionToDelete = document.getElementById(id);
-  const amountOfTransaction = parseFloat(transactionToDelete.childNodes[9].innerText.slice(2));
-  const indexOfTransactionToDelete = moneyArray.indexOf(amountOfTransaction);
+  const amountOfTransactionToDelete = parseFloat(transactionToDelete.childNodes[9].childNodes[1].innerText.slice(1));
+  const indexOfTransactionToDelete = moneyArray.indexOf(amountOfTransactionToDelete);
 
   moneyArray.splice(indexOfTransactionToDelete, 1);
   calculateBalance(moneyArray);
-
   transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
+}
+
+const editTransaction = (id) => {
+  const transactionToEdit = document.getElementById(id);
+  console.log(transactionToEdit);
+  console.log(transactionToEdit.childNodes);
+
+  const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
+  console.log("Name of transaction to edit: " + nameOfTransactionToEdit);
+
+  const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
+  console.log("Amount of transaction to edit: " + amountOfTransactionToEdit);
+
+  const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
+  console.log("Index of transaction to edit: " + indexOfTransactionToEdit);
 }
 
 const calculateBalance = (moneyArray) => {
@@ -235,11 +258,20 @@ const calculateBalance = (moneyArray) => {
   availableMoney.textContent = `$ ${balance}`;
 }
 
+const showConfirmationModal = () => {
+  confirmationModal.style.display = "flex";
+}
+
+const hideConfirmationModal = () => {
+  confirmationModal.style.display = "none";
+}
+
 const deleteAllTransactions = () => {
   incomesBox.innerHTML = '<h3 class="incomes-box__title">Incomes</h3>';
   expensesBox.innerHTML = '<h3 class="expenses-box__title">Expenses</h3>';
   moneyArray = [0];
   availableMoney.textContent = `$ 0`;
+  hideConfirmationModal();
 }
 
 const switchToLightMode = () => {
@@ -252,9 +284,9 @@ const switchToDarkMode = () => {
   rootElement.style.setProperty("--lightColor", "#f0ebd8");
 }
 
-const setFooterYear = () => {
-  const now = new Date();
-  footerYear.textContent = now.getFullYear();
-}
+// const setFooterYear = () => {
+//   const now = new Date();
+//   footerYear.textContent = now.getFullYear();
+// }
 
 window.addEventListener("DOMContentLoaded", main);

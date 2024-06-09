@@ -1,6 +1,38 @@
+@use "../utilities/colors" as colors;
+
 @mixin flexLayout($direction, $justify, $align) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
   align-items: $align;
+}
+
+@mixin buttonStyles($paddingY, $paddingX, $fontSize, $borderColor) {
+  padding: $paddingY $paddingX;
+  background: none;
+  border: 2px solid $borderColor;
+  border-radius: 8px;
+  font-size: $fontSize;
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
+  cursor: pointer;
+}
+
+@mixin modalStyles {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin modalContentStyles {
+  width: 90%;
+  max-width: 700px;
+  gap: 2em;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: colors.$lightColor;
+  color: colors.$darkColor;
+  border: 2px solid colors.$secondColor;
 }
