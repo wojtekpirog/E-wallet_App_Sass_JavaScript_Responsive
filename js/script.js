@@ -17,9 +17,10 @@ let cancelBtn;
 let closePanelBtn;
 let confirmationModal;
 let editionModal;
-let confirmButton;
-let doNotConfirmButton;
-let editTransactionButton;
+let confirmDeletionButton;
+let doNotConfirmDeletionButton;
+let applyDetailsButton;
+let doNotApplyDetailsButton;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -52,9 +53,10 @@ const getElements = function() {
   closePanelBtn = document.querySelector(".transaction-panel__xmark");
   confirmationModal = document.querySelector(".confirmation-modal");
   editionModal = document.querySelector(".edition-modal");
-  confirmButton = document.querySelector(".confirmation-modal__button--confirm");
-  doNotConfirmButton = document.querySelector(".confirmation-modal__button--cancel");
-  editTransactionButton = document.querySelector(".transactions__item-amount-button--edit");
+  confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
+  doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
+  applyDetailsButton = document.querySelector(".edition-modal__button--apply");
+  doNotApplyDetailsButton = document.querySelector(".edition-modal__button--cancel");
 }
 
 const addEventListeners = () => {
@@ -65,9 +67,9 @@ const addEventListeners = () => {
   cancelBtn.addEventListener("click", closeTransactionPanel);
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
-  confirmButton.addEventListener("click", deleteAllTransactions);
-  doNotConfirmButton.addEventListener("click", hideConfirmationModal);
-  editTransactionButton.addEventListener("click", showEditionModal);
+  confirmDeletionButton.addEventListener("click", deleteAllTransactions);
+  doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
+  doNotApplyDetailsButton.addEventListener("click", hideEditionModal);
 }
 
 const openTransactionPanel = () => {
@@ -181,7 +183,8 @@ const createNewTransaction = () => {
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
   transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `editTransaction(${ID})`);
+  // transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `editTransaction(${ID})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `showEditionModal(${ID})`);
   transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${ID})`);
   newTransaction.appendChild(transactionsTemplate);
 
@@ -271,8 +274,13 @@ const hideConfirmationModal = () => {
   confirmationModal.style.display = "none";
 }
 
-const showEditionModal = () => {
-  editionModal.style.display = "flex";
+const showEditionModal = (ID) => {
+  console.log(`ID transakcji: ${ID}`);
+  editionModal.classList.add("active");
+}
+
+const hideEditionModal = () => {
+  editionModal.classList.remove("active");
 }
 
 const deleteAllTransactions = () => {

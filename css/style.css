@@ -470,6 +470,9 @@ body {
   width: 100%;
   height: 100%;
 }
+.edition-modal.active {
+  display: flex;
+}
 .edition-modal__shadow {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -483,9 +486,9 @@ body {
   gap: 2em;
   padding: 1em;
   border-radius: 8px;
-  background-color: #f0ebd8;
-  color: #0d1321;
-  border: 2px solid #3E5C76;
+  background-color: #3E5C76;
+  color: #f0ebd8;
+  border: 2px solid #0d1321;
 }
 .edition-modal__form .section-title {
   text-align: center;
@@ -506,16 +509,20 @@ body {
   text-align: center;
 }
 .edition-modal__input, .edition-modal__select, .edition-modal__button {
-  padding: 0.5em 1em;
+  padding: 0.75em 1.5em;
   background: none;
-  border: 2px solid #0d1321;
+  border: 2px solid #f0ebd8;
   border-radius: 8px;
   font-size: 1.6rem;
   transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
   cursor: pointer;
-  color: #0d1321;
+  color: #f0ebd8;
   transition: none;
   cursor: auto;
+}
+.edition-modal__input:focus, .edition-modal__select:focus, .edition-modal__button:focus {
+  outline: none;
+  border-color: #1D2D44;
 }
 .edition-modal__input {
   width: 90%;
@@ -536,7 +543,7 @@ body {
   top: 0;
   right: 0;
   height: 100%;
-  background: linear-gradient(to right bottom, #3E5C76 0%, #1D2D44 75%);
+  background: #3E5C76;
   border: 2px solid #f0ebd8;
   border-radius: 0 8px 8px 0;
   pointer-events: none;
@@ -562,8 +569,8 @@ body {
   margin-right: 0.25em;
 }
 .edition-modal__button:hover {
-  color: #f0ebd8;
-  background-color: #0d1321;
+  color: #748CAB;
+  background-color: #f0ebd8;
 }
 
 @media screen and (min-width: 375px) {
@@ -644,6 +651,21 @@ body {
   }
   .transaction-panel .section-title {
     font-size: 3.6rem;
+  }
+  .edition-modal .section-title {
+    font-size: 3.2rem;
+  }
+  .edition-modal__label {
+    font-size: 2rem;
+  }
+  .edition-modal__button {
+    padding: 1em 2em;
+    background: none;
+    border: 2px solid #f0ebd8;
+    border-radius: 8px;
+    font-size: 1.8rem;
+    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
+    cursor: pointer;
   }
 }
 @media screen and (min-width: 992px) {

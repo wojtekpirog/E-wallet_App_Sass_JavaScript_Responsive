@@ -107,15 +107,7 @@
   }
   
   &__arrow {  
-    @include utils.selectBoxArrowStyles(10px, 10px);
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // height: 100%;
-    // background: linear-gradient(to right bottom, utils.$secondColor 0%, utils.$thirdColor 75%);
-    // border: 2px solid utils.$lightColor;
-    // border-radius: 0 10px 10px 0;
-    // pointer-events: none;
+    @include utils.selectBoxArrowStyles(linear-gradient(to right bottom, utils.$secondColor 0%, utils.$thirdColor 75%), 10px, 10px);
     
     i {
       position: absolute;

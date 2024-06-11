@@ -10,7 +10,7 @@
 
   &__content {
     @include utils.flexLayout(column, center, center);
-    @include utils.modalContentStyles;
+    @include utils.modalContentStyles(utils.$lightColor, utils.$darkColor, utils.$secondColor);
   }
 
   &__text {

@@ -4,13 +4,17 @@
   @include utils.flexLayout(column, center, center);
   @include utils.modalStyles;
 
+  &.active {
+    display: flex;
+  }
+
   &__shadow {
     background-color: utils.$modalShadow;
   }
 
   &__form {
     @include utils.flexLayout(column, center, center);
-    @include utils.modalContentStyles;
+    @include utils.modalContentStyles(utils.$secondColor, utils.$lightColor, utils.$darkColor);
 
     .section-title {
       text-align: center;
@@ -33,10 +37,15 @@
   }
 
   &__input, &__select, &__button {
-    @include utils.buttonStyles(.5em, 1em, 1.6rem, utils.$darkColor);
-    color: utils.$darkColor;
+    @include utils.buttonStyles(.75em, 1.5em, 1.6rem, utils.$lightColor);
+    color: utils.$lightColor;
     transition: none;
     cursor: auto;
+
+    &:focus {
+      outline: none;
+      border-color: utils.$thirdColor;
+    }
   }
 
   &__input {
@@ -55,7 +64,7 @@
   }
 
   &__arrow {
-    @include utils.selectBoxArrowStyles(8px, 8px);
+    @include utils.selectBoxArrowStyles(utils.$secondColor, 8px, 8px);
     padding: 0 1em;
 
     i {
@@ -82,8 +91,8 @@
     }
 
     &:hover {
-      color: utils.$lightColor;
-      background-color: utils.$darkColor;
+      color: utils.$firstColor;
+      background-color: utils.$lightColor;
     }
   }
 }

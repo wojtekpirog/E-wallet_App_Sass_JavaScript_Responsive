@@ -26,4 +26,18 @@
       font-size: 3.6rem;
     }
   }
+
+  .edition-modal {
+    .section-title {
+      font-size: 3.2rem;
+    }
+
+    &__label {
+      font-size: 2rem;
+    }
+
+    &__button {
+      @include utils.buttonStyles(1em, 2em, 1.8rem, utils.$lightColor);
+    }
+  }
 }

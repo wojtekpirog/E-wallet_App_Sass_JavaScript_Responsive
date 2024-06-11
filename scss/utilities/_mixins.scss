@@ -7,12 +7,12 @@
   align-items: $align;
 }
 
-@mixin selectBoxArrowStyles($radiusTopRight, $radiusBottomRight) {
+@mixin selectBoxArrowStyles($backgroundStyles, $radiusTopRight, $radiusBottomRight) {
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
-  background: linear-gradient(to right bottom, colors.$secondColor 0%, colors.$thirdColor 75%);
+  background: $backgroundStyles;
   border: 2px solid colors.$lightColor;
   border-radius: 0 $radiusTopRight $radiusBottomRight 0;
   pointer-events: none;
@@ -37,13 +37,13 @@
   height: 100%;
 }
 
-@mixin modalContentStyles {
+@mixin modalContentStyles($bgColor, $textColor, $borderColor) {
   width: 90%;
   max-width: 700px;
   gap: 2em;
   padding: 1em;
   border-radius: 8px;
-  background-color: colors.$lightColor;
-  color: colors.$darkColor;
-  border: 2px solid colors.$secondColor;
+  background-color: $bgColor;
+  color: $textColor;
+  border: 2px solid $borderColor;
 }
