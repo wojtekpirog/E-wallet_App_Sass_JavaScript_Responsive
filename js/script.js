@@ -16,8 +16,10 @@ let saveBtn;
 let cancelBtn;
 let closePanelBtn;
 let confirmationModal;
+let editionModal;
 let confirmButton;
 let doNotConfirmButton;
+let editTransactionButton;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -49,8 +51,10 @@ const getElements = function() {
   cancelBtn = document.querySelector(".transaction-panel__button--cancel");
   closePanelBtn = document.querySelector(".transaction-panel__xmark");
   confirmationModal = document.querySelector(".confirmation-modal");
+  editionModal = document.querySelector(".edition-modal");
   confirmButton = document.querySelector(".confirmation-modal__button--confirm");
   doNotConfirmButton = document.querySelector(".confirmation-modal__button--cancel");
+  editTransactionButton = document.querySelector(".transactions__item-amount-button--edit");
 }
 
 const addEventListeners = () => {
@@ -63,6 +67,7 @@ const addEventListeners = () => {
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmButton.addEventListener("click", deleteAllTransactions);
   doNotConfirmButton.addEventListener("click", hideConfirmationModal);
+  editTransactionButton.addEventListener("click", showEditionModal);
 }
 
 const openTransactionPanel = () => {
@@ -264,6 +269,10 @@ const showConfirmationModal = () => {
 
 const hideConfirmationModal = () => {
   confirmationModal.style.display = "none";
+}
+
+const showEditionModal = () => {
+  editionModal.style.display = "flex";
 }
 
 const deleteAllTransactions = () => {

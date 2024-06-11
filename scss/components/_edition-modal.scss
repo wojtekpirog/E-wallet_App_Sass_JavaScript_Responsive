@@ -18,9 +18,9 @@
     }
   }
 
-  &__control-box {
+  &__control-box, &__buttons {
     @include utils.flexLayout(column, center, center);
-    width: 90%;
+    width: 100%;
   }
 
   &__label {
@@ -29,13 +29,61 @@
 
   small {
     margin-bottom: .75em;
+    text-align: center;
   }
 
   &__input, &__select, &__button {
     @include utils.buttonStyles(.5em, 1em, 1.6rem, utils.$darkColor);
     color: utils.$darkColor;
-    font-family: var(--regular-font);
     transition: none;
     cursor: auto;
+  }
+
+  &__input {
+    width: 90%;
+  }
+
+  &__select-box {
+    width: 90%;
+    position: relative;
+  }
+
+  &__select {
+    width: 100%;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  &__arrow {
+    @include utils.selectBoxArrowStyles(8px, 8px);
+    padding: 0 1em;
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: utils.$lightColor;
+    }
+  }
+
+  &__buttons {
+    flex-direction: row;
+    gap: 2em;
+  }
+
+  &__button {
+    font-family: var(--medium-font);
+    transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
+    cursor: pointer;
+
+    i {
+      margin-right: .25em;
+    }
+
+    &:hover {
+      color: utils.$lightColor;
+      background-color: utils.$darkColor;
+    }
   }
 }

@@ -7,6 +7,17 @@
   align-items: $align;
 }
 
+@mixin selectBoxArrowStyles($radiusTopRight, $radiusBottomRight) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to right bottom, colors.$secondColor 0%, colors.$thirdColor 75%);
+  border: 2px solid colors.$lightColor;
+  border-radius: 0 $radiusTopRight $radiusBottomRight 0;
+  pointer-events: none;
+}
+
 @mixin buttonStyles($paddingY, $paddingX, $fontSize, $borderColor) {
   padding: $paddingY $paddingX;
   background: none;
