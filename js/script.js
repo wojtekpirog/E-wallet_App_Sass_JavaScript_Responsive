@@ -19,8 +19,6 @@ let confirmationModal;
 let editionModal;
 let confirmDeletionButton;
 let doNotConfirmDeletionButton;
-//let applyDetailsButton;
-//let doNotApplyDetailsButton;
 let nameToEditInput;
 let amountToEditInput;
 let categoryToEditSelect;
@@ -58,8 +56,10 @@ const getElements = () => {
   editionModal = document.querySelector(".edition-modal");
   confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
   doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
-  //applyDetailsButton = document.querySelector(".edition-modal__button--apply");
-  //doNotApplyDetailsButton = document.querySelector(".edition-modal__button--cancel");
+  nameToEditInput = editionModal.querySelector("#name-to-edit");
+  amountToEditInput = editionModal.querySelector("#amount-to-edit");
+  categoryToEditSelect = editionModal.querySelector("#category-to-edit");
+  categoryToEditArrow = editionModal.querySelector(".edition-modal__arrow");
 }
 
 const addEventListeners = () => {
@@ -72,12 +72,13 @@ const addEventListeners = () => {
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
   doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
-  //applyDetailsButton.addEventListener("click", editTransaction);
-  //doNotApplyDetailsButton.addEventListener("click", hideEditionModal);
+  editionModal.addEventListener("click", (event) => event.target.classList.contains("edition-modal__shadow") ? hideEditionModal() : false);
 }
 
 const openTransactionPanel = () => {
   transactionPanel.classList.add("active");
+  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", handleFormSubmit);
+  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", closeTransactionPanel);
 }
 
 const closeTransactionPanel = () => {
@@ -187,7 +188,6 @@ const createNewTransaction = () => {
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
   transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  // transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `editTransaction(${ID})`);
   transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `showEditionModal(${ID})`);
   transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${ID})`);
   newTransaction.appendChild(transactionsTemplate);
@@ -250,27 +250,14 @@ const deleteTransaction = (id) => {
   transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
 }
 
-const editTransaction = (id) => {
-  const transactionToEdit = document.getElementById(id);
-  console.log(transactionToEdit);
-  console.log(transactionToEdit.childNodes);
+// const editTransaction = (id) => {
+//   const transactionToEdit = document.getElementById(id);
+//   const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
+//   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
+//   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
 
-  const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
-  console.log("Name of transaction to edit: " + nameOfTransactionToEdit);
-
-  const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
-  console.log("Amount of transaction to edit: " + amountOfTransactionToEdit);
-
-  const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
-  console.log("Index of transaction to edit: " + indexOfTransactionToEdit);
-
-  const nameToEditInput = editionModal.querySelector("#name-to-edit");
-  const amountToEditInput = editionModal.querySelector("#amount-to-edit");
-  const categoryToEditSelect = editionModal.querySelector("#category-to-edit");
-  const categoryToEditArrow = editionModal.querySelector(".edition-modal__arrow");
-
-  hideEditionModal();
-}
+//   hideEditionModal();
+// }
 
 const calculateBalance = (moneyArray) => {
   console.log(moneyArray);
@@ -300,9 +287,8 @@ const hideConfirmationModal = () => {
 
 const showEditionModal = (ID) => {
   editionModal.classList.add("active");
-  editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
+  //editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
   editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
-  //console.log(`ID transakcji: ${ID}`);
 }
 
 const hideEditionModal = () => {
