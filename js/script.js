@@ -19,8 +19,11 @@ let confirmationModal;
 let editionModal;
 let confirmDeletionButton;
 let doNotConfirmDeletionButton;
-let applyDetailsButton;
-let doNotApplyDetailsButton;
+//let applyDetailsButton;
+//let doNotApplyDetailsButton;
+let nameToEditInput;
+let amountToEditInput;
+let categoryToEditSelect;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -33,9 +36,9 @@ const main = () => {
   //setFooterYear();
 }
 
-const getElements = function() {
-  footerYear = document.querySelector(".footer__year");
-  availableMoney = document.querySelector(".options__balance");
+const getElements = () => {
+  //footerYear = document.querySelector(".footer__year");
+  availableMoney = document.querySelector(".options__balance > span");
   incomesBox = document.querySelector(".incomes-box");
   expensesBox = document.querySelector(".expenses-box");
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
@@ -55,8 +58,8 @@ const getElements = function() {
   editionModal = document.querySelector(".edition-modal");
   confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
   doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
-  applyDetailsButton = document.querySelector(".edition-modal__button--apply");
-  doNotApplyDetailsButton = document.querySelector(".edition-modal__button--cancel");
+  //applyDetailsButton = document.querySelector(".edition-modal__button--apply");
+  //doNotApplyDetailsButton = document.querySelector(".edition-modal__button--cancel");
 }
 
 const addEventListeners = () => {
@@ -69,7 +72,8 @@ const addEventListeners = () => {
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
   doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
-  doNotApplyDetailsButton.addEventListener("click", hideEditionModal);
+  //applyDetailsButton.addEventListener("click", editTransaction);
+  //doNotApplyDetailsButton.addEventListener("click", hideEditionModal);
 }
 
 const openTransactionPanel = () => {
@@ -259,11 +263,31 @@ const editTransaction = (id) => {
 
   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
   console.log("Index of transaction to edit: " + indexOfTransactionToEdit);
+
+  const nameToEditInput = editionModal.querySelector("#name-to-edit");
+  const amountToEditInput = editionModal.querySelector("#amount-to-edit");
+  const categoryToEditSelect = editionModal.querySelector("#category-to-edit");
+  const categoryToEditArrow = editionModal.querySelector(".edition-modal__arrow");
+
+  hideEditionModal();
 }
 
 const calculateBalance = (moneyArray) => {
+  console.log(moneyArray);
+
   const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);
-  availableMoney.textContent = `$ ${balance}`;
+
+  if (balance < 0) {
+    availableMoney.classList.remove("options__balance--positive");
+    availableMoney.classList.add("options__balance--negative");
+  } else if (balance > 0) {
+    availableMoney.classList.remove("options__balance--negative");
+    availableMoney.classList.add("options__balance--positive");
+  } else {
+    availableMoney.classList.remove("options__balance--positive", "options__balance--negative");
+  }
+
+  availableMoney.textContent = balance;
 }
 
 const showConfirmationModal = () => {
@@ -275,8 +299,10 @@ const hideConfirmationModal = () => {
 }
 
 const showEditionModal = (ID) => {
-  console.log(`ID transakcji: ${ID}`);
   editionModal.classList.add("active");
+  editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
+  editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
+  //console.log(`ID transakcji: ${ID}`);
 }
 
 const hideEditionModal = () => {

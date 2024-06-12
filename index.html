@@ -49,7 +49,7 @@
           <h2 class="section-title">Balance</h2>
           <!-- Section title -->
           <!-- Balance -->
-          <div class="options__balance">$ 0</div>
+          <div class="options__balance">$ <span>0</span></div>
           <!-- Balance -->
           <!-- Controls -->
           <div class="options__controls">
@@ -195,7 +195,7 @@
         <!-- modal form control -->
         <label for="name" class="edition-modal__label">Name: </label>
         <small>(3-30 characters)</small>
-        <input type="text" id="name" name="name" class="edition-modal__input" minlength="3" maxlength="30" required/>
+        <input type="text" id="name-to-edit" name="name-to-edit" class="edition-modal__input" minlength="3" maxlength="30" required/>
         <p class="edition-modal__error"></p>
         <!-- modal form control -->
       </div>
@@ -205,7 +205,7 @@
         <!-- modal form control -->
         <label for="amount" class="edition-modal__label">Name: </label>
         <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
-        <input type="number" id="amount" name="amount" class="edition-modal__input" required/>
+        <input type="number" id="amount-to-edit" name="amount-to-edit" class="edition-modal__input" required/>
         <p class="edition-modal__error"></p>
         <!-- modal form control -->
       </div>
@@ -218,7 +218,7 @@
         <!-- Select box -->
         <div class="edition-modal__select-box">
           <!-- Select -->
-          <select id="category" name="category" class="edition-modal__select" required>
+          <select id="category-to-edit" name="category-to-edit" class="edition-modal__select" required>
             <option value="none" class="transaction-panel__select-option-text" disabled selected> - select category - </option>
             <option value="salary" class="transaction-panel__select-option-text">[ + ] Salary</option>
             <option value="investment" class="transaction-panel__select-option-text">[ + ] Investment</option>

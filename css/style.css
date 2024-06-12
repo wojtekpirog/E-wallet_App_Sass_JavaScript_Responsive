@@ -141,6 +141,12 @@ body {
   font-size: 6rem;
   text-align: center;
 }
+.container .options__balance span.options__balance--positive {
+  color: #386641;
+}
+.container .options__balance span.options__balance--negative {
+  color: #bc4749;
+}
 .container .options__controls {
   display: flex;
   flex-direction: column;
