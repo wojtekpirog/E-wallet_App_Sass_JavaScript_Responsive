@@ -76,6 +76,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 80px;
 }
 .container .section-title {
   margin-bottom: 1em;
@@ -727,13 +728,19 @@ body {
   background-color: var(--darkColor);
   color: var(--lightColor);
 }
-body .footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+body .app-wrapper {
+  position: relative;
+  min-height: 100%;
+}
+body .app-wrapper > .footer {
   width: 100%;
-  padding: 3em;
+  height: 5em;
   position: absolute;
   bottom: 0;
+}
+body .app-wrapper > .footer > .footer__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }/*# sourceMappingURL=style.css.map */

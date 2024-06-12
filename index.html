@@ -144,10 +144,95 @@
       <!-- Form -->
     </div>
     <!-- Transaction panel (out of main) -->
+    <!-- Modal with confirmation message -->
+    <div class="confirmation-modal confirmation-modal__shadow">
+      <!-- Modal content -->
+      <div class="confirmation-modal__content">
+        <!-- Modal text -->
+        <p class="confirmation-modal__text">Are you sure you want to delete all notes? This action is irreversible!</p>
+        <!-- Modal text -->
+        <!-- Modal buttons -->
+        <div class="confirmation-modal__buttons">
+          <button type="button" class="confirmation-modal__button confirmation-modal__button--confirm"><i class="fa-solid fa-trash-alt"></i> Confirm</button>
+          <button type="button" class="confirmation-modal__button confirmation-modal__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
+        </div>
+        <!-- Modal buttons -->
+      </div> 
+      <!-- Modal content -->
+    </div> 
+    <!-- Modal with confirmation message -->
+    <!-- Modal with edition details -->
+    <div class="edition-modal edition-modal__shadow">
+      <!-- modal form -->
+      <form class="edition-modal__form" autocomplete="off">
+        <!-- modal text -->
+        <h2 class="section-title">Edit transaction</h2>
+        <!-- modal text -->
+        <!-- modal form box -->
+        <div class="edition-modal__control-box">
+          <!-- modal form control -->
+          <label for="name" class="edition-modal__label">Name: </label>
+          <small>(3-30 characters)</small>
+          <input type="text" id="name-to-edit" name="name-to-edit" class="edition-modal__input" minlength="3" maxlength="30" required/>
+          <p class="edition-modal__error"></p>
+          <!-- modal form control -->
+        </div>
+        <!-- modal form box -->
+        <!-- modal form box -->
+        <div class="edition-modal__control-box">
+          <!-- modal form control -->
+          <label for="amount" class="edition-modal__label">Name: </label>
+          <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
+          <input type="number" id="amount-to-edit" name="amount-to-edit" class="edition-modal__input" required/>
+          <p class="edition-modal__error"></p>
+          <!-- modal form control -->
+        </div>
+        <!-- modal form box -->
+        <!-- modal form box -->
+        <div class="edition-modal__control-box">
+          <!-- modal form control -->
+          <label for="category" class="edition-modal__label">Select category: </label> 
+          <small>( [ + ] = income, [ - ] = expense )</small>
+          <!-- Select box -->
+          <div class="edition-modal__select-box">
+            <!-- Select -->
+            <select id="category-to-edit" name="category-to-edit" class="edition-modal__select" required>
+              <option value="none" class="transaction-panel__select-option-text" disabled selected> - select category - </option>
+              <option value="salary" class="transaction-panel__select-option-text">[ + ] Salary</option>
+              <option value="investment" class="transaction-panel__select-option-text">[ + ] Investment</option>
+              <option value="freelance" class="transaction-panel__select-option-text">[ + ] Freelance</option>
+              <option value="rent" class="transaction-panel__select-option-text">[ - ] Rent</option>
+              <option value="shopping" class="transaction-panel__select-option-text">[ - ] Shopping</option>
+              <option value="food" class="transaction-panel__select-option-text">[ - ] Food</option>
+              <option value="bills" class="transaction-panel__select-option-text">[ - ] Bills</option>
+              <option value="cinema" class="transaction-panel__select-option-text">[ - ] Cinema</option>
+              <option value="leisure" class="transaction-panel__select-option-text">[ - ] Leisure</option>
+              <option value="other" class="transaction-panel__select-option-text">[ - ] Other</option>
+            </select>
+            <!-- Select -->
+            <!-- Custom arrow -->
+            <div class="edition-modal__arrow"><i class="fa-solid fa-arrow-down"></i></div> 
+            <!-- Custom arrow -->
+          </div> 
+          <!-- Select box -->
+          <p class="edition-modal__error"></p>
+          <!-- modal form control -->
+        </div> 
+        <!-- modal form box -->
+        <!-- modal form buttons -->
+        <div class="edition-modal__buttons">
+          <button type="submit" class="edition-modal__button edition-modal__button--apply"><i class="fa-solid fa-check"></i> Apply</button>
+          <button type="button" class="edition-modal__button edition-modal__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
+        </div>
+        <!-- modal form buttons -->
+      </form> 
+      <!-- modal form -->
+    </div>
+    <!-- Modal with edition details -->
     <!-- Footer -->
-    <!-- <footer class="footer">
+    <footer class="footer">
       <p class="footer__text"> &copy; <span class="footer__year"></span> Wallet App </p>
-    </footer> -->
+    </footer>
     <!-- Footer -->
   </div>
   <!-- Wrapper -->
@@ -166,91 +251,6 @@
     </div>
     <!-- Income amount -->
   </template>
-  <!-- Modal with confirmation message -->
-  <div class="confirmation-modal confirmation-modal__shadow">
-    <!-- Modal content -->
-    <div class="confirmation-modal__content">
-      <!-- Modal text -->
-      <p class="confirmation-modal__text">Are you sure you want to delete all notes? This action is irreversible!</p>
-      <!-- Modal text -->
-      <!-- Modal buttons -->
-      <div class="confirmation-modal__buttons">
-        <button type="button" class="confirmation-modal__button confirmation-modal__button--confirm"><i class="fa-solid fa-trash-alt"></i> Confirm</button>
-        <button type="button" class="confirmation-modal__button confirmation-modal__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
-      </div>
-      <!-- Modal buttons -->
-    </div> 
-    <!-- Modal content -->
-  </div> 
-  <!-- Modal with confirmation message -->
-  <!-- Modal with edition details -->
-  <div class="edition-modal edition-modal__shadow">
-    <!-- modal form -->
-    <form class="edition-modal__form" autocomplete="off">
-      <!-- modal text -->
-      <h2 class="section-title">Edit transaction</h2>
-      <!-- modal text -->
-      <!-- modal form box -->
-      <div class="edition-modal__control-box">
-        <!-- modal form control -->
-        <label for="name" class="edition-modal__label">Name: </label>
-        <small>(3-30 characters)</small>
-        <input type="text" id="name-to-edit" name="name-to-edit" class="edition-modal__input" minlength="3" maxlength="30" required/>
-        <p class="edition-modal__error"></p>
-        <!-- modal form control -->
-      </div>
-      <!-- modal form box -->
-      <!-- modal form box -->
-      <div class="edition-modal__control-box">
-        <!-- modal form control -->
-        <label for="amount" class="edition-modal__label">Name: </label>
-        <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
-        <input type="number" id="amount-to-edit" name="amount-to-edit" class="edition-modal__input" required/>
-        <p class="edition-modal__error"></p>
-        <!-- modal form control -->
-      </div>
-      <!-- modal form box -->
-      <!-- modal form box -->
-      <div class="edition-modal__control-box">
-        <!-- modal form control -->
-        <label for="category" class="edition-modal__label">Select category: </label> 
-        <small>( [ + ] = income, [ - ] = expense )</small>
-        <!-- Select box -->
-        <div class="edition-modal__select-box">
-          <!-- Select -->
-          <select id="category-to-edit" name="category-to-edit" class="edition-modal__select" required>
-            <option value="none" class="transaction-panel__select-option-text" disabled selected> - select category - </option>
-            <option value="salary" class="transaction-panel__select-option-text">[ + ] Salary</option>
-            <option value="investment" class="transaction-panel__select-option-text">[ + ] Investment</option>
-            <option value="freelance" class="transaction-panel__select-option-text">[ + ] Freelance</option>
-            <option value="rent" class="transaction-panel__select-option-text">[ - ] Rent</option>
-            <option value="shopping" class="transaction-panel__select-option-text">[ - ] Shopping</option>
-            <option value="food" class="transaction-panel__select-option-text">[ - ] Food</option>
-            <option value="bills" class="transaction-panel__select-option-text">[ - ] Bills</option>
-            <option value="cinema" class="transaction-panel__select-option-text">[ - ] Cinema</option>
-            <option value="leisure" class="transaction-panel__select-option-text">[ - ] Leisure</option>
-            <option value="other" class="transaction-panel__select-option-text">[ - ] Other</option>
-          </select>
-          <!-- Select -->
-          <!-- Custom arrow -->
-          <div class="edition-modal__arrow"><i class="fa-solid fa-arrow-down"></i></div> 
-          <!-- Custom arrow -->
-        </div> 
-        <!-- Select box -->
-        <p class="edition-modal__error"></p>
-        <!-- modal form control -->
-      </div> 
-      <!-- modal form box -->
-      <!-- modal form buttons -->
-      <div class="edition-modal__buttons">
-        <button type="submit" class="edition-modal__button edition-modal__button--apply"><i class="fa-solid fa-check"></i> Apply</button>
-        <button type="button" class="edition-modal__button edition-modal__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
-      </div>
-      <!-- modal form buttons -->
-    </form> 
-    <!-- modal form -->
-  </div>
-  <!-- Modal with edition details -->
   <!-- Transactions item template -->
   <script src="./js/script.js"></script>
 </body>

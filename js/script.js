@@ -1,4 +1,4 @@
-// let footerYear;
+let footerYear;
 let availableMoney;
 let incomesBox;
 let expensesBox;
@@ -31,11 +31,11 @@ let moneyArray = [0];
 const main = () => {
   getElements();
   addEventListeners();
-  //setFooterYear();
+  setFooterYear();
 }
 
 const getElements = () => {
-  //footerYear = document.querySelector(".footer__year");
+  footerYear = document.querySelector(".footer__year");
   availableMoney = document.querySelector(".options__balance > span");
   incomesBox = document.querySelector(".incomes-box");
   expensesBox = document.querySelector(".expenses-box");
@@ -313,9 +313,9 @@ const switchToDarkMode = () => {
   rootElement.style.setProperty("--lightColor", "#f0ebd8");
 }
 
-// const setFooterYear = () => {
-//   const now = new Date();
-//   footerYear.textContent = now.getFullYear();
-// }
+const setFooterYear = () => {
+  const now = new Date();
+  footerYear.textContent = now.getFullYear();
+}
 
 window.addEventListener("DOMContentLoaded", main);

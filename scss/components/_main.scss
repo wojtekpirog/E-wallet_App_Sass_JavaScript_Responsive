@@ -2,6 +2,7 @@
 
 .container {
   @include utils.flexLayout(column, center, center);
+  padding-bottom: 80px;
 
   .section-title {
     margin-bottom: 1em;

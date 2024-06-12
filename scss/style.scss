@@ -17,14 +17,23 @@ body {
   background-color: var(--darkColor);
   color: var(--lightColor);
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 3em;
-    position: absolute;
-    bottom: 0;
+  .app-wrapper {
+    position: relative;
+    min-height: 100%;
+
+    & > .footer {
+      width: 100%;
+      height: 5em;
+      position: absolute;
+      bottom: 0;
+
+      & > .footer__text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
+
 }
