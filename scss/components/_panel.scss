@@ -136,6 +136,7 @@
   &__button {
     cursor: pointer;
     transition: background-color 300ms ease, color 300ms ease;
+    z-index: 1000;
 
     &:focus, &:hover {
       background-color: utils.$lightColor;

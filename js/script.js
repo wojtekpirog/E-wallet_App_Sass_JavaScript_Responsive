@@ -111,6 +111,18 @@ const openEditionPanel = (ID) => {
   //editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
   //editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
 }
+
+// const editTransaction = (id) => {
+//   const transactionToEdit = document.getElementById(id);
+//   const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
+//   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
+//   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
+
+//   hideEditionModal();
+// }
+const editTransaction = () => {
+  console.log("Próba edycji...");
+}
   
 const closeTransactionPanel = (name, amount, category, categoryArrow, panel) => {
   clearElements(name, amount, category, categoryArrow);
@@ -135,14 +147,10 @@ const clearErrors = () => {
 const handleFormSubmit = (event, name, amount, category, panel) => {
   event.preventDefault();
 
-  console.log(name);
-  console.log(amount);
-  console.log(category);
-
   validateInputs([name, amount]);
   validateSelect(category);
   checkLength(name);
-  checkForErrors(panel);
+  checkForErrors(event, panel);
 }
 
 const validateInputs = (inputs) => {
@@ -175,7 +183,10 @@ const checkLength = (nameInput) => {
   }
 }
 
-const checkForErrors = (panel) => {
+const checkForErrors = (event, panel) => {
+  console.log(event.target);
+  console.log(editTransactionPanel.querySelector("i.fa-solid.fa-check"));
+
   const allErrors = document.querySelectorAll(".transaction-panel__error");
   let errorCount = 0;
 
@@ -184,7 +195,7 @@ const checkForErrors = (panel) => {
   });
 
   if (errorCount === 0) {
-    createNewTransaction();
+    event.target === editTransactionPanel.querySelector(".edit-btn") || event.target === editTransactionPanel.querySelector("i.fa-solid.fa-check") ? editTransaction() : createNewTransaction();
     closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, panel);
   }
 }
@@ -285,15 +296,6 @@ const deleteTransaction = (id) => {
   calculateBalance(moneyArray);
   transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
 }
-
-// const editTransaction = (id) => {
-//   const transactionToEdit = document.getElementById(id);
-//   const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
-//   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
-//   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
-
-//   hideEditionModal();
-// }
 
 const calculateBalance = (moneyArray) => {
   console.log(moneyArray);

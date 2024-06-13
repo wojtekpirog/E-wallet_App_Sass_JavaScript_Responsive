@@ -384,6 +384,7 @@ body {
 .transaction-panel__button {
   cursor: pointer;
   transition: background-color 300ms ease, color 300ms ease;
+  z-index: 1000;
 }
 .transaction-panel__button:focus, .transaction-panel__button:hover {
   background-color: #f0ebd8;
