@@ -97,8 +97,8 @@ const addEventListeners = () => {
 
 const openTransactionPanel = () => {
   transactionPanel.classList.add("active");
-  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", handleFormSubmit);
-  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(transactionPanel));
+  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, nameInput, amountInput, categorySelect, transactionPanel));
+  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, transactionPanel));
 }
 
 
@@ -106,42 +106,48 @@ const openEditionPanel = (ID) => {
   console.log(`ID transakcji: ${ID}`);
   
   editTransactionPanel.classList.add("active");
-  editTransactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", handleFormSubmit);
-  editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(editTransactionPanel));
+  editTransactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, nameToEditInput, amountToEditInput, categoryToEditSelect, editTransactionPanel));
+  editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
   //editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
   //editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
 }
   
-const closeTransactionPanel = (panel) => {
-  clearElements();
+const closeTransactionPanel = (name, amount, category, categoryArrow, panel) => {
+  clearElements(name, amount, category, categoryArrow);
   clearErrors();
   panel.classList.remove("active");
 }
 
-const clearElements = () => {
-  nameInput.value = "";
-  nameInput.classList.remove("transaction-panel__input--error");
-  amountInput.value = "";
-  amountInput.classList.remove("transaction-panel__input--error");
-  categorySelect.selectedIndex = 0;
-  categorySelect.classList.remove("transaction-panel__input--error");
-  categorySelectArrow.classList.remove("transaction-panel__arrow--error");
+const clearElements = (name, amount, category, categoryArrow) => {
+  name.value = "";
+  name.classList.remove("transaction-panel__input--error");
+  amount.value = "";
+  amount.classList.remove("transaction-panel__input--error");
+  category.selectedIndex = 0;
+  category.classList.remove("transaction-panel__input--error");
+  categoryArrow.classList.remove("transaction-panel__arrow--error");
 }
 
 const clearErrors = () => {
   document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
 }
 
-const handleFormSubmit = (event) => {
+const handleFormSubmit = (event, name, amount, category, panel) => {
   event.preventDefault();
 
-  validateInputs([nameInput, amountInput]);
-  validateSelect(categorySelect);
-  checkLength(nameInput);
-  checkForErrors();
+  console.log(name);
+  console.log(amount);
+  console.log(category);
+
+  validateInputs([name, amount]);
+  validateSelect(category);
+  checkLength(name);
+  checkForErrors(panel);
 }
 
 const validateInputs = (inputs) => {
+  console.log(inputs);
+
   inputs.forEach((input) => {
     if (input.value === "") {
       displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be empty!`);
@@ -169,7 +175,7 @@ const checkLength = (nameInput) => {
   }
 }
 
-const checkForErrors = () => {
+const checkForErrors = (panel) => {
   const allErrors = document.querySelectorAll(".transaction-panel__error");
   let errorCount = 0;
 
@@ -179,7 +185,7 @@ const checkForErrors = () => {
 
   if (errorCount === 0) {
     createNewTransaction();
-    closeTransactionPanel(transactionPanel);
+    closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, panel);
   }
 }
 
