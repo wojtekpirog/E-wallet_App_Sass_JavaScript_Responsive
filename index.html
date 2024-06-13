@@ -74,7 +74,7 @@
     </main>
     <!-- Main -->
     <!-- Transaction panel (out of main) -->
-    <div class="transaction-panel">
+    <div class="transaction-panel transaction-panel--create">
       <!-- Xmark -->
       <button type="button" class="transaction-panel__xmark"><i class="fa-solid fa-xmark"></i></button>
       <!-- Xmark -->
@@ -162,41 +162,44 @@
     </div> 
     <!-- Modal with confirmation message -->
     <!-- Modal with edition details -->
-    <div class="edition-modal edition-modal__shadow">
+    <div class="transaction-panel transaction-panel--edit">
+      <!-- Xmark -->
+      <button type="button" class="transaction-panel__xmark"><i class="fa-solid fa-xmark"></i></button>
+      <!-- Xmark -->
       <!-- modal form -->
-      <form class="edition-modal__form" autocomplete="off">
+      <form class="transaction-panel__form" autocomplete="off">
         <!-- modal text -->
         <h2 class="section-title">Edit transaction</h2>
         <!-- modal text -->
         <!-- modal form box -->
-        <div class="edition-modal__control-box">
+        <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="name" class="edition-modal__label">Name: </label>
+          <label for="name" class="transaction-panel__label">Name: </label>
           <small>(3-30 characters)</small>
-          <input type="text" id="name-to-edit" name="name-to-edit" class="edition-modal__input" minlength="3" maxlength="30" required/>
-          <p class="edition-modal__error"></p>
+          <input type="text" id="name-to-edit" name="name-to-edit" class="transaction-panel__input" minlength="3" maxlength="30" required/>
+          <p class="transaction-panel__error"></p>
           <!-- modal form control -->
         </div>
         <!-- modal form box -->
         <!-- modal form box -->
-        <div class="edition-modal__control-box">
+        <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="amount" class="edition-modal__label">Name: </label>
+          <label for="amount" class="transaction-panel__label">Name: </label>
           <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
-          <input type="number" id="amount-to-edit" name="amount-to-edit" class="edition-modal__input" required/>
-          <p class="edition-modal__error"></p>
+          <input type="number" id="amount-to-edit" name="amount-to-edit" class="transaction-panel__input" required/>
+          <p class="transaction-panel__error"></p>
           <!-- modal form control -->
         </div>
         <!-- modal form box -->
         <!-- modal form box -->
-        <div class="edition-modal__control-box">
+        <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="category" class="edition-modal__label">Select category: </label> 
+          <label for="category" class="transaction-panel__label">Select category: </label> 
           <small>( [ + ] = income, [ - ] = expense )</small>
           <!-- Select box -->
-          <div class="edition-modal__select-box">
+          <div class="transaction-panel__select-box">
             <!-- Select -->
-            <select id="category-to-edit" name="category-to-edit" class="edition-modal__select" required>
+            <select id="category-to-edit" name="category-to-edit" class="transaction-panel__select" required>
               <option value="none" class="transaction-panel__select-option-text" disabled selected> - select category - </option>
               <option value="salary" class="transaction-panel__select-option-text">[ + ] Salary</option>
               <option value="investment" class="transaction-panel__select-option-text">[ + ] Investment</option>
@@ -211,18 +214,18 @@
             </select>
             <!-- Select -->
             <!-- Custom arrow -->
-            <div class="edition-modal__arrow"><i class="fa-solid fa-arrow-down"></i></div> 
+            <div class="transaction-panel__arrow"><i class="fa-solid fa-arrow-down"></i></div> 
             <!-- Custom arrow -->
           </div> 
           <!-- Select box -->
-          <p class="edition-modal__error"></p>
+          <p class="transaction-panel__error"></p>
           <!-- modal form control -->
         </div> 
         <!-- modal form box -->
         <!-- modal form buttons -->
-        <div class="edition-modal__buttons">
-          <button type="submit" class="edition-modal__button edition-modal__button--apply"><i class="fa-solid fa-check"></i> Apply</button>
-          <button type="button" class="edition-modal__button edition-modal__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
+        <div class="transaction-panel__buttons">
+          <button type="submit" class="transaction-panel__button transaction-panel__button--save"><i class="fa-solid fa-check"></i> Apply</button>
+          <button type="button" class="transaction-panel__button transaction-panel__button--cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
         </div>
         <!-- modal form buttons -->
       </form> 

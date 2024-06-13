@@ -7,6 +7,7 @@ let deleteTransactionBtn;
 let deleteAllBtn;
 let lightCircle;
 let darkCircle;
+
 let transactionPanel;
 let nameInput;
 let amountInput;
@@ -15,13 +16,20 @@ let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
 let closePanelBtn;
+
+let editTransactionPanel;
+let nameToEditInput;
+let amountToEditInput;
+let categoryToEditSelect;
+let categoryToEditSelectArrow;
+let saveEditionBtn;
+let cancelEditionBtn;
+let closeEditionPanelBtn;
+
 let confirmationModal;
 let editionModal;
 let confirmDeletionButton;
 let doNotConfirmDeletionButton;
-let nameToEditInput;
-let amountToEditInput;
-let categoryToEditSelect;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -37,54 +45,91 @@ const main = () => {
 const getElements = () => {
   footerYear = document.querySelector(".footer__year");
   availableMoney = document.querySelector(".options__balance > span");
+
   incomesBox = document.querySelector(".incomes-box");
   expensesBox = document.querySelector(".expenses-box");
+
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
+
   deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");
   deleteAllBtn = document.querySelector(".options__controls-btn--deleteAll");
+
   lightCircle = document.querySelector(".options__style-button--light");
   darkCircle = document.querySelector(".options__style-button--dark");
-  transactionPanel = document.querySelector(".transaction-panel");
-  nameInput = document.querySelector("#name");
-  amountInput = document.querySelector("#amount");
-  categorySelect = document.querySelector("#category");
-  categorySelectArrow = document.querySelector(".transaction-panel__arrow");
-  saveBtn = document.querySelector(".transaction-panel__button--save");
-  cancelBtn = document.querySelector(".transaction-panel__button--cancel");
-  closePanelBtn = document.querySelector(".transaction-panel__xmark");
+  // Create transaction
+  transactionPanel = document.querySelector(".transaction-panel--create");
+  nameInput = transactionPanel.querySelector("#name");
+  amountInput = transactionPanel.querySelector("#amount");
+  categorySelect = transactionPanel.querySelector("#category");
+  categorySelectArrow = transactionPanel.querySelector(".transaction-panel__arrow");
+  //saveBtn = transactionPanel.querySelector(".transaction-panel__button--save");
+  //cancelBtn = transactionPanel.querySelector(".transaction-panel__button--cancel");
+  closePanelBtn = transactionPanel.querySelector(".transaction-panel__xmark");
+  // Create transaction
+  // Edit transaction
+  editTransactionPanel = document.querySelector(".transaction-panel--edit");
+  nameToEditInput = editTransactionPanel.querySelector("#name-to-edit");
+  amountToEditInput = editTransactionPanel.querySelector("#amount-to-edit");
+  categoryToEditSelect = editTransactionPanel.querySelector("#category-to-edit");
+  categoryToEditSelectArrow = editTransactionPanel.querySelector(".transaction-panel__arrow");
+  //saveEditionBtn = editTransactionPanel.querySelector(".transaction-panel__button--save");
+  //cancelEditionBtn = editTransactionPanel.querySelector(".transaction-panel__button--cancel");
+  closeEditionPanelBtn = editTransactionPanel.querySelector(".transaction-panel__xmark");
+
   confirmationModal = document.querySelector(".confirmation-modal");
   editionModal = document.querySelector(".edition-modal");
   confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
   doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
-  nameToEditInput = editionModal.querySelector("#name-to-edit");
-  amountToEditInput = editionModal.querySelector("#amount-to-edit");
-  categoryToEditSelect = editionModal.querySelector("#category-to-edit");
-  categoryToEditArrow = editionModal.querySelector(".edition-modal__arrow");
 }
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", showConfirmationModal);
-  closePanelBtn.addEventListener("click", closeTransactionPanel);
-  saveBtn.addEventListener("click", handleFormSubmit);
-  cancelBtn.addEventListener("click", closeTransactionPanel);
+  closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel));
+  closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(editTransactionPanel));
+  //saveBtn.addEventListener("click", handleFormSubmit);
+  //cancelBtn.addEventListener("click", closeTransactionPanel);
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
   doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
-  editionModal.addEventListener("click", (event) => event.target.classList.contains("edition-modal__shadow") ? hideEditionModal() : false);
 }
 
 const openTransactionPanel = () => {
   transactionPanel.classList.add("active");
   transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", handleFormSubmit);
-  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", closeTransactionPanel);
+  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(transactionPanel));
 }
 
-const closeTransactionPanel = () => {
+
+const openEditionPanel = (ID) => {
+  console.log(`ID transakcji: ${ID}`);
+  
+  editTransactionPanel.classList.add("active");
+  editTransactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", handleFormSubmit);
+  editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(editTransactionPanel));
+  //editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
+  //editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
+}
+  
+const closeTransactionPanel = (panel) => {
   clearElements();
   clearErrors();
-  transactionPanel.classList.remove("active");
+  panel.classList.remove("active");
+}
+
+const clearElements = () => {
+  nameInput.value = "";
+  nameInput.classList.remove("transaction-panel__input--error");
+  amountInput.value = "";
+  amountInput.classList.remove("transaction-panel__input--error");
+  categorySelect.selectedIndex = 0;
+  categorySelect.classList.remove("transaction-panel__input--error");
+  categorySelectArrow.classList.remove("transaction-panel__arrow--error");
+}
+
+const clearErrors = () => {
+  document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
 }
 
 const handleFormSubmit = (event) => {
@@ -134,14 +179,13 @@ const checkForErrors = () => {
 
   if (errorCount === 0) {
     createNewTransaction();
-    closeTransactionPanel();
+    closeTransactionPanel(transactionPanel);
   }
 }
 
 const displayError = (formControl, errorMessage) => {
   let error = formControl.parentElement.querySelector(".transaction-panel__error");
-  
-  // !error && (error = formControl.parentElement.nextElementSibling);
+
   if (!error) {
     error = formControl.parentElement.nextElementSibling;
     formControl.nextElementSibling.classList.add("transaction-panel__arrow--error");
@@ -165,20 +209,6 @@ const removeError = (formControl) => {
   formControl.classList.remove("transaction-panel__input--error");
 }
 
-const clearElements = () => {
-  nameInput.value = "";
-  nameInput.classList.remove("transaction-panel__input--error");
-  amountInput.value = "";
-  amountInput.classList.remove("transaction-panel__input--error");
-  categorySelect.selectedIndex = 0;
-  categorySelect.classList.remove("transaction-panel__input--error");
-  categorySelectArrow.classList.remove("transaction-panel__arrow--error");
-}
-
-const clearErrors = () => {
-  document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
-}
-
 const createNewTransaction = () => {
   const newTransaction = document.createElement("div");
   newTransaction.setAttribute("id", ID);
@@ -188,7 +218,7 @@ const createNewTransaction = () => {
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
   transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `showEditionModal(${ID})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `openEditionPanel(${ID})`);
   transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${ID})`);
   newTransaction.appendChild(transactionsTemplate);
 
@@ -283,16 +313,6 @@ const showConfirmationModal = () => {
 
 const hideConfirmationModal = () => {
   confirmationModal.style.display = "none";
-}
-
-const showEditionModal = (ID) => {
-  editionModal.classList.add("active");
-  //editionModal.querySelector(".edition-modal__button--apply").addEventListener("click", () => editTransaction(ID));
-  editionModal.querySelector(".edition-modal__button--cancel").addEventListener("click", hideEditionModal);
-}
-
-const hideEditionModal = () => {
-  editionModal.classList.remove("active");
 }
 
 const deleteAllTransactions = () => {
