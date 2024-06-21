@@ -73,12 +73,12 @@
       </div>
     </main>
     <!-- Main -->
-    <!-- Transaction panel (out of main) -->
+    <!-- Transaction creation panel -->
     <div class="transaction-panel transaction-panel--create">
       <!-- Xmark -->
       <button type="button" class="transaction-panel__xmark"><i class="fa-solid fa-xmark"></i></button>
       <!-- Xmark -->
-      <!-- Form -->
+      <!-- Transaction creation orm -->
       <form class="transaction-panel__form" autocomplete="off">
         <!-- Form header -->
         <h2 class="section-title">Add a new transaction</h2>
@@ -141,9 +141,9 @@
         </div>
         <!-- Buttons -->
       </form>
-      <!-- Form -->
+      <!-- Transaction creation form -->
     </div>
-    <!-- Transaction panel (out of main) -->
+    <!-- Transaction creation panel -->
     <!-- Modal with confirmation message -->
     <div class="confirmation-modal confirmation-modal__shadow">
       <!-- Modal content -->
@@ -197,7 +197,7 @@
           <label for="category" class="transaction-panel__label">Select category: </label> 
           <small>( [ + ] = income, [ - ] = expense )</small>
           <!-- Select box -->
-          <div class="transaction-panel__select-box">
+          <div class="transaction-panel__box">
             <!-- Select -->
             <select id="category-to-edit" name="category-to-edit" class="transaction-panel__select" required>
               <option value="none" class="transaction-panel__select-option-text" disabled selected> - select category - </option>
