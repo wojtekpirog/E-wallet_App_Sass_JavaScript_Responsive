@@ -1,13 +1,18 @@
+// Footer year
 let footerYear;
+// Balance info
 let availableMoney;
+// Boxes for transactions
 let incomesBox;
 let expensesBox;
+// Buttons for transactions
 let addTransactionBtn;
 let deleteTransactionBtn;
 let deleteAllBtn;
+// Light and dark mode buttons
 let lightCircle;
 let darkCircle;
-
+// Transaction creation panel
 let transactionPanel;
 let nameInput;
 let amountInput;
@@ -16,7 +21,7 @@ let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
 let closePanelBtn;
-
+// Transaction edition panel
 let editTransactionPanel;
 let nameToEditInput;
 let amountToEditInput;
@@ -25,11 +30,12 @@ let categoryToEditSelectArrow;
 let saveEditionBtn;
 let cancelEditionBtn;
 let closeEditionPanelBtn;
-
+// Confirmation modal
 let confirmationModal;
-let editionModal;
 let confirmDeletionButton;
 let doNotConfirmDeletionButton;
+// Edition modal
+let editionModal;
 
 let rootElement = document.documentElement;
 let ID = 0;
@@ -43,44 +49,40 @@ const main = () => {
 }
 
 const getElements = () => {
+  // Footer year
   footerYear = document.querySelector(".footer__year");
+  // Balance info
   availableMoney = document.querySelector(".options__balance > span");
-
+  // Boxes for transactions
   incomesBox = document.querySelector(".incomes-box");
   expensesBox = document.querySelector(".expenses-box");
-
+  // Buttons for transactions
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
-
   deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");
   deleteAllBtn = document.querySelector(".options__controls-btn--deleteAll");
-
+  // Light and dark mode buttons
   lightCircle = document.querySelector(".options__style-button--light");
   darkCircle = document.querySelector(".options__style-button--dark");
-  // Create transaction
+  // Transaction creation panel
   transactionPanel = document.querySelector(".transaction-panel--create");
   nameInput = transactionPanel.querySelector("#name");
   amountInput = transactionPanel.querySelector("#amount");
   categorySelect = transactionPanel.querySelector("#category");
   categorySelectArrow = transactionPanel.querySelector(".transaction-panel__arrow");
-  //saveBtn = transactionPanel.querySelector(".transaction-panel__button--save");
-  //cancelBtn = transactionPanel.querySelector(".transaction-panel__button--cancel");
   closePanelBtn = transactionPanel.querySelector(".transaction-panel__xmark");
-  // Create transaction
-  // Edit transaction
+  // Transaction edition panel
   editTransactionPanel = document.querySelector(".transaction-panel--edit");
   nameToEditInput = editTransactionPanel.querySelector("#name-to-edit");
   amountToEditInput = editTransactionPanel.querySelector("#amount-to-edit");
   categoryToEditSelect = editTransactionPanel.querySelector("#category-to-edit");
   categoryToEditSelectArrow = editTransactionPanel.querySelector(".transaction-panel__arrow");
-
-  //saveEditionBtn = editTransactionPanel.querySelector(".transaction-panel__button--save");
-  //cancelEditionBtn = editTransactionPanel.querySelector(".transaction-panel__button--cancel");
   closeEditionPanelBtn = editTransactionPanel.querySelector(".transaction-panel__xmark");
-
+  // Confirmation modal
   confirmationModal = document.querySelector(".confirmation-modal");
-  editionModal = document.querySelector(".edition-modal");
   confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
   doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
+  // Edition modal
+  editionModal = document.querySelector(".edition-modal");
 }
 
 const addEventListeners = () => {
@@ -88,8 +90,6 @@ const addEventListeners = () => {
   deleteAllBtn.addEventListener("click", showConfirmationModal);
   closePanelBtn.addEventListener("click", () => closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, transactionPanel));
   closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
-  //saveBtn.addEventListener("click", handleFormSubmit);
-  //cancelBtn.addEventListener("click", closeTransactionPanel);
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
@@ -104,49 +104,49 @@ const openTransactionPanel = () => {
 
 
 const openEditionPanel = (ID) => {
-  console.log(document.getElementById(ID));
   editTransactionPanel.classList.add("active");
   editTransactionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, nameToEditInput, amountToEditInput, categoryToEditSelect, editTransactionPanel, ID));
   editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
 }
 
-// const editTransaction = (id) => {
-//   const transactionToEdit = document.getElementById(id);
-//   const nameOfTransactionToEdit = transactionToEdit.childNodes[3].innerText.slice(1);
-//   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
-//   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
-
-//   hideEditionModal();
-// }
 const editTransaction = (ID) => {
+  const currentIncomes = incomesBox.children;
+  const currentExpenses = expensesBox.children;
+
   const transactionToEdit = document.getElementById(ID);
   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
+
+  const currentNameOfTransaction = transactionToEdit.querySelector(".transactions__item-name");
+  const currentAmountOfTransaction = transactionToEdit.querySelector(".transactions__item-amount-text");
 
   const newNameOfTransaction = nameToEditInput.value;
   const newAmountOfTransaction = parseFloat(amountToEditInput.value);
 
   checkCategory(categoryToEditSelect);
 
-  console.log("Poprzednia kwota transakcji: " + amountOfTransactionToEdit);
-  console.log("Nowa kwota transakcji: " + newAmountOfTransaction);
-
-  transactionToEdit.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${newNameOfTransaction.charAt(0).toUpperCase() + newNameOfTransaction.slice(1)}`;
-  transactionToEdit.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${newAmountOfTransaction}`;
+  currentNameOfTransaction.innerHTML = `${categoryIcon} ${newNameOfTransaction.charAt(0).toUpperCase() + newNameOfTransaction.slice(1)}`;
+  currentAmountOfTransaction.innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${newAmountOfTransaction}`;
 
   if (newAmountOfTransaction > 0) {
-    transactionToEdit.classList.remove("transactions__item--expense");
-    expensesBox.removeChild(transactionToEdit);
-    transactionToEdit.classList.add("transactions__item--income");
-    incomesBox.appendChild(transactionToEdit);
-  } else {
-    transactionToEdit.classList.remove("transactions__item--income");
-    incomesBox.removeChild(transactionToEdit);
-    transactionToEdit.classList.add("transactions__item--expense");
-    expensesBox.appendChild(transactionToEdit);
-  }
+    const isExpense = Array.from(currentExpenses).includes(transactionToEdit);
 
-  console.log(transactionToEdit);
+    if (isExpense) {
+      transactionToEdit.classList.remove("transactions__item--expense");
+      transactionToEdit.classList.add("transactions__item--income");
+      expensesBox.removeChild(transactionToEdit);
+      incomesBox.appendChild(transactionToEdit);
+    }
+  } else {
+    const isIncome = Array.from(currentIncomes).includes(transactionToEdit);
+
+    if (isIncome) {
+      transactionToEdit.classList.remove("transactions__item--income");
+      transactionToEdit.classList.add("transactions__item--expense");
+      incomesBox.removeChild(transactionToEdit);
+      expensesBox.appendChild(transactionToEdit);
+    }
+  }
 
   moneyArray[indexOfTransactionToEdit] = newAmountOfTransaction;
   calculateBalance(moneyArray);
@@ -178,7 +178,7 @@ const handleFormSubmit = (event, name, amount, category, panel, ID) => {
   validateInputs([name, amount]);
   validateSelect(category);
   checkLength(name);
-  checkForErrors(event, panel, ID);
+  checkForErrors(event, name, amount, category, panel, ID);
 }
 
 const validateInputs = (inputs) => {
@@ -209,20 +209,16 @@ const checkLength = (nameInput) => {
   }
 }
 
-const checkForErrors = (event, panel, ID) => {
-  const allErrors = document.querySelectorAll(".transaction-panel__error");
-  let errorCount = 0;
+const checkForErrors = (event, name, amount, category, panel, ID) => {
+  const editTransactionBtn = editTransactionPanel.querySelector(".transaction-panel__button--edit");
+  const checkIcon = editTransactionPanel.querySelector("i.fa-solid.fa-check");
 
-  allErrors.forEach((error) => error.style.display === "block" ? errorCount += 1 : false);
-
-  console.log(`Liczba błędów: ${errorCount}`);
-
-  if (errorCount === 0) {
-    if (event.target === editTransactionPanel.querySelector(".transaction-panel__button--edit") || event.target === editTransactionPanel.querySelector("i.fa-solid.fa-check")) {
+  if (name.value !== "" && name.value.length >= name.minLength && name.value.length <= name.maxLength && name.value !== "0" && amount.value !== "" && amount.value !== "0" && category.value !== "none") {
+    if (event.target === editTransactionBtn || event.target === checkIcon) {
       editTransaction(ID);
       closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, panel);
     } else {
-      createNewTransaction(errorCount);
+      createNewTransaction();
       closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, panel);
     }
   }
@@ -254,7 +250,7 @@ const removeError = (formControl) => {
   formControl.classList.remove("transaction-panel__input--error");
 }
 
-const createNewTransaction = (errorCount) => {
+const createNewTransaction = () => {
   const newTransaction = document.createElement("div");
   newTransaction.setAttribute("id", ID);
   newTransaction.className = "transactions__item";
@@ -274,8 +270,6 @@ const createNewTransaction = (errorCount) => {
     newTransaction.classList.add("transactions__item--expense");
     expensesBox.appendChild(newTransaction);
   }
-
-  errorCount = 0;
 
   moneyArray.push(parseFloat(amountInput.value));
   calculateBalance(moneyArray);
