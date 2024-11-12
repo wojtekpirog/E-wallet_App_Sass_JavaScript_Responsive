@@ -1,10 +1,20 @@
+import setFooterYear from "./footer.js";
+import calculateBalance from "./utils/balance.js";
+import checkCategory from "./utils/category.js";
+import handleFormSubmit from "./panel/form_validation.js";
+import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
+
+// Root element
+export let rootElement;
 // Footer year
-let footerYear;
-// Balance info
-let availableMoney;
+export let footerYear;
+// Wallet icon
+export let walletIcon;
 // Boxes for transactions
 let incomesBox;
 let expensesBox;
+// Category icon
+export let categoryIcon;
 // Buttons for transactions
 let addTransactionBtn;
 let deleteTransactionBtn;
@@ -16,7 +26,7 @@ let darkCircle;
 let transactionPanel;
 let nameInput;
 let amountInput;
-let categorySelect;
+export let categorySelect;
 let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
@@ -37,20 +47,26 @@ let doNotConfirmDeletionButton;
 // Edition modal
 let editionModal;
 
-let rootElement = document.documentElement;
-let ID = 0;
-let categoryIcon;
-let moneyArray = [0]; 
+// Transaction number
+export let transactionId = 0;
+// Amounts array
+export let moneyArray = [0];
+// Balance info
+export let availableMoney;
 
 const main = () => {
   getElements();
   addEventListeners();
-  setFooterYear();
+  setFooterYear(); 
 }
 
 const getElements = () => {
+  // Root element
+  rootElement = document.documentElement;
   // Footer year
   footerYear = document.querySelector(".footer__year");
+  // Wallet icon
+  walletIcon = document.querySelector(".header__title-icon");
   // Balance info
   availableMoney = document.querySelector(".options__balance > span");
   // Boxes for transactions
@@ -83,7 +99,7 @@ const getElements = () => {
   doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
   // Edition modal
   editionModal = document.querySelector(".edition-modal");
-}
+} 
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
@@ -94,26 +110,26 @@ const addEventListeners = () => {
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
   doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
-}
+} 
 
 const openTransactionPanel = () => {
   transactionPanel.classList.add("active");
-  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, nameInput, amountInput, categorySelect, transactionPanel));
+  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, {panel: transactionPanel, nameInput, amountInput, categorySelect}));
   transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, transactionPanel));
 }
 
 
-const openEditionPanel = (ID) => {
+const openEditionPanel = (transactionId) => {
   editTransactionPanel.classList.add("active");
-  editTransactionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, nameToEditInput, amountToEditInput, categoryToEditSelect, editTransactionPanel, ID));
+  editTransactionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, nameToEditInput, amountToEditInput, categoryToEditSelect, editTransactionPanel, transactionId));
   editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
 }
 
-const editTransaction = (ID) => {
+const editTransaction = (transactionId) => {
   const currentIncomes = incomesBox.children;
   const currentExpenses = expensesBox.children;
 
-  const transactionToEdit = document.getElementById(ID);
+  const transactionToEdit = document.getElementById(transactionId);
   const amountOfTransactionToEdit = parseFloat(transactionToEdit.childNodes[9].childNodes[1].innerText.slice(1));
   const indexOfTransactionToEdit = moneyArray.indexOf(amountOfTransactionToEdit);
 
@@ -154,7 +170,7 @@ const editTransaction = (ID) => {
   
 const closeTransactionPanel = (name, amount, category, categoryArrow, panel) => {
   clearElements(name, amount, category, categoryArrow);
-  clearErrors();
+  // clearErrors(); 
   panel.classList.remove("active");
 }
 
@@ -168,99 +184,69 @@ const clearElements = (name, amount, category, categoryArrow) => {
   categoryArrow.classList.remove("transaction-panel__arrow--error");
 }
 
-const clearErrors = () => {
-  document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
-}
+// const handleFormSubmit = (event, name, amount, category, panel, transactionId) => {
+//   event.preventDefault(); 
 
-const handleFormSubmit = (event, name, amount, category, panel, ID) => {
-  event.preventDefault();
+//   validateInputs([name, amount]);
+//   validateSelect(category);
+//   checkLength(name);
+//   checkForErrors(event, name, amount, category, panel, transactionId);
+// }
 
-  validateInputs([name, amount]);
-  validateSelect(category);
-  checkLength(name);
-  checkForErrors(event, name, amount, category, panel, ID);
-}
+// const validateInputs = (inputs) => {
+//   inputs.forEach((input) => {
+//     if (input.value === "") {
+//       displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be empty!`);
+//     } else if (input.value === "0") {
+//       displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be equal to zero!`);
+//     } else {
+//       removeError(input);
+//     }
+//   });
+// }
 
-const validateInputs = (inputs) => {
-  inputs.forEach((input) => {
-    if (input.value === "") {
-      displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be empty!`);
-    } else if (input.value === "0") {
-      displayError(input, `${input.id.charAt(0).toUpperCase() + input.id.slice(1)} cannot be equal to zero!`);
-    } else {
-      removeError(input);
-    }
-  });
-}
+// const validateSelect = (categorySelect) => {
+//   if (categorySelect.value === "none") {
+//     displayError(categorySelect, `${categorySelect.id.charAt(0).toUpperCase() + categorySelect.id.slice(1)} must be selected!`);
+//   } else {
+//     removeError(categorySelect);
+//   }
+// }
 
-const validateSelect = (categorySelect) => {
-  if (categorySelect.value === "none") {
-    displayError(categorySelect, `${categorySelect.id.charAt(0).toUpperCase() + categorySelect.id.slice(1)} must be selected!`);
-  } else {
-    removeError(categorySelect);
-  }
-}
+// const checkLength = (nameInput) => {
+//   if (nameInput.value.length < nameInput.minLength || nameInput.value.length > nameInput.maxLength) {
+//     displayError(nameInput, `${nameInput.id.charAt(0).toUpperCase() + nameInput.id.slice(1)} must be between ${nameInput.minLength} and ${nameInput.maxLength} characters!`);
+//   } else {
+//     removeError(nameInput);
+//   }
+// }
 
-const checkLength = (nameInput) => {
-  if (nameInput.value.length < nameInput.minLength || nameInput.value.length > nameInput.maxLength) {
-    displayError(nameInput, `${nameInput.id.charAt(0).toUpperCase() + nameInput.id.slice(1)} must be between ${nameInput.minLength} and ${nameInput.maxLength} characters!`);
-  } else {
-    removeError(nameInput);
-  }
-}
+// const checkForErrors = (event, name, amount, category, panel, transactionId) => {
+//   const editTransactionBtn = editTransactionPanel.querySelector(".transaction-panel__button--edit");
+//   const checkIcon = editTransactionPanel.querySelector("i.fa-solid.fa-check");
 
-const checkForErrors = (event, name, amount, category, panel, ID) => {
-  const editTransactionBtn = editTransactionPanel.querySelector(".transaction-panel__button--edit");
-  const checkIcon = editTransactionPanel.querySelector("i.fa-solid.fa-check");
-
-  if (name.value !== "" && name.value.length >= name.minLength && name.value.length <= name.maxLength && name.value !== "0" && amount.value !== "" && amount.value !== "0" && category.value !== "none") {
-    if (event.target === editTransactionBtn || event.target === checkIcon) {
-      editTransaction(ID);
-      closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, panel);
-    } else {
-      createNewTransaction();
-      closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, panel);
-    }
-  }
-}
-
-const displayError = (formControl, errorMessage) => {
-  let error = formControl.parentElement.querySelector(".transaction-panel__error");
-
-  if (!error) {
-    error = formControl.parentElement.nextElementSibling;
-    formControl.nextElementSibling.classList.add("transaction-panel__arrow--error");
-  }
-
-  error.textContent = errorMessage;
-  error.style.display = "block";
-  formControl.classList.add("transaction-panel__input--error");
-}
-
-const removeError = (formControl) => {
-  let error = formControl.parentElement.querySelector(".transaction-panel__error");
-
-  if (!error) {
-    error = formControl.parentElement.nextElementSibling;
-    formControl.nextElementSibling.classList.remove("transaction-panel__arrow--error");
-  }
-
-  error.textContent = "";
-  error.style.display = "none";
-  formControl.classList.remove("transaction-panel__input--error");
-}
+//   if (name.value !== "" && name.value.length >= name.minLength && name.value.length <= name.maxLength && name.value !== "0" && amount.value !== "" && amount.value !== "0" && category.value !== "none") {
+//     if (event.target === editTransactionBtn || event.target === checkIcon) {
+//       editTransaction(transactionId);
+//       closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, panel);
+//     } else {
+//       createNewTransaction();
+//       closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, panel);
+//     }
+//   }
+// }
 
 const createNewTransaction = () => {
   const newTransaction = document.createElement("div");
-  newTransaction.setAttribute("id", ID);
+  newTransaction.setAttribute("id", transactionId);
   newTransaction.className = "transactions__item";
   checkCategory(categorySelect);
 
   const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
   transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
   transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `openEditionPanel(${ID})`);
-  transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${ID})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `openEditionPanel(${transactionId})`);
+  transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${transactionId})`);
   newTransaction.appendChild(transactionsTemplate);
 
   if (amountInput.value > 0) {
@@ -273,42 +259,7 @@ const createNewTransaction = () => {
 
   moneyArray.push(parseFloat(amountInput.value));
   calculateBalance(moneyArray);
-  ID++;
-}
-
-const checkCategory = (categorySelect) => {
-  switch (categorySelect.value) {
-    case "salary":
-      categoryIcon = `<i class="fa-solid fa-wallet"></i>`;
-      break;
-    case "investment":
-      categoryIcon = `<i class="fa-solid fa-chart-line"></i>`;
-      break;
-    case "freelance":
-      categoryIcon = `<i class="fa-solid fa-briefcase"></i>`;
-      break;
-    case "rent":
-      categoryIcon = `<i class="fa-solid fa-house"></i>`;
-      break;
-    case "shopping":
-      categoryIcon = `<i class="fa-solid fa-cart-shopping"></i>`;
-      break;
-    case "food":
-      categoryIcon = `<i class="fa-solid fa-utensils"></i>`;
-      break;
-    case "bills":
-      categoryIcon = `<i class="fa-solid fa-credit-card"></i>`;
-      break;
-    case "cinema":
-      categoryIcon = `<i class="fa-solid fa-film"></i>`;
-      break;
-    case "leisure":
-      categoryIcon = `<i class="fa-solid fa-glass-cheers"></i>`;
-      break;
-    case "other":
-      categoryIcon = `<i class="fa-solid fa-pen"></i>`;
-      break;
-  }
+  transactionId++;
 }
 
 const deleteTransaction = (id) => {
@@ -319,22 +270,6 @@ const deleteTransaction = (id) => {
   moneyArray.splice(indexOfTransactionToDelete, 1);
   calculateBalance(moneyArray);
   transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
-}
-
-const calculateBalance = (moneyArray) => {
-  const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);
-
-  if (balance < 0) {
-    availableMoney.classList.remove("options__balance--positive");
-    availableMoney.classList.add("options__balance--negative");
-  } else if (balance > 0) {
-    availableMoney.classList.remove("options__balance--negative");
-    availableMoney.classList.add("options__balance--positive");
-  } else {
-    availableMoney.classList.remove("options__balance--positive", "options__balance--negative");
-  }
-
-  availableMoney.textContent = balance;
 }
 
 const showConfirmationModal = () => {
@@ -352,21 +287,6 @@ const deleteAllTransactions = () => {
   availableMoney.textContent = "0";
   availableMoney.style.color = "#f0ebd8";
   hideConfirmationModal();
-}
-
-const switchToLightMode = () => {
-  rootElement.style.setProperty("--darkColor", "#f0ebd8");
-  rootElement.style.setProperty("--lightColor", "#0d1321");
-}
-
-const switchToDarkMode = () => {
-  rootElement.style.setProperty("--darkColor", "#0d1321");
-  rootElement.style.setProperty("--lightColor", "#f0ebd8");
-}
-
-const setFooterYear = () => {
-  const now = new Date();
-  footerYear.textContent = now.getFullYear();
 }
 
 window.addEventListener("DOMContentLoaded", main);

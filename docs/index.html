@@ -7,8 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Wallet is a fast and reliable household budget calculator. Add, remove and edit your transactions in one place.">
   <meta name="author" content="Wojciech Piróg">
-  <link rel="icon" type="image/svg+xml" href="./assets/images/wallet-solid.svg">
-  <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="icon" type="image/svg+xml" href="./assets/icons/wallet.svg">
+  <link rel="icon" type="image/png" href="./assets/icons/wallet-dark.png" media="(prefers-color-scheme: light)"> <!-- fallback PNG favicon for older browsers -->
+  <link rel="icon" type="image/png" href="./assets/icons/wallet-light.png" media="(prefers-color-scheme: dark)"> <!-- fallback PNG favicon for older browsers> -->
+  <link rel="stylesheet" type="text/css" href="./css/style.min.css">
   <script src="https://kit.fontawesome.com/7aa1ebf341.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,7 +18,17 @@
   <div class="app-wrapper">
     <!-- Header -->
     <header class="header">
-      <h1 class="header__title"><i class="fa-solid fa-wallet"></i> Wallet</h1>
+      <h1 class="header__title">
+        <!-- Icon -->
+        <!-- <img class="header__title-icon" src="./assets/icons/wallet.svg" alt="Wallet icon."> -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="header__title-icon" viewBox="0 0 24 24" fill="none" stroke="#f0ebd8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+          <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+        </svg>
+        <!-- Icon -->
+        Wallet
+      </h1>
       <p class="header__text">Your personal balance manager</p>
     </header>
     <!-- Header -->
@@ -63,8 +75,16 @@
             <h2 class="section-title">Select style</h2>
             <!-- Style buttons -->
             <div class="options__style-buttons">
-              <button type="button" class="options__style-button options__style-button--light" title="Light"></button>
-              <button type="button" class="options__style-button options__style-button--dark" title="Dark"></button>
+              <!-- Button -->
+              <button type="button" class="options__style-button options__style-button--light" aria-labelledby="light-mode">
+                <title id="light-mode">Click to enable light mode.</title>
+              </button>
+              <!-- Button -->
+              <!-- Button -->
+              <button type="button" class="options__style-button options__style-button--dark" aria-labelledby="dark-mode">
+                <title id="dark-mode">Click to enable dark mode.</title>
+              </button>
+              <!-- Button -->
             </div>
             <!-- Style buttons -->
           </div>
@@ -90,7 +110,7 @@
           <label for="name" class="transaction-panel__label">Name: </label>
           <small>(3-30 characters)</small>
           <input type="text" id="name" name="name" class="transaction-panel__input" minlength="3" maxlength="30" required/>
-          <p class="transaction-panel__error">Błąd</p>
+          <p class="transaction-panel__error"></p>
           <!-- Form control -->
         </div>
         <!-- Form control box -->
@@ -100,7 +120,7 @@
           <label for="amount" class="transaction-panel__label">Amount: </label>
           <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
           <input type="number" id="amount" name="amount" class="transaction-panel__input" required/>
-          <p class="transaction-panel__error">Błąd</p>
+          <p class="transaction-panel__error"></p>
           <!-- Form control -->
         </div>
         <!-- Form control box -->
@@ -132,7 +152,7 @@
             <!-- Custom arrow -->
           </div>
           <!-- Select box -->
-          <p class="transaction-panel__error">Błąd</p>
+          <p class="transaction-panel__error"></p>
           <!-- Form control box -->
         </div>
         <!-- Buttons -->
@@ -256,6 +276,6 @@
     <!-- Income amount -->
   </template>
   <!-- Transactions item template -->
-  <script src="./js/script.min.js" defer></script>
+  <script src="./js/bundle.min.js" defer></script>
 </body>
 </html>

@@ -5,9 +5,14 @@
   @include utils.flexLayout(column, center, center);
 
   &__title {
+    @include utils.flexLayout(row, center, center);
     margin-bottom: .25em;
     font-size: 4.8rem;
     font-family: var(--light-font);
+
+    &-icon {
+      width: 100px;
+    }
   }
 
   &__text {

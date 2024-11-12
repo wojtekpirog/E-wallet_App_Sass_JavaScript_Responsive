@@ -127,6 +127,10 @@
     margin-top: .15em;
     color: utils.$redColor;
     font-size: 1.4rem;
+
+    &--active {
+      display: block;
+    }
   }
 
   &__buttons {

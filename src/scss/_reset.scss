@@ -1,6 +1,14 @@
-@use "./reset";
-@use "./components/" as components;
-@use "./breakpoints/" as breakpoints;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root, body {
+  height: 100%;
+}
 
 :root {
   --regular-font: "Raleway";
@@ -11,11 +19,16 @@
 
   --darkColor: #0d1321;
   --lightColor: #f0ebd8;
+
+  font-size: 62.5%;
 }
 
 body {
   background-color: var(--darkColor);
   color: var(--lightColor);
+  font-size: 1.6rem;
+  font-family: var(--regular-font);
+  overflow-x: hidden;
 
   .app-wrapper {
     position: relative;
@@ -35,5 +48,4 @@ body {
       }
     }
   }
-
 }
