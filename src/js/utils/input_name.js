@@ -1,5 +1,5 @@
-function formatInputName(inputId) {
-  return inputId.charAt(0).toUpperCase() + inputId.slice(1).toLowerCase();
+function formatInputName(inputValue) {
+  return inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
 }
 
 export default formatInputName;

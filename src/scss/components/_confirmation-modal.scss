@@ -4,6 +4,10 @@
   @include utils.flexLayout(column, center, center);
   @include utils.modalStyles;
 
+  &--open {
+    display: flex;
+  }
+
   &__shadow {
     background-color: utils.$modalShadow;
   }

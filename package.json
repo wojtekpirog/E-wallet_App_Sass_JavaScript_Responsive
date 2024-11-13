@@ -2,7 +2,7 @@
   "name": "e-wallet_app",
   "version": "1.0.0",
   "description": "Wallet - a fast and reliable household budget calculator",
-  "main": "script.js",
+  "main": "main.js",
   "scripts": {
     "build": "webpack"
   },
@@ -13,11 +13,7 @@
     "finance",
     "money"
   ],
-  "author": {
-    "name": "Wojciech Piróg",
-    "email": "wojtekpirog12@interia.pl",
-    "url": "https://github.com/wojtekpirog"
-  },
+  "author": "Wojciech Piróg (https://github.com/wojtekpirog)",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.26.0",

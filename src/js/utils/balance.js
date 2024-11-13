@@ -1,7 +1,9 @@
 import {moneyArray, availableMoney} from "../main.js";
 
 function calculateBalance(moneyArray) {
-  const balance = moneyArray.reduce((prevValue, currValue) => prevValue + currValue);
+  console.log(moneyArray);
+
+  const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);
 
   if (balance > 0) {
     availableMoney.classList.add("options__balance--positive");

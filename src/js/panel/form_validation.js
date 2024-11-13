@@ -1,4 +1,6 @@
 import {transactionId} from "../main.js";
+import {closeTransactionPanel} from "./creation_panel.js";
+import {createNewTransaction} from "../data/transactions.js";
 import formatInputName from "../utils/input_name.js";
 
 const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}, transactionId) => {
@@ -67,11 +69,23 @@ const checkForErrors = (event, panel, inputs, transactionId) => {
   });
 
   if (!hasErrors) {
+    createNewTransaction();
+    clearInputs(inputs);
     clearErrors(inputs);
+    closeTransactionPanel(panel);
   }
 }
 
-const clearErrors = (inputs) => {
+export const clearInputs = (inputs) => {
+  inputs.forEach((input) => {
+    input.value = "";
+    input.classList.remove("transaction-panel__input--error");
+  });
+
+  inputs[2].selectedIndex = 0;
+}
+
+export const clearErrors = (inputs) => {
   // document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
   inputs.forEach((input) => {
     input.classList.remove("transaction-panel__input--error");

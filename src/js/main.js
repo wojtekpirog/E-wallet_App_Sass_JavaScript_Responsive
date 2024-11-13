@@ -1,31 +1,34 @@
 import setFooterYear from "./footer.js";
 import calculateBalance from "./utils/balance.js";
 import checkCategory from "./utils/category.js";
+import formatInputName from "./utils/input_name.js";
 import handleFormSubmit from "./panel/form_validation.js";
+import {openTransactionPanel, closeTransactionPanel} from "./panel/creation_panel.js";
+import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
 
 // Root element
-export let rootElement;
+export let rootElement; 
 // Footer year
 export let footerYear;
 // Wallet icon
 export let walletIcon;
 // Boxes for transactions
-let incomesBox;
-let expensesBox;
+export let incomesBox; 
+export let expensesBox;
 // Category icon
-export let categoryIcon;
+export let categoryIcon;  
 // Buttons for transactions
-let addTransactionBtn;
+let addTransactionBtn; 
 let deleteTransactionBtn;
 let deleteAllBtn;
 // Light and dark mode buttons
 let lightCircle;
 let darkCircle;
 // Transaction creation panel
-let transactionPanel;
-let nameInput;
-let amountInput;
+export let transactionPanel;
+export let nameInput;
+export let amountInput;
 export let categorySelect;
 let categorySelectArrow;
 let saveBtn;
@@ -41,7 +44,7 @@ let saveEditionBtn;
 let cancelEditionBtn;
 let closeEditionPanelBtn;
 // Confirmation modal
-let confirmationModal;
+export let confirmationModal;
 let confirmDeletionButton;
 let doNotConfirmDeletionButton;
 // Edition modal
@@ -103,21 +106,14 @@ const getElements = () => {
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
-  deleteAllBtn.addEventListener("click", showConfirmationModal);
-  closePanelBtn.addEventListener("click", () => closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, transactionPanel));
+  deleteAllBtn.addEventListener("click", openConfirmationModal);
+  doNotConfirmDeletionButton.addEventListener("click", closeConfirmationModal);
+  closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel, [nameInput, amountInput, categorySelect]));
   closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
   confirmDeletionButton.addEventListener("click", deleteAllTransactions);
-  doNotConfirmDeletionButton.addEventListener("click", hideConfirmationModal);
 } 
-
-const openTransactionPanel = () => {
-  transactionPanel.classList.add("active");
-  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, {panel: transactionPanel, nameInput, amountInput, categorySelect}));
-  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameInput, amountInput, categorySelect, categorySelectArrow, transactionPanel));
-}
-
 
 const openEditionPanel = (transactionId) => {
   editTransactionPanel.classList.add("active");
@@ -168,21 +164,21 @@ const editTransaction = (transactionId) => {
   calculateBalance(moneyArray);
 }
   
-const closeTransactionPanel = (name, amount, category, categoryArrow, panel) => {
-  clearElements(name, amount, category, categoryArrow);
-  // clearErrors(); 
-  panel.classList.remove("active");
-}
+// const closeTransactionPanel = (name, amount, category, categoryArrow, panel) => {
+//   clearElements(name, amount, category, categoryArrow);
+//   clearErrors(); 
+//   panel.classList.remove("active");
+// }
 
-const clearElements = (name, amount, category, categoryArrow) => {
-  name.value = "";
-  name.classList.remove("transaction-panel__input--error");
-  amount.value = "";
-  amount.classList.remove("transaction-panel__input--error");
-  category.selectedIndex = 0;
-  category.classList.remove("transaction-panel__input--error");
-  categoryArrow.classList.remove("transaction-panel__arrow--error");
-}
+// const clearElements = (name, amount, category, categoryArrow) => {
+  // name.value = "";
+  // name.classList.remove("transaction-panel__input--error");
+  // amount.value = "";
+  // amount.classList.remove("transaction-panel__input--error");
+  // category.selectedIndex = 0;
+  // category.classList.remove("transaction-panel__input--error");
+  // categoryArrow.classList.remove("transaction-panel__arrow--error");
+// }
 
 // const handleFormSubmit = (event, name, amount, category, panel, transactionId) => {
 //   event.preventDefault(); 
@@ -236,31 +232,30 @@ const clearElements = (name, amount, category, categoryArrow) => {
 //   }
 // }
 
-const createNewTransaction = () => {
-  const newTransaction = document.createElement("div");
-  newTransaction.setAttribute("id", transactionId);
-  newTransaction.className = "transactions__item";
-  checkCategory(categorySelect);
+// const createNewTransaction = () => {
+//   const newTransaction = document.createElement("div");
+//   newTransaction.id = transactionId;
+//   checkCategory(categorySelect);
 
-  const transactionsTemplate = document.querySelector(".transactions__template").content.cloneNode(true);
-  transactionsTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1)}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
-  transactionsTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `openEditionPanel(${transactionId})`);
-  transactionsTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${transactionId})`);
-  newTransaction.appendChild(transactionsTemplate);
+//   transactionTemplate = transactionTemplate.content.cloneNode(true);
+//   transactionTemplate.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
+//   transactionTemplate.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountInput.value}`;
+//   transactionTemplate.querySelector(".transactions__item-amount-button--edit").setAttribute("onclick", `openEditionPanel(${transactionId})`);
+//   transactionTemplate.querySelector(".transactions__item-amount-button--delete").setAttribute("onclick", `deleteTransaction(${transactionId})`);
+//   newTransaction.appendChild(transactionTemplate);
 
-  if (amountInput.value > 0) {
-    newTransaction.classList.add("transactions__item--income");
-    incomesBox.appendChild(newTransaction);
-  } else {
-    newTransaction.classList.add("transactions__item--expense");
-    expensesBox.appendChild(newTransaction);
-  }
+//   if (amountInput.value > 0) {
+//     newTransaction.classList.add("transactions__item", "transactions__item--income");
+//     incomesBox.appendChild(newTransaction);
+//   } else {
+//     newTransaction.classList.add("transactions__item", "transactions__item--expense");
+//     expensesBox.appendChild(newTransaction);
+//   }
 
-  moneyArray.push(parseFloat(amountInput.value));
-  calculateBalance(moneyArray);
-  transactionId++;
-}
+//   transactionId++;
+//   moneyArray.push(parseFloat(amountInput.value));
+//   calculateBalance(moneyArray);
+// }
 
 const deleteTransaction = (id) => {
   const transactionToDelete = document.getElementById(id);
@@ -272,21 +267,13 @@ const deleteTransaction = (id) => {
   transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
 }
 
-const showConfirmationModal = () => {
-  confirmationModal.style.display = "flex";
-}
-
-const hideConfirmationModal = () => {
-  confirmationModal.style.display = "none";
-}
-
 const deleteAllTransactions = () => {
   incomesBox.innerHTML = '<h3 class="incomes-box__title">Incomes</h3>';
   expensesBox.innerHTML = '<h3 class="expenses-box__title">Expenses</h3>';
   moneyArray = [0];
   availableMoney.textContent = "0";
   availableMoney.style.color = "#f0ebd8";
-  hideConfirmationModal();
+  closeConfirmationModal();
 }
 
 window.addEventListener("DOMContentLoaded", main);
