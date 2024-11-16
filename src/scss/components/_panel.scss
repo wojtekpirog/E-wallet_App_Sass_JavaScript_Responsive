@@ -101,6 +101,11 @@
     appearance: none;
     cursor: pointer;
 
+    &:focus {
+      background-color: utils.$lightColor;
+      color: utils.$secondColor;
+    }
+
     &-option-text {
       color: utils.$thirdColor;
     }

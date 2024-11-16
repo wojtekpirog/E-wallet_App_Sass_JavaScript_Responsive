@@ -116,16 +116,17 @@
         }
 
         &--add {
-          &:hover {
-            border-color: var(--lightColor);
-            background-color: var(--lightColor);            
+          &:hover, &:focus {
+            background-color: var(--lightColor);
+            color: var(--darkColor);
           }
         }
 
         &--deleteAll {
-          &:hover {
+          &:hover, &:focus {
             border-color: utils.$redColor;
             background-color: utils.$redColor;
+            color: var(--darkColor);
           }
         }
       }
