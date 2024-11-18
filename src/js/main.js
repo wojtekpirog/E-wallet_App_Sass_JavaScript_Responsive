@@ -1,11 +1,11 @@
 import setFooterYear from "./footer.js";
 import calculateBalance from "./utils/balance.js";
 import checkCategory from "./utils/category.js";
-import formatInputName from "./utils/input_name.js";
 import handleFormSubmit from "./panel/form_validation.js";
 import {openTransactionPanel, closeTransactionPanel} from "./panel/creation_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
+import deleteAllTransactions from "./data/transactions.js";
 
 // Root element
 export let rootElement; 
@@ -50,11 +50,11 @@ let doNotConfirmDeletionButton;
 // Edition modal
 let editionModal;
 
-// Transaction number
+// Transaction ID
 export let transactionId = 0;
 // Amounts array
 export let moneyArray = [0];
-// Balance info
+// Balance info (how much money is available)
 export let availableMoney;
 
 const main = () => {
@@ -255,25 +255,6 @@ const editTransaction = (transactionId) => {
 //   transactionId++;
 //   moneyArray.push(parseFloat(amountInput.value));
 //   calculateBalance(moneyArray);
-// }
-
-const deleteTransaction = (id) => {
-  const transactionToDelete = document.getElementById(id);
-  const amountOfTransactionToDelete = parseFloat(transactionToDelete.childNodes[9].childNodes[1].innerText.slice(1));
-  const indexOfTransactionToDelete = moneyArray.indexOf(amountOfTransactionToDelete);
-
-  moneyArray.splice(indexOfTransactionToDelete, 1);
-  calculateBalance(moneyArray);
-  transactionToDelete.classList.contains("transactions__item--income") ? incomesBox.removeChild(transactionToDelete) : expensesBox.removeChild(transactionToDelete);
-}
-
-const deleteAllTransactions = () => {
-  incomesBox.innerHTML = '<h3 class="incomes-box__title">Incomes</h3>';
-  expensesBox.innerHTML = '<h3 class="expenses-box__title">Expenses</h3>';
-  moneyArray = [0];
-  availableMoney.textContent = "0";
-  availableMoney.style.color = "#f0ebd8";
-  closeConfirmationModal();
-}
+// } 
 
 window.addEventListener("DOMContentLoaded", main);
