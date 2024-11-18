@@ -45,8 +45,7 @@ let cancelEditionBtn;
 let closeEditionPanelBtn;
 // Confirmation modal
 export let confirmationModal;
-let confirmDeletionButton;
-let doNotConfirmDeletionButton;
+let cancelDeletionButton;
 // Edition modal
 let editionModal;
 
@@ -98,8 +97,7 @@ const getElements = () => {
   closeEditionPanelBtn = editTransactionPanel.querySelector(".transaction-panel__xmark");
   // Confirmation modal
   confirmationModal = document.querySelector(".confirmation-modal");
-  confirmDeletionButton = document.querySelector(".confirmation-modal__button--confirm");
-  doNotConfirmDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
+  cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
   // Edition modal
   editionModal = document.querySelector(".edition-modal");
 } 
@@ -107,12 +105,11 @@ const getElements = () => {
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", openConfirmationModal);
-  doNotConfirmDeletionButton.addEventListener("click", closeConfirmationModal);
+  cancelDeletionButton.addEventListener("click", closeConfirmationModal);
   closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel, [nameInput, amountInput, categorySelect]));
   closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
   lightCircle.addEventListener("click", switchToLightMode);
   darkCircle.addEventListener("click", switchToDarkMode);
-  confirmDeletionButton.addEventListener("click", deleteAllTransactions);
 } 
 
 const openEditionPanel = (transactionId) => {

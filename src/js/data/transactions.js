@@ -1,5 +1,5 @@
-import {transactionId, moneyArray, availableMoney, categoryIcon, incomesBox, expensesBox, nameInput, amountInput, categorySelect} from "../main.js";
-import closeConfirmationModal from "../modal/modal.js";
+import {transactionId, moneyArray, availableMoney, categoryIcon, incomesBox, expensesBox, nameInput, amountInput, categorySelect, confirmationModal} from "../main.js";
+//import closeConfirmationModal from "../modal/modal.js";
 import checkCategory from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
@@ -52,6 +52,5 @@ export const deleteAllTransactions = () => {
   moneyArray = [0];
   availableMoney.textContent = "0";
   availableMoney.style.color = "#f0ebd8";
-
-  closeConfirmationModal();
+  confirmationModal.classList.remove("confirmation-modal--open");
 }
