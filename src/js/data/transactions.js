@@ -1,5 +1,5 @@
 import {transactionId, moneyArray, availableMoney, categoryIcon, incomesBox, expensesBox, nameInput, amountInput, categorySelect, confirmationModal} from "../main.js";
-//import closeConfirmationModal from "../modal/modal.js";
+import {openEditionPanel} from "../panel/edition_panel.js";
 import checkCategory from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
@@ -16,7 +16,7 @@ export const createNewTransaction = () => {
   const transactionItem = document.querySelector(".transaction__template").content.cloneNode(true);
   transactionItem.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
   transactionItem.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountFormatted}`;
-  //transactionItem.querySelector(".transactions__item-amount-button--edit").addEventListener("click", () => openEditionPanel(transactionId));
+  transactionItem.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event));
   transactionItem.querySelector(".transactions__item-amount-button--delete").addEventListener("click", (event) => deleteTransaction(event, amountFormatted));
   newTransaction.appendChild(transactionItem);
 
@@ -31,6 +31,11 @@ export const createNewTransaction = () => {
   transactionId++;
   moneyArray.push(parseFloat(formatCurrency(amountCents)));
   calculateBalance(moneyArray);
+}
+
+export const editTransaction = (event, transaction, {panel, nameInput, amountInput, categorySelect}) => {
+  event.preventDefault();
+
 }
 
 const deleteTransaction = (event, amountFormatted) => {

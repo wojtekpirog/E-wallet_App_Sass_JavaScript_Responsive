@@ -5,7 +5,6 @@ import handleFormSubmit from "./panel/form_validation.js";
 import {openTransactionPanel, closeTransactionPanel} from "./panel/creation_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
-import deleteAllTransactions from "./data/transactions.js";
 
 // Root element
 export let rootElement; 
@@ -30,16 +29,14 @@ export let transactionPanel;
 export let nameInput;
 export let amountInput;
 export let categorySelect;
-let categorySelectArrow;
 let saveBtn;
 let cancelBtn;
 let closePanelBtn;
 // Transaction edition panel
-let editTransactionPanel;
-let nameToEditInput;
-let amountToEditInput;
-let categoryToEditSelect;
-let categoryToEditSelectArrow;
+export let editionPanel;
+export let nameToEditInput;
+export let amountToEditInput;
+export let categoryToEditSelect;
 let saveEditionBtn;
 let cancelEditionBtn;
 let closeEditionPanelBtn;
@@ -86,36 +83,28 @@ const getElements = () => {
   nameInput = transactionPanel.querySelector("#name");
   amountInput = transactionPanel.querySelector("#amount");
   categorySelect = transactionPanel.querySelector("#category");
-  categorySelectArrow = transactionPanel.querySelector(".transaction-panel__arrow");
   closePanelBtn = transactionPanel.querySelector(".transaction-panel__xmark");
   // Transaction edition panel
-  editTransactionPanel = document.querySelector(".transaction-panel--edit");
-  nameToEditInput = editTransactionPanel.querySelector("#name-to-edit");
-  amountToEditInput = editTransactionPanel.querySelector("#amount-to-edit");
-  categoryToEditSelect = editTransactionPanel.querySelector("#category-to-edit");
-  categoryToEditSelectArrow = editTransactionPanel.querySelector(".transaction-panel__arrow");
-  closeEditionPanelBtn = editTransactionPanel.querySelector(".transaction-panel__xmark");
+  editionPanel = document.querySelector(".transaction-panel--edit");
+  nameToEditInput = editionPanel.querySelector("#name-to-edit");
+  amountToEditInput = editionPanel.querySelector("#amount-to-edit");
+  categoryToEditSelect = editionPanel.querySelector("#category-to-edit");
+  closeEditionPanelBtn = editionPanel.querySelector(".transaction-panel__xmark"); 
   // Confirmation modal
   confirmationModal = document.querySelector(".confirmation-modal");
   cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
   // Edition modal
   editionModal = document.querySelector(".edition-modal");
-} 
+}
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", openConfirmationModal);
   cancelDeletionButton.addEventListener("click", closeConfirmationModal);
-  closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel, [nameInput, amountInput, categorySelect]));
-  closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
-  lightCircle.addEventListener("click", switchToLightMode);
+  closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel));
+  closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(editionPanel));
+  lightCircle.addEventListener("click", switchToLightMode); 
   darkCircle.addEventListener("click", switchToDarkMode);
-} 
-
-const openEditionPanel = (transactionId) => {
-  editTransactionPanel.classList.add("active");
-  editTransactionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, nameToEditInput, amountToEditInput, categoryToEditSelect, editTransactionPanel, transactionId));
-  editTransactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeTransactionPanel(nameToEditInput, amountToEditInput, categoryToEditSelect, categoryToEditSelectArrow, editTransactionPanel));
 }
 
 const editTransaction = (transactionId) => {

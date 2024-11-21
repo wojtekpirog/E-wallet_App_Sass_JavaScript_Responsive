@@ -99,7 +99,7 @@
       <!-- Xmark -->
       <button type="button" class="transaction-panel__xmark"><i class="fa-solid fa-xmark"></i></button>
       <!-- Xmark -->
-      <!-- Transaction creation orm -->
+      <!-- Transaction creation form -->
       <form class="transaction-panel__form" autocomplete="off">
         <!-- Form header -->
         <h2 class="section-title">Add a new transaction</h2>
@@ -126,7 +126,6 @@
         <!-- Form control box -->
         <!-- Form control box -->
         <div class="transaction-panel__control-box">
-          <!-- Form control box -->
           <!-- Form control -->
           <label for="category" class="transaction-panel__label">Select category: </label>
           <small>( [ + ] = income, [ - ] = expense )</small>
@@ -153,7 +152,7 @@
           </div>
           <!-- Select box -->
           <p class="transaction-panel__error"></p>
-          <!-- Form control box -->
+          <!-- Form control -->
         </div>
         <!-- Buttons -->
         <div class="transaction-panel__buttons">
@@ -195,9 +194,9 @@
         <!-- modal form box -->
         <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="name" class="transaction-panel__label">Name: </label>
+          <label for="name-to-edit" class="transaction-panel__label">Name: </label>
           <small>(3-30 characters)</small>
-          <input type="text" id="name-to-edit" name="name-to-edit" class="transaction-panel__input" minlength="3" maxlength="30" required/>
+          <input type="text" id="name-to-edit" name="name-to-edit" class="transaction-panel__input transaction-panel__input--name" minlength="3" maxlength="30" required/>
           <p class="transaction-panel__error"></p>
           <!-- modal form control -->
         </div>
@@ -205,9 +204,9 @@
         <!-- modal form box -->
         <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="amount" class="transaction-panel__label">Amount: </label>
+          <label for="amount-to-edit" class="transaction-panel__label">Amount: </label>
           <small>(put an amount, if you add an expense, put a minus sign before the amount)</small>
-          <input type="number" id="amount-to-edit" name="amount-to-edit" class="transaction-panel__input" required/>
+          <input type="number" id="amount-to-edit" name="amount-to-edit" class="transaction-panel__input transaction-panel__input--amount" required/>
           <p class="transaction-panel__error"></p>
           <!-- modal form control -->
         </div>
@@ -215,7 +214,7 @@
         <!-- modal form box -->
         <div class="transaction-panel__control-box">
           <!-- modal form control -->
-          <label for="category" class="transaction-panel__label">Select category: </label> 
+          <label for="category-to-edit" class="transaction-panel__label">Select category: </label> 
           <small>( [ + ] = income, [ - ] = expense )</small>
           <!-- Select box -->
           <div class="transaction-panel__box">
