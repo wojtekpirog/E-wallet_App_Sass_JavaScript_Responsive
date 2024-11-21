@@ -10,9 +10,8 @@ export const createNewTransaction = () => {
   newTransaction.id = transactionId;
   // Return category icon based on selected category
   checkCategory(categorySelect);
-
-  const amountCents = Math.round(parseFloat(amountInput.value) * 100);
-  const amountFormatted = formatCurrency(amountCents);
+  // Return the monetary value of the transaction
+  const amountFormatted = formatCurrency(amountInput.value);
 
   const transactionItem = document.querySelector(".transaction__template").content.cloneNode(true);
   transactionItem.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
@@ -21,6 +20,7 @@ export const createNewTransaction = () => {
   transactionItem.querySelector(".transactions__item-amount-button--delete").addEventListener("click", (event) => deleteTransaction(event, amountFormatted));
   newTransaction.appendChild(transactionItem);
 
+  // If amount is positive, add a new income, otherwise add a new expense
   if (amountInput.value > 0) {
     newTransaction.classList.add("transactions__item", "transactions__item--income");
     incomesList.appendChild(newTransaction);
@@ -30,13 +30,20 @@ export const createNewTransaction = () => {
   }
 
   transactionId++;
-  moneyArray.push(parseFloat(formatCurrency(amountCents)));
+  moneyArray.push(parseFloat(amountFormatted));
   calculateBalance(moneyArray);
 }
 
 export const editTransaction = (event, transaction, {panel, nameInput, amountInput, categorySelect}) => {
-  event.preventDefault();
-
+  event.preventDefault(); 
+  // Return category icon based on selected category
+  checkCategory(categorySelect);
+  // Return the monetary value of the transaction
+  const amountFormatted = formatCurrency(amountInput.value);
+  // Set the new transaction name and transaction category icon
+  transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
+  // Set the new transaction amount
+  transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountFormatted}`;
 }
 
 const deleteTransaction = (event, amountFormatted) => {

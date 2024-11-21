@@ -1,8 +1,6 @@
 import {moneyArray, availableMoney} from "../main.js";
 
 function calculateBalance(moneyArray) {
-  console.log(moneyArray);
-
   const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);
 
   if (balance > 0) {
