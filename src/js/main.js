@@ -1,7 +1,6 @@
 import setFooterYear from "./footer.js";
 import calculateBalance from "./utils/balance.js";
 import checkCategory from "./utils/category.js";
-import handleFormSubmit from "./panel/form_validation.js";
 import {openTransactionPanel, closeTransactionPanel} from "./panel/creation_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
@@ -12,9 +11,9 @@ export let rootElement;
 export let footerYear;
 // Wallet icon
 export let walletIcon;
-// Boxes for transactions
-export let incomesBox; 
-export let expensesBox;
+// Lists of transactions
+export let incomesList;
+export let expensesList;
 // Category icon
 export let categoryIcon;  
 // Buttons for transactions
@@ -68,9 +67,9 @@ const getElements = () => {
   walletIcon = document.querySelector(".header__title-icon");
   // Balance info
   availableMoney = document.querySelector(".options__balance > span");
-  // Boxes for transactions
-  incomesBox = document.querySelector(".incomes-box");
-  expensesBox = document.querySelector(".expenses-box");
+  // Lists of transactions
+  incomesList = document.querySelector(".incomes-box__list");
+  expensesList = document.querySelector(".expenses-box__list");
   // Buttons for transactions
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
   deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");

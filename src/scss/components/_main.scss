@@ -183,6 +183,10 @@
       font-size: 2.4rem;
       font-family: var(--bold-font);
     }
+
+    &__list {
+      list-style-type: none;
+    }
   }
 
   .incomes-box__title {

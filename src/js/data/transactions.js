@@ -1,4 +1,4 @@
-import {transactionId, moneyArray, availableMoney, categoryIcon, incomesBox, expensesBox, nameInput, amountInput, categorySelect, confirmationModal} from "../main.js";
+import {transactionId, moneyArray, availableMoney, categoryIcon, incomesList, expensesList, nameInput, amountInput, categorySelect, confirmationModal} from "../main.js";
 import {openEditionPanel} from "../panel/edition_panel.js";
 import checkCategory from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
@@ -6,8 +6,9 @@ import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";
 
 export const createNewTransaction = () => {
-  const newTransaction = document.createElement("div");
+  const newTransaction = document.createElement("li");
   newTransaction.id = transactionId;
+  // Return category icon based on selected category
   checkCategory(categorySelect);
 
   const amountCents = Math.round(parseFloat(amountInput.value) * 100);
@@ -22,10 +23,10 @@ export const createNewTransaction = () => {
 
   if (amountInput.value > 0) {
     newTransaction.classList.add("transactions__item", "transactions__item--income");
-    incomesBox.appendChild(newTransaction);
+    incomesList.appendChild(newTransaction);
   } else {
     newTransaction.classList.add("transactions__item", "transactions__item--expense");
-    expensesBox.appendChild(newTransaction);
+    expensesList.appendChild(newTransaction);
   }
 
   transactionId++;
@@ -44,16 +45,16 @@ const deleteTransaction = (event, amountFormatted) => {
   const transactionIndex = moneyArray.indexOf(amountToDelete)
 
   transactionToDelete.classList.contains("transactions__item--income")
-    ? incomesBox.removeChild(transactionToDelete)
-    : expensesBox.removeChild(transactionToDelete);
+    ? incomesList.removeChild(transactionToDelete)
+    : expensesList.removeChild(transactionToDelete);
 
   moneyArray.splice(transactionIndex, 1);
   calculateBalance(moneyArray);  
 }
 
 export const deleteAllTransactions = () => {
-  incomesBox.innerHTML = "<h3 class='incomes-box__title'>Incomes</h3>";
-  expensesBox.innerHTML = "<h3 class='expenses-box__title'>Expenses</h3>";
+  incomesList.innerHTML = "";
+  expensesList.innerHTML = "";
   moneyArray = [0];
   availableMoney.textContent = "0";
   availableMoney.style.color = "#f0ebd8";
