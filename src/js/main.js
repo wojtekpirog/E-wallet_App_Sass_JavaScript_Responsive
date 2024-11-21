@@ -95,7 +95,7 @@ const getElements = () => {
   cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
   // Edition modal
   editionModal = document.querySelector(".edition-modal");
-}
+} 
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
