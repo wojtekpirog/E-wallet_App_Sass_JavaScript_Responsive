@@ -44,6 +44,16 @@ export const editTransaction = (event, transaction, {panel, nameInput, amountInp
   transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
   // Set the new transaction amount
   transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountFormatted}`;
+  // Remove the classes that identify the transaction as an income or expense
+  transaction.classList.remove("transactions__item--income", "transactions__item--expense");
+  // If the new amount is positive, turn the transaction into an income, otherwise turn it into an expense
+  if (amountFormatted > 0) {
+    transaction.classList.remove("transactions__item--expense");
+    transaction.classList.add("transactions__item--income");
+  } else {
+    transaction.classList.remove("transactions__item--income");
+    transaction.classList.add("transactions__item--expense");
+  }
 }
 
 const deleteTransaction = (event, amountFormatted) => {
