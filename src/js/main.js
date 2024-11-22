@@ -1,5 +1,5 @@
 import setFooterYear from "./footer.js";
-import {openTransactionPanel, closeTransactionPanel} from "./panel/creation_panel.js";
+import {openTransactionPanel, closePanel} from "./panel/transaction_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
 
@@ -94,8 +94,8 @@ const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", openConfirmationModal);
   cancelDeletionButton.addEventListener("click", closeConfirmationModal);
-  closePanelBtn.addEventListener("click", () => closeTransactionPanel(transactionPanel));
-  closeEditionPanelBtn.addEventListener("click", () => closeTransactionPanel(editionPanel));
+  closePanelBtn.addEventListener("click", () => closePanel(transactionPanel));
+  closeEditionPanelBtn.addEventListener("click", () => closePanel(editionPanel));
   lightCircle.addEventListener("click", switchToLightMode); 
   darkCircle.addEventListener("click", switchToDarkMode);
 }

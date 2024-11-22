@@ -1,5 +1,16 @@
-import {editionPanel, nameToEditInput, amountToEditInput, categoryToEditSelect} from "../main.js";
+import {transactionPanel, editionPanel, nameInput, nameToEditInput, amountInput, amountToEditInput, categorySelect, categoryToEditSelect} from "../main.js";
 import {editTransaction} from "../data/transactions.js";
+import handleFormSubmit from "./form_validation.js";
+
+export const openTransactionPanel = () => {
+  // Show the transaction panel
+  transactionPanel.classList.add("transaction-panel--open");
+  // Put focus on the name input
+  transactionPanel.querySelector(".transaction-panel__input--name").focus();
+  // Add event listeners on the `Save` and `Cancel` buttons
+  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, {panel: transactionPanel, nameInput: nameInput, amountInput: amountInput, categorySelect: categorySelect}));
+  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(transactionPanel));
+}
 
 export const openEditionPanel = (event) => {
   // Get the transaction and its details
@@ -15,9 +26,9 @@ export const openEditionPanel = (event) => {
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
   // Add event listeners on the `Apply` and `Cancel` buttons
   editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, transaction, {panel: editionPanel, nameInput: nameToEditInput, amountInput: amountToEditInput, categorySelect: categoryToEditSelect}));
-  editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closeEditionPanel(editionPanel));
+  editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel));
 }
 
-const closeEditionPanel = (editionPanel) => {
-  editionPanel.classList.remove("transaction-panel--open");
+export const closePanel = (panel) => {
+  panel.classList.remove("transaction-panel--open");
 }

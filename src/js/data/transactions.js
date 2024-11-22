@@ -1,5 +1,5 @@
 import {transactionId, moneyArray, availableMoney, categoryIcon, incomesList, expensesList, nameInput, amountInput, categorySelect, confirmationModal} from "../main.js";
-import {openEditionPanel} from "../panel/edition_panel.js";
+import {openEditionPanel} from "../panel/transaction_panel.js";
 import checkCategory from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";

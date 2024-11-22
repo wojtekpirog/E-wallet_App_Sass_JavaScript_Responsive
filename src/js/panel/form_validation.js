@@ -1,6 +1,5 @@
-// import {transactionId} from "../main.js";
-import {closeTransactionPanel} from "./creation_panel.js";
-import {createNewTransaction, editTransaction} from "../data/transactions.js";
+import {closePanel} from "./transaction_panel.js";
+import {createNewTransaction} from "../data/transactions.js";
 import formatInputName from "../utils/input_name.js";
 
 const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}, transactionId) => {
@@ -71,13 +70,11 @@ const checkForErrors = (panel, inputs, transactionId) => {
   if (!hasErrors) {
     if (panel.classList.contains("transaction-panel--create")) {
       createNewTransaction();
-    } else if (panel.classList.contains("transaction-panel--edit")) {
-      editTransaction(transactionId);
     }
 
     clearInputs(inputs);
     clearErrors(inputs);
-    closeTransactionPanel(panel);
+    closePanel(panel);
   }
 }
 
