@@ -1,4 +1,4 @@
-import {moneyArray, availableMoney} from "../main.js";
+import {availableMoney} from "../main.js";
 
 function calculateBalance(moneyArray) {
   const balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue);

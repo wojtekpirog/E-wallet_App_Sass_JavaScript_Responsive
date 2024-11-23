@@ -2,15 +2,13 @@ import {closePanel} from "./transaction_panel.js";
 import {createNewTransaction} from "../data/transactions.js";
 import formatInputName from "../utils/input_name.js";
 
-const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}, transactionId) => {
+const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}) => {
   event.preventDefault();
   
   checkName(nameInput);
   checkAmount(amountInput);
   checkSelect(categorySelect);
-
-  const inputs = [nameInput, amountInput, categorySelect];
-  checkForErrors(panel, inputs, transactionId);
+  checkForErrors(panel, [nameInput, amountInput, categorySelect]);
 }
 
 const checkName = (nameInput) => {
@@ -58,7 +56,7 @@ const removeError = (formControl) => {
   formControl.classList.remove("transaction-panel__input--error");
 }
 
-const checkForErrors = (panel, inputs, transactionId) => {
+const checkForErrors = (panel, inputs) => {
   let hasErrors = false;
 
   inputs.forEach((input) => {
