@@ -65,32 +65,13 @@ const checkForErrors = (panel, inputs) => {
       : hasErrors = false;
   });
 
-  if (!hasErrors) {
+  if (!hasErrors) { // Nie ma błędów
     if (panel.classList.contains("transaction-panel--create")) {
       createNewTransaction();
     }
-
-    clearInputs(inputs);
-    clearErrors(inputs);
-    closePanel(panel);
+    
+    closePanel(panel, inputs);
   }
-}
-
-export const clearInputs = (inputs) => {
-  inputs.forEach((input) => {
-    input.value = "";
-    input.classList.remove("transaction-panel__input--error");
-  });
-
-  inputs[2].selectedIndex = 0;
-}
-
-export const clearErrors = (inputs) => {
-  // document.querySelectorAll(".transaction-panel__error").forEach(error => error.style.display = "none");
-  inputs.forEach((input) => {
-    input.classList.remove("transaction-panel__input--error");
-    input.closest(".transaction-panel__control-box").querySelector(".transaction-panel__error").classList.remove("transaction-panel__error--active");
-  });
 }
 
 export default handleFormSubmit;

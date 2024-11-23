@@ -88,14 +88,14 @@ const getElements = () => {
   cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
   // Edition modal
   editionModal = document.querySelector(".edition-modal");
-} 
+}
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", openConfirmationModal);
   cancelDeletionButton.addEventListener("click", closeConfirmationModal);
-  closePanelBtn.addEventListener("click", () => closePanel(transactionPanel));
-  closeEditionPanelBtn.addEventListener("click", () => closePanel(editionPanel));
+  closePanelBtn.addEventListener("click", () => closePanel(transactionPanel, [nameInput, amountInput, categorySelect]));
+  closeEditionPanelBtn.addEventListener("click", () => closePanel(editionPanel, [nameToEditInput, amountToEditInput, categoryToEditSelect]));
   lightCircle.addEventListener("click", switchToLightMode); 
   darkCircle.addEventListener("click", switchToDarkMode);
 }
