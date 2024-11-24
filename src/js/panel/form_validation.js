@@ -1,14 +1,14 @@
 import {closePanel} from "./transaction_panel.js";
-import {createNewTransaction} from "../data/transactions.js";
+import {createNewTransaction, editTransaction} from "../data/transactions.js";
 import formatInputName from "../utils/input_name.js";
 
-const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}) => {
+const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}, transaction, transactionAmount) => {
   event.preventDefault();
   
   checkName(nameInput);
   checkAmount(amountInput);
   checkSelect(categorySelect);
-  checkForErrors(panel, [nameInput, amountInput, categorySelect]);
+  checkForErrors(panel, [nameInput, amountInput, categorySelect], transaction, transactionAmount);
 }
 
 const checkName = (nameInput) => {
@@ -56,7 +56,7 @@ const removeError = (formControl) => {
   formControl.classList.remove("transaction-panel__input--error");
 }
 
-const checkForErrors = (panel, inputs) => {
+const checkForErrors = (panel, inputs, transaction, transactionAmount) => {
   let hasErrors = false;
 
   inputs.forEach((input) => {
@@ -66,9 +66,8 @@ const checkForErrors = (panel, inputs) => {
   });
 
   if (!hasErrors) { // Nie ma błędów
-    if (panel.classList.contains("transaction-panel--create")) {
-      createNewTransaction();
-    }
+    if (panel.classList.contains("transaction-panel--create")) createNewTransaction();
+    else if (panel.classList.contains("transaction-panel--edit")) editTransaction(panel, inputs, transaction, transactionAmount);
     
     closePanel(panel, inputs);
   }

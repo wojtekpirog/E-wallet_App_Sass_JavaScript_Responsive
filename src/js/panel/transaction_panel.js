@@ -13,10 +13,12 @@ export const openTransactionPanel = () => {
 }
 
 export const openEditionPanel = (event) => {
+  console.log(event.target.closest(".transactions__item"));
   // Get the transaction and its details
   const transaction = event.target.closest(".transactions__item");
   const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
   const transactionAmount = transaction.querySelector(".transactions__item-amount-text").textContent.trim();
+
   // Show the edition panel
   editionPanel.classList.add("transaction-panel--open");
   // Put focus on the name input
@@ -25,7 +27,7 @@ export const openEditionPanel = (event) => {
   editionPanel.querySelector(".transaction-panel__input--name").value = transactionName;
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
   // Add event listeners on the `Apply` and `Cancel` buttons
-  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, transaction, {panel: editionPanel, nameInput: nameToEditInput, amountInput: amountToEditInput, categorySelect: categoryToEditSelect}));
+  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, {panel: editionPanel, nameInput: nameToEditInput, amountInput: amountToEditInput, categorySelect: categoryToEditSelect}, transaction, transactionAmount));
   editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, [nameToEditInput, amountToEditInput, categoryToEditSelect]));
 }
 
