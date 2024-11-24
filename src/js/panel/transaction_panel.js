@@ -1,5 +1,4 @@
 import {transactionPanel, editionPanel, nameInput, nameToEditInput, amountInput, amountToEditInput, categorySelect, categoryToEditSelect} from "../main.js";
-import {editTransaction} from "../data/transactions.js";
 import handleFormSubmit from "./form_validation.js";
 
 export const openTransactionPanel = () => {
@@ -13,14 +12,12 @@ export const openTransactionPanel = () => {
 }
 
 export const openEditionPanel = (event) => {
-  console.log(event.target.closest(".transactions__item"));
+  // Show the edition panel
+  editionPanel.classList.add("transaction-panel--open");
   // Get the transaction and its details
   const transaction = event.target.closest(".transactions__item");
   const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
   const transactionAmount = transaction.querySelector(".transactions__item-amount-text").textContent.trim();
-
-  // Show the edition panel
-  editionPanel.classList.add("transaction-panel--open");
   // Put focus on the name input
   editionPanel.querySelector(".transaction-panel__input--name").focus();
   // Fill the inputs with values from `transactionName` and `transactionAmount`

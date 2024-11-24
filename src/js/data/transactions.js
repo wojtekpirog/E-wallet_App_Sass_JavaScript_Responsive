@@ -6,28 +6,30 @@ import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";
 
 export const createNewTransaction = () => {
+  // Increment the transaction id
+  transactionId += 1;
+  // Return category icon based on selected category
+  checkCategory(categorySelect);
+  // Return the monetary amount of the transaction
+  const amountFormatted = formatCurrency(amountInput.value);
   // Create a list item
   const listItem = document.createElement("li");
   // Create a container for a new transaction
   const transactionContainer = document.createElement("div");
   // Give the new transaction a unique id
   transactionContainer.dataset.id = transactionId;
-  // Return category icon based on selected category
-  checkCategory(categorySelect);
-  // Return the monetary value of the transaction
-  const amountFormatted = formatCurrency(amountInput.value);
   // Set the new transaction name and amount and add transaction category icon
   const transaction = document.querySelector(".transaction__template").content.cloneNode(true);
   transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
   transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountFormatted}`;
-  transaction.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event, transactionId));
-  transaction.querySelector(".transactions__item-amount-button--delete").addEventListener("click", (event) => deleteTransaction(event, amountFormatted));
+  transaction.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event));
+  transaction.querySelector(".transactions__item-amount-button--delete").addEventListener("click", (event) => deleteTransaction(event));
   // Put the new transaction inside its container
   transactionContainer.appendChild(transaction);
   // Put the new transaction's container inside the list item (li) tag
   listItem.appendChild(transactionContainer);
   // If amount is positive, add a new income, otherwise add a new expense
-  if (amountInput.value > 0) {
+  if (amountFormatted > 0) {
     transactionContainer.classList.add("transactions__item", "transactions__item--income");
     incomesList.appendChild(listItem);
   } else {
@@ -35,10 +37,8 @@ export const createNewTransaction = () => {
     expensesList.appendChild(listItem);
   }
   // Add the amount of the new transaction to `moneyArray` and recalculate the balance
-  moneyArray.push(parseFloat(amountFormatted));
+  moneyArray.push(amountFormatted);
   calculateBalance(moneyArray);
-  // Increment the transaction id
-  transactionId += 1;
 }
 
 export const editTransaction = (panel, [nameInput, amountInput, categorySelect], transaction, transactionAmount) => { 
@@ -66,20 +66,22 @@ export const editTransaction = (panel, [nameInput, amountInput, categorySelect],
   }
   // Replace the old amount with the new amount
   moneyArray.splice(oldAmountIndex, 1, parseFloat(newAmountFormatted));
-
   // Recalculate the balance
   calculateBalance(moneyArray);
 }
 
-const deleteTransaction = (event, amountFormatted) => {
+const deleteTransaction = (event) => {
   const transactionToDelete = event.target.closest(".transactions__item");
-  const amountToDelete = parseFloat(amountFormatted);
-  const transactionIndex = moneyArray.indexOf(amountToDelete)
-
+  // Get the amount of the transaction and turn it into a monetary value
+  const amountString = transactionToDelete.querySelector(".transactions__item-amount-text").textContent.trim();
+  const amountNumber = parseFloat(amountString);
+  // Get the index of the transaction amount in `moneyArray`
+  const transactionIndex = moneyArray.indexOf(amountNumber);
+  // Remove the transaction from the DOM
   transactionToDelete.classList.contains("transactions__item--income")
-    ? incomesList.removeChild(transactionToDelete)
-    : expensesList.removeChild(transactionToDelete);
-
+    ? incomesList.removeChild(transactionToDelete.parentElement)
+    : expensesList.removeChild(transactionToDelete.parentElement);
+  // Remove the transaction from `moneyArray` and recalculate the balance
   moneyArray.splice(transactionIndex, 1);
   calculateBalance(moneyArray);  
 }
