@@ -41,7 +41,7 @@ export const createNewTransaction = () => {
   calculateBalance(moneyArray);
 }
 
-export const editTransaction = (panel, [nameInput, amountInput, categorySelect], transaction, transactionAmount) => { 
+export const editTransaction = (panel, [nameInput, amountInput, categorySelect], transaction, transactionAmount) => {
   // Return category icon based on selected category
   checkCategory(categorySelect);
   // Get the old amount and turn it into a number
@@ -65,7 +65,7 @@ export const editTransaction = (panel, [nameInput, amountInput, categorySelect],
     transaction.classList.add("transactions__item--expense");
   }
   // Replace the old amount with the new amount
-  moneyArray.splice(oldAmountIndex, 1, parseFloat(newAmountFormatted));
+  moneyArray.splice(oldAmountIndex, 1, newAmountFormatted);
   // Recalculate the balance
   calculateBalance(moneyArray);
 }

@@ -65,7 +65,7 @@ const checkForErrors = (panel, inputs, transaction, transactionAmount) => {
       : hasErrors = false;
   });
 
-  if (!hasErrors) { // Nie ma błędów
+  if (!hasErrors) {
     if (panel.classList.contains("transaction-panel--create")) createNewTransaction();
     else if (panel.classList.contains("transaction-panel--edit")) editTransaction(panel, inputs, transaction, transactionAmount);
     
