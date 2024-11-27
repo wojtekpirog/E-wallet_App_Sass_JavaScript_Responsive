@@ -1,17 +1,21 @@
 import {transactionPanel, editionPanel, nameInput, nameToEditInput, amountInput, amountToEditInput, categorySelect, categoryToEditSelect} from "../main.js";
-import handleFormSubmit from "./form_validation.js";
+import {createNewTransaction, editTransaction} from "../data/transactions.js";
 
 export const openTransactionPanel = () => {
+  // Group the inputs into an array
+  const inputs = [nameInput, amountInput, categorySelect];
   // Show the transaction panel
   transactionPanel.classList.add("transaction-panel--open");
   // Put focus on the name input
   transactionPanel.querySelector(".transaction-panel__input--name").focus();
   // Add event listeners on the `Save` and `Cancel` buttons
-  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => handleFormSubmit(event, {panel: transactionPanel, nameInput: nameInput, amountInput: amountInput, categorySelect: categorySelect}));
-  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(transactionPanel, [nameInput, amountInput, categorySelect]));
+  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => createNewTransaction(event, transactionPanel, inputs));
+  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(transactionPanel, inputs));
 }
 
 export const openEditionPanel = (event) => {
+  // Group the inputs into an array
+  const inputs = [nameToEditInput, amountToEditInput, categoryToEditSelect];
   // Show the edition panel
   editionPanel.classList.add("transaction-panel--open");
   // Get the transaction and its details
@@ -24,8 +28,8 @@ export const openEditionPanel = (event) => {
   editionPanel.querySelector(".transaction-panel__input--name").value = transactionName;
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
   // Add event listeners on the `Apply` and `Cancel` buttons
-  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => handleFormSubmit(event, {panel: editionPanel, nameInput: nameToEditInput, amountInput: amountToEditInput, categorySelect: categoryToEditSelect}, transaction, transactionAmount));
-  editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, [nameToEditInput, amountToEditInput, categoryToEditSelect]));
+  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, editionPanel, inputs, transaction, transactionAmount));
+  editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, inputs));
 }
 
 export const clearInputs = (inputs) => {

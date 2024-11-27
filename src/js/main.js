@@ -16,7 +16,6 @@ export let expensesList;
 export let categoryIcon;  
 // Buttons for transactions
 let addTransactionBtn; 
-let deleteTransactionBtn;
 let deleteAllBtn;
 // Light and dark mode buttons
 let lightCircle;
@@ -36,8 +35,6 @@ let closeEditionPanelBtn;
 // Confirmation modal
 export let confirmationModal;
 let cancelDeletionButton;
-// Edition modal
-let editionModal;
 
 // Transaction ID
 export let transactionId = 0;
@@ -66,7 +63,6 @@ const getElements = () => {
   expensesList = document.querySelector(".expenses-box__list");
   // Buttons for transactions
   addTransactionBtn = document.querySelector(".options__controls-btn--add");
-  deleteTransactionBtn = document.querySelector(".incomes-box__item-amount-btn");
   deleteAllBtn = document.querySelector(".options__controls-btn--deleteAll");
   // Light and dark mode buttons
   lightCircle = document.querySelector(".options__style-button--light");
@@ -86,9 +82,7 @@ const getElements = () => {
   // Confirmation modal
   confirmationModal = document.querySelector(".confirmation-modal");
   cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
-  // Edition modal
-  editionModal = document.querySelector(".edition-modal");
-} 
+}
 
 const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
@@ -100,7 +94,7 @@ const addEventListeners = () => {
   darkCircle.addEventListener("click", switchToDarkMode);
 }
 
-window.addEventListener("DOMContentLoaded", main);
+document.addEventListener("DOMContentLoaded", main);
 
 // const editTransaction = (transactionId) => {
 //   const currentIncomes = incomesBox.children;
@@ -143,4 +137,4 @@ window.addEventListener("DOMContentLoaded", main);
 
 //   moneyArray[indexOfTransactionToEdit] = newAmountOfTransaction;
 //   calculateBalance(moneyArray);
-// }
+// } 

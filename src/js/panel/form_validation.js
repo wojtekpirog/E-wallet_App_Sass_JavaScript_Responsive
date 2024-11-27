@@ -1,14 +1,16 @@
-import {closePanel} from "./transaction_panel.js";
-import {createNewTransaction, editTransaction} from "../data/transactions.js";
 import formatInputName from "../utils/input_name.js";
 
-const handleFormSubmit = (event, {panel, nameInput, amountInput, categorySelect}, transaction, transactionAmount) => {
+const handleFormSubmit = (event, inputs) => {
+  // Prevent page reload
   event.preventDefault();
-  
+  // Destructure the `inputs` array
+  const [nameInput, amountInput, categorySelect] = inputs;
+  // Validate the inputs
   checkName(nameInput);
-  checkAmount(amountInput);
-  checkSelect(categorySelect);
-  checkForErrors(panel, [nameInput, amountInput, categorySelect], transaction, transactionAmount);
+  checkAmount(amountInput, categorySelect);
+  checkCategory(categorySelect);
+  // Check whether there are any errors and return `true` if there are any errors, otherwise return `false`
+  return checkForErrors(inputs);
 }
 
 const checkName = (nameInput) => {
@@ -24,19 +26,26 @@ const checkName = (nameInput) => {
   }
 }
 
-const checkAmount = (amountInput) => {
+const checkAmount = (amountInput, categorySelect) => {
+  // Get the amount of the transaction
   const amount = parseFloat(amountInput.value);
+  // Get the selected category
+  const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
 
   if (isNaN(amount)) {
     displayError(amountInput, `${formatInputName(amountInput.id)} must be provided.`);
   } else if (amount === 0) {
     displayError(amountInput, `${formatInputName(amountInput.id)} cannot be equal to zero.`);
+  } else if (amount > 0 && selectedCategory.textContent.startsWith("[ - ]")) {
+    displayError(amountInput, `${formatInputName(amountInput.id)} must be a negative value for an expense.`);
+  } else if (amount < 0 && selectedCategory.textContent.startsWith("[ + ]")) {
+    displayError(amountInput, `${formatInputName(amountInput.id)} must be a positive value for an income.`);
   } else {
     removeError(amountInput);
   }
 }
 
-const checkSelect = (categorySelect) => {
+const checkCategory = (categorySelect) => {
   categorySelect.value === "none"
     ? displayError(categorySelect, `${formatInputName(categorySelect.id)} must be selected.`)
     : removeError(categorySelect);
@@ -56,21 +65,9 @@ const removeError = (formControl) => {
   formControl.classList.remove("transaction-panel__input--error");
 }
 
-const checkForErrors = (panel, inputs, transaction, transactionAmount) => {
-  let hasErrors = false;
-
-  inputs.forEach((input) => {
-    input.classList.contains("transaction-panel__input--error") 
-      ? hasErrors = true
-      : hasErrors = false;
-  });
-
-  if (!hasErrors) {
-    if (panel.classList.contains("transaction-panel--create")) createNewTransaction();
-    else if (panel.classList.contains("transaction-panel--edit")) editTransaction(panel, inputs, transaction, transactionAmount);
-    
-    closePanel(panel, inputs);
-  }
+const checkForErrors = (inputs) => {
+  // Use `some` to return `true` if at least one input in the `inputs` array contains an error, otherwise return `false`
+  return inputs.some((input) => input.classList.contains("transaction-panel__input--error"));
 }
 
 export default handleFormSubmit;
