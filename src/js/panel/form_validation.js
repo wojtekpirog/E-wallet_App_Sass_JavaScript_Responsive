@@ -5,9 +5,11 @@ const handleFormSubmit = (event, inputs) => {
   event.preventDefault();
   // Destructure the `inputs` array
   const [nameInput, amountInput, categorySelect] = inputs;
+  // Get the current option from categorySelect
+  const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
   // Validate the inputs
   checkName(nameInput);
-  checkAmount(amountInput, categorySelect);
+  checkAmount(amountInput, selectedCategory);
   checkCategory(categorySelect);
   // Check whether there are any errors and return `true` if there are any errors, otherwise return `false`
   return checkForErrors(inputs);
@@ -26,11 +28,9 @@ const checkName = (nameInput) => {
   }
 }
 
-const checkAmount = (amountInput, categorySelect) => {
+const checkAmount = (amountInput, selectedCategory) => {
   // Get the amount of the transaction
   const amount = parseFloat(amountInput.value);
-  // Get the selected category
-  const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
 
   if (isNaN(amount)) {
     displayError(amountInput, `${formatInputName(amountInput.id)} must be provided.`);
