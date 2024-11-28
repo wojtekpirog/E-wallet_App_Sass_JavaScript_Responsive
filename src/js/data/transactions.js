@@ -1,10 +1,29 @@
-import {transactionId, moneyArray, availableMoney, categoryIcon, incomesList, expensesList, confirmationModal} from "../main.js";
+import {availableMoney, categoryIcon, incomesList, expensesList, confirmationModal} from "../main.js";
 import {openEditionPanel, closePanel} from "../panel/transaction_panel.js";
 import handleFormSubmit from "../panel/form_validation.js";
 import checkCategory from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";
+// Array to store information about transactions
+export let moneyArray = [];
+// Transaction ID
+export let transactionId = 0;
+
+// Function to save data in Local Storage
+const saveToStorage = () => {
+  localStorage.setItem("moneyArray", JSON.stringify(moneyArray));
+}
+
+// Function to load data from Local Storage
+const loadFromStorage = () => {
+  // Get data from Local Storage
+  const storedAmounts = localStorage.getItem("moneyArray");
+  // Update `moneyArray` with the data from Local Storage
+  if (storedAmounts) {
+    moneyArray = JSON.parse(storedAmounts);
+  }
+}
 
 export const createNewTransaction = (event, transactionPanel, inputs) => {
   // Return whether the form validation resulted in erros or not
@@ -43,11 +62,16 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
       transactionContainer.classList.add("transactions__item", "transactions__item--expense");
       expensesList.appendChild(listItem);
     }
-    // Add the amount of the new transaction to `moneyArray` and recalculate the balance
+    // Add the amount of the new transaction to `moneyArray`
     moneyArray.push(parseFloat(amountFormatted));
+    // Save the data in Local Storage
+    saveToStorage();
+    // Recalculate the balance
     calculateBalance(moneyArray);
     // Close the panel
     closePanel(transactionPanel, inputs);
+
+    console.log(moneyArray);
   };
 }
 
@@ -113,3 +137,5 @@ export const deleteAllTransactions = () => {
   availableMoney.style.color = "#f0ebd8";
   confirmationModal.classList.remove("confirmation-modal--open");
 }
+
+export default loadFromStorage;

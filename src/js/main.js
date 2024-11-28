@@ -1,4 +1,5 @@
 import setFooterYear from "./footer.js";
+import loadFromStorage from "./data/transactions.js";
 import {openTransactionPanel, closePanel} from "./panel/transaction_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
@@ -9,6 +10,8 @@ export let rootElement;
 export let footerYear;
 // Wallet icon
 export let walletIcon;
+// Balance info (how much money is available)
+export let availableMoney;
 // Lists of transactions
 export let incomesList;
 export let expensesList;
@@ -36,17 +39,11 @@ let closeEditionPanelBtn;
 export let confirmationModal;
 let cancelDeletionButton;
 
-// Transaction ID
-export let transactionId = 0;
-// Amounts array
-export let moneyArray = [0];
-// Balance info (how much money is available)
-export let availableMoney;
-
 const main = () => {
   getElements();
   addEventListeners();
-  setFooterYear(); 
+  setFooterYear();
+  loadFromStorage();
 }
 
 const getElements = () => {

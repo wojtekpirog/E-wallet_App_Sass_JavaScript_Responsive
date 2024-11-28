@@ -1,4 +1,4 @@
-import {categorySelect, categoryIcon} from "../main.js";
+import {categoryIcon} from "../main.js";
 
 const checkCategory = (categorySelect) => {
   switch (categorySelect.value) {
