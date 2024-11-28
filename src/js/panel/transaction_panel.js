@@ -13,22 +13,22 @@ export const openTransactionPanel = () => {
   transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(transactionPanel, inputs));
 }
 
-export const openEditionPanel = (event) => {
+export const openEditionPanel = (transactionId) => {
   // Group the inputs into an array
   const inputs = [nameToEditInput, amountToEditInput, categoryToEditSelect];
   // Show the edition panel
   editionPanel.classList.add("transaction-panel--open");
-  // Get the transaction and its details
-  const transaction = event.target.closest(".transactions__item");
-  const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
-  const transactionAmount = transaction.querySelector(".transactions__item-amount-text").textContent.trim();
   // Put focus on the name input
   editionPanel.querySelector(".transaction-panel__input--name").focus();
+  // Get the transaction and its details
+  const transaction = document.querySelector(`[data-id="${transactionId}"]`);
+  const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
+  const transactionAmount = transaction.querySelector(".transactions__item-amount-text").textContent.trim();
   // Fill the inputs with values from `transactionName` and `transactionAmount`
   editionPanel.querySelector(".transaction-panel__input--name").value = transactionName;
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
   // Add event listeners on the `Apply` and `Cancel` buttons
-  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, editionPanel, inputs, transaction, transactionAmount));
+  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, transactionId, editionPanel, inputs));
   editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, inputs));
 }
 

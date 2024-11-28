@@ -47,7 +47,7 @@ export const renderTransactions = () => {
       // Fill in the transaction's data
       transactionElement.querySelector(".transactions__item-name").innerHTML = `${transaction.categoryIcon} ${transaction.name}`;
       transactionElement.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${transaction.amount}`;
-      //transaction.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event));
+      transactionElement.querySelector(".transactions__item-amount-button--edit").addEventListener("click", () => openEditionPanel(transactionId));
       transactionElement.querySelector(".transactions__item-amount-button--delete").addEventListener("click", () => deleteTransaction(transactionId));
       // Put the new transaction inside its container
       transactionContainer.appendChild(transactionElement);
@@ -97,6 +97,24 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
   };
 }
 
+export const editTransaction = (event, transactionId, editionPanel, inputs) => {
+  console.log("Edit transaction...");
+  // Return whether the form validation resulted in erros or not
+  const errorsOccured = handleFormSubmit(event, inputs);
+  // If there are no errors, edit the transaction
+  if (!errorsOccured) {
+    // Destructure the `inputs` array
+    const [nameToEditInput, amountToEditInput, categoryToEditSelect] = inputs;
+    // Get the transaction to be edited
+    const transactionToEdit = document.querySelector(`[data-id="${transactionId}"]`);
+
+    console.log(transactionToEdit);
+
+    // Close the edition panel
+    closePanel(editionPanel, inputs);
+  }
+}
+
 const deleteTransaction = (transactionId) => {
   // Get the transaction to be deleted
   const transactionToDelete = document.querySelector(`[data-id="${transactionId}"]`);
@@ -120,43 +138,43 @@ const deleteTransaction = (transactionId) => {
   renderTransactions();
 }
 
-export const editTransaction = (event, editionPanel, inputs, transaction, transactionAmount) => {
-  // Return whether the form validation resulted in erros or not
-  const errorsOccured = handleFormSubmit(event, inputs);
-  // If there are no errors, edit the transaction
-  if (!errorsOccured) {
-    // Destructure the `inputs` array
-    const [nameInput, amountInput, categorySelect] = inputs;
-    // Return category icon based on selected category
-    checkCategory(categorySelect);
-    // // Get the old amount and turn it into a floating-point number
-    const oldAmount = parseFloat(transactionAmount);
-    // // Get the index of the old amount from `moneyArray`
-    const oldAmountIndex = moneyArray.indexOf(oldAmount);
-    // // Return the monetary value of the transaction
-    const newAmountFormatted = formatCurrency(amountInput.value);
-    // // Set the new transactions name and category icon
-    transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
-    // Set the new transaction amount
-    transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${newAmountFormatted}`;
-    // Remove the classes that identify the transaction as an income or expense
-    transaction.classList.remove("transactions__item--income", "transactions__item--expense");
-    // If the new amount is positive, turn the transaction into an income, otherwise turn it into an expense
-    if (parseFloat(newAmountFormatted) > 0) {
-      transaction.classList.remove("transactions__item--expense");
-      transaction.classList.add("transactions__item--income");
-    } else {
-      transaction.classList.remove("transactions__item--income");
-      transaction.classList.add("transactions__item--expense");
-    }
-    // Replace the old amount with the new amount
-    moneyArray.splice(oldAmountIndex, 1, parseFloat(newAmountFormatted));
-    // Recalculate the balance
-    calculateBalance(moneyArray);
-    // Close the panel
-    closePanel(editionPanel, inputs);
-  }
-}
+// export const editTransaction = (event, editionPanel, inputs, transaction, transactionAmount) => {
+//   // Return whether the form validation resulted in erros or not
+//   const errorsOccured = handleFormSubmit(event, inputs);
+//   // If there are no errors, edit the transaction
+//   if (!errorsOccured) {
+//     // Destructure the `inputs` array
+//     const [nameInput, amountInput, categorySelect] = inputs;
+//     // Return category icon based on selected category
+//     checkCategory(categorySelect);
+//     // // Get the old amount and turn it into a floating-point number
+//     const oldAmount = parseFloat(transactionAmount);
+//     // // Get the index of the old amount from `moneyArray`
+//     const oldAmountIndex = moneyArray.indexOf(oldAmount);
+//     // // Return the monetary value of the transaction
+//     const newAmountFormatted = formatCurrency(amountInput.value);
+//     // // Set the new transactions name and category icon
+//     transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
+//     // Set the new transaction amount
+//     transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${newAmountFormatted}`;
+//     // Remove the classes that identify the transaction as an income or expense
+//     transaction.classList.remove("transactions__item--income", "transactions__item--expense");
+//     // If the new amount is positive, turn the transaction into an income, otherwise turn it into an expense
+//     if (parseFloat(newAmountFormatted) > 0) {
+//       transaction.classList.remove("transactions__item--expense");
+//       transaction.classList.add("transactions__item--income");
+//     } else {
+//       transaction.classList.remove("transactions__item--income");
+//       transaction.classList.add("transactions__item--expense");
+//     }
+//     // Replace the old amount with the new amount
+//     moneyArray.splice(oldAmountIndex, 1, parseFloat(newAmountFormatted));
+//     // Recalculate the balance
+//     calculateBalance(moneyArray);
+//     // Close the panel
+//     closePanel(editionPanel, inputs);
+//   }
+// }
 
 export const deleteAllTransactions = () => {
   // Remove all transactions from `moneyArray`
