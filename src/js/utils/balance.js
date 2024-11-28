@@ -1,8 +1,10 @@
 import {availableMoney} from "../main.js";
 
-function calculateBalance(moneyArray) {
+const calculateBalance = (moneyArray) => {
   // Calculate the sum of all the transaction amounts
-  let balance = moneyArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  let balance = moneyArray.reduce((accumulator, currentValue) => {
+    return accumulator + parseFloat(currentValue.amount);
+  }, 0);
   // Round the balance to two decimal places and then convert it to a number
   balance = parseFloat(balance.toFixed(2));
   // Format the balance to a string

@@ -1,7 +1,7 @@
-import {availableMoney, categoryIcon, incomesList, expensesList, confirmationModal} from "../main.js";
+import {availableMoney, incomesList, expensesList, confirmationModal} from "../main.js";
 import {openEditionPanel, closePanel} from "../panel/transaction_panel.js";
 import handleFormSubmit from "../panel/form_validation.js";
-import checkCategory from "../utils/category.js";
+import getCategoryIcon from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";
@@ -16,12 +16,54 @@ const saveToStorage = () => {
 }
 
 // Function to load data from Local Storage
-const loadFromStorage = () => {
+export const loadFromStorage = () => {
   // Get data from Local Storage
   const storedAmounts = localStorage.getItem("moneyArray");
   // Update `moneyArray` with the data from Local Storage
   if (storedAmounts) {
     moneyArray = JSON.parse(storedAmounts);
+  }
+}
+
+// Function to render transactions from `moneyArray`
+export const renderTransactions = () => {
+  // Reset both incomesList and expensesList and balance info in availableMoney
+  clearStuff();
+  // Load transactions from Local Storage (get updated `moneyArray`)
+  loadFromStorage();
+  // Render transactions from `moneyArray`, if there are any
+  if (moneyArray.length > 0) {
+    // Render HTML for each transaction in `moneyArray`
+    moneyArray.forEach((transaction, index) => {
+      // Create a list item
+      const listItem = document.createElement("li");
+      // Create a container for a new transaction
+      const transactionContainer = document.createElement("div");
+      // Give the new transaction a unique id as a data attribute
+      const transactionId = index + 1;
+      transactionContainer.dataset.id = transactionId;
+      // Get a copy of the document fragment from template
+      const transactionElement = document.querySelector(".transaction__template").content.cloneNode(true);
+      // Fill in the transaction's data
+      transactionElement.querySelector(".transactions__item-name").innerHTML = `${transaction.categoryIcon} ${transaction.name}`;
+      transactionElement.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${transaction.amount}`;
+      //transaction.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event));
+      transactionElement.querySelector(".transactions__item-amount-button--delete").addEventListener("click", () => deleteTransaction(transactionId));
+      // Put the new transaction inside its container
+      transactionContainer.appendChild(transactionElement);
+      // Put the new transaction's container inside the list item (li) tag
+      listItem.appendChild(transactionContainer);
+      // If amount is positive, add a new income, otherwise add a new expense
+      if (parseFloat(transaction.amount) > 0) {
+        transactionContainer.classList.add("transactions__item", "transactions__item--income");
+        incomesList.appendChild(listItem);
+      } else {
+        transactionContainer.classList.add("transactions__item", "transactions__item--expense");
+        expensesList.appendChild(listItem);
+      }
+    });
+    // Recalculate the balance
+    calculateBalance(moneyArray);
   }
 }
 
@@ -34,45 +76,48 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
     const [nameInput, amountInput, categorySelect] = inputs;
     // Increment the transaction id
     transactionId += 1;
+    // Return the formatted transaction's name
+    const nameFormatted = formatInputName(nameInput.value);
     // Return category icon based on selected category
-    checkCategory(categorySelect);
+    const categoryIcon = getCategoryIcon(categorySelect.value);
     // Return the monetary amount of the transaction
     const amountFormatted = formatCurrency(amountInput.value);
-    // Create a list item
-    const listItem = document.createElement("li");
-    // Create a container for a new transaction
-    const transactionContainer = document.createElement("div");
-    // Give the new transaction a unique id
-    transactionContainer.dataset.id = transactionId;
-    // Set the new transaction's name, amount category icon
-    const transaction = document.querySelector(".transaction__template").content.cloneNode(true);
-    transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
-    transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${amountFormatted}`;
-    transaction.querySelector(".transactions__item-amount-button--edit").addEventListener("click", (event) => openEditionPanel(event));
-    transaction.querySelector(".transactions__item-amount-button--delete").addEventListener("click", (event) => deleteTransaction(event));
-    // Put the new transaction inside its container
-    transactionContainer.appendChild(transaction);
-    // Put the new transaction's container inside the list item (li) tag
-    listItem.appendChild(transactionContainer);
-    // If amount is positive, add a new income, otherwise add a new expense
-    if (parseFloat(amountFormatted) > 0) {
-      transactionContainer.classList.add("transactions__item", "transactions__item--income");
-      incomesList.appendChild(listItem);
-    } else {
-      transactionContainer.classList.add("transactions__item", "transactions__item--expense");
-      expensesList.appendChild(listItem);
-    }
-    // Add the amount of the new transaction to `moneyArray`
-    moneyArray.push(parseFloat(amountFormatted));
-    // Save the data in Local Storage
+    // Create a new transaction as an object
+    moneyArray.push({
+      name: nameFormatted,
+      categoryIcon: categoryIcon,
+      amount: amountFormatted
+    });
+    // Save the newly updated `moneyArray` to LocalStorage
     saveToStorage();
-    // Recalculate the balance
-    calculateBalance(moneyArray);
+    // Re-render the transactions
+    renderTransactions();
     // Close the panel
     closePanel(transactionPanel, inputs);
-
-    console.log(moneyArray);
   };
+}
+
+const deleteTransaction = (transactionId) => {
+  // Get the transaction to be deleted
+  const transactionToDelete = document.querySelector(`[data-id="${transactionId}"]`);
+  // Remove the transaction from the DOM
+  transactionToDelete.classList.contains("transactions__item--income")
+    ? incomesList.removeChild(transactionToDelete.parentElement) // `transactionToDelete` is a direct child of `incomesList` or `expensesList`, hence the `.parentElement` part
+    : expensesList.removeChild(transactionToDelete.parentElement);
+  // Get the transaction to be removed from `moneyArray` based on its transaction id
+  let matchingTransaction;
+
+  moneyArray.forEach((transaction, index) => {
+    if (index + 1 === transactionId) matchingTransaction = transaction;
+  });
+  // Get the index of the matching transaction
+  const matchingTransactionIndex = moneyArray.indexOf(matchingTransaction);
+  // Remove `matchingTransaction` from `moneyArray`
+  moneyArray.splice(matchingTransactionIndex, 1);
+  // Save the updated `moneyArray` to Local Storage
+  saveToStorage();
+  // Re-render the transactions
+  renderTransactions();
 }
 
 export const editTransaction = (event, editionPanel, inputs, transaction, transactionAmount) => {
@@ -113,29 +158,22 @@ export const editTransaction = (event, editionPanel, inputs, transaction, transa
   }
 }
 
-const deleteTransaction = (event) => {
-  const transactionToDelete = event.target.closest(".transactions__item");
-  // Get the amount of the transaction and turn it into a monetary value
-  const amountString = transactionToDelete.querySelector(".transactions__item-amount-text").textContent.trim();
-  const amountNumber = parseFloat(amountString);
-  // Get the index of the transaction amount in `moneyArray`
-  const transactionIndex = moneyArray.indexOf(amountNumber);
-  // Remove the transaction from the DOM
-  transactionToDelete.classList.contains("transactions__item--income")
-    ? incomesList.removeChild(transactionToDelete.parentElement)
-    : expensesList.removeChild(transactionToDelete.parentElement);
-  // Remove the transaction from `moneyArray` and recalculate the balance
-  moneyArray.splice(transactionIndex, 1);
-  calculateBalance(moneyArray);  
-}
-
 export const deleteAllTransactions = () => {
-  incomesList.innerHTML = "";
-  expensesList.innerHTML = "";
-  moneyArray = [0];
-  availableMoney.textContent = "0";
-  availableMoney.style.color = "#f0ebd8";
+  // Remove all transactions from `moneyArray`
+  moneyArray = [];
+  // Save the updated `moneyArray` to Local Storage
+  saveToStorage();
+  // Clear both incomesList and expensesList and balance info in `availableMoney`
+  clearStuff();
+  // Close the confirmation modal
   confirmationModal.classList.remove("confirmation-modal--open");
 }
 
-export default loadFromStorage;
+const clearStuff = () => {
+  // Reset both incomesList and expensesList
+  incomesList.innerHTML = "";
+  expensesList.innerHTML = "";
+  // Reset textContent and classList of `availableMoney`
+  availableMoney.textContent = "0";
+  availableMoney.classList.remove("options__balance--positive", "options__balance--negative");
+}

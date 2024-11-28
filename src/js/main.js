@@ -1,9 +1,9 @@
 import setFooterYear from "./footer.js";
-import loadFromStorage from "./data/transactions.js";
+import {loadFromStorage, renderTransactions} from "./data/transactions.js";
 import {openTransactionPanel, closePanel} from "./panel/transaction_panel.js";
 import {openConfirmationModal, closeConfirmationModal} from "./modal/modal.js";
 import {switchToDarkMode, switchToLightMode} from "./utils/color_mode.js";
-
+ 
 // Root element
 export let rootElement; 
 // Footer year
@@ -15,8 +15,6 @@ export let availableMoney;
 // Lists of transactions
 export let incomesList;
 export let expensesList;
-// Category icon
-export let categoryIcon;  
 // Buttons for transactions
 let addTransactionBtn; 
 let deleteAllBtn;
@@ -44,6 +42,7 @@ const main = () => {
   addEventListeners();
   setFooterYear();
   loadFromStorage();
+  renderTransactions();
 }
 
 const getElements = () => {

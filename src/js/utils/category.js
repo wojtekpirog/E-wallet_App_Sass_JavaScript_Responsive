@@ -1,38 +1,29 @@
-import {categoryIcon} from "../main.js";
-
-const checkCategory = (categorySelect) => {
-  switch (categorySelect.value) {
+const getCategoryIcon = (selectedCategory) => {
+  switch (selectedCategory) {
     case "salary":
-      categoryIcon = `<i class="fa-solid fa-wallet"></i>`;
-      break;
+      return `<i class="fa-solid fa-wallet"></i>`;
     case "investment":
-      categoryIcon = `<i class="fa-solid fa-chart-line"></i>`;
-      break;
+      return `<i class="fa-solid fa-chart-line"></i>`;
     case "freelance":
-      categoryIcon = `<i class="fa-solid fa-briefcase"></i>`;
-      break;
+      return `<i class="fa-solid fa-briefcase"></i>`;
     case "rent":
-      categoryIcon = `<i class="fa-solid fa-house"></i>`;
-      break;
+      return `<i class="fa-solid fa-house"></i>`;
     case "shopping":
-      categoryIcon = `<i class="fa-solid fa-cart-shopping"></i>`;
-      break;
+      return `<i class="fa-solid fa-cart-shopping"></i>`;
     case "food":
-      categoryIcon = `<i class="fa-solid fa-utensils"></i>`;
-      break;
+      return `<i class="fa-solid fa-utensils"></i>`;
     case "bills":
-      categoryIcon = `<i class="fa-solid fa-credit-card"></i>`;
-      break;
+      return `<i class="fa-solid fa-credit-card"></i>`;
     case "cinema":
-      categoryIcon = `<i class="fa-solid fa-film"></i>`;
-      break;
+      return `<i class="fa-solid fa-film"></i>`;
     case "leisure":
-      categoryIcon = `<i class="fa-solid fa-glass-cheers"></i>`;
-      break;
+      return `<i class="fa-solid fa-glass-cheers"></i>`;
     case "other":
-      categoryIcon = `<i class="fa-solid fa-pen"></i>`;
-      break;
+      return `<i class="fa-solid fa-pen"></i>`;
+    default: // Handle an unknown category
+      console.warn(`Unknown category: ${selectedCategory}`);
+      return `<i class="fa-solid fa-question"></i>`;
   }
 };
 
-export default checkCategory;
+export default getCategoryIcon;
