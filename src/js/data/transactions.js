@@ -5,10 +5,9 @@ import {getCategoryIcon} from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";
+import getTransactionIndex from "../utils/transaction.js";
 // Array to store information about transactions
 export let moneyArray = [];
-// Transaction ID
-export let transactionId = 0;
 
 // Function to save data in Local Storage
 const saveToStorage = () => {
@@ -68,14 +67,13 @@ export const renderTransactions = () => {
 }
 
 export const createNewTransaction = (event, transactionPanel, inputs) => {
+  console.log("Kliknięto w przycisk 'Zapisz' ...");
   // Return whether the form validation resulted in erros or not
   const errorsOccurred = handleFormSubmit(event, inputs);
   // If there are no errors, create a new transaction
   if (!errorsOccurred) {
     // Destructure the `inputs` array
     const [nameInput, amountInput, categorySelect] = inputs;
-    // Increment the transaction id
-    transactionId += 1;
     // Return the formatted transaction's name
     const nameFormatted = formatInputName(nameInput.value);
     // Return category icon based on selected category
@@ -98,38 +96,42 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
 }
 
 export const editTransaction = (event, transactionId, editionPanel, inputs) => {
-  console.log("Edit transaction...");
+  console.log("Edit transaction with ID:", transactionId, "...");
+  console.log("Kliknięto w przycisk 'Edytuj' ...");
   // Return whether the form validation resulted in erros or not
   const errorsOccured = handleFormSubmit(event, inputs);
   // If there are no errors, edit the transaction
   if (!errorsOccured) {
     // Destructure the `inputs` array
     const [nameToEditInput, amountToEditInput, categoryToEditSelect] = inputs;
-    // Get the transaction to be edited
-    const transactionToEdit = document.querySelector(`[data-id="${transactionId}"]`);
-
-    console.log(transactionToEdit);
-
+    // Return the formatted new transaction's name
+    const newNameFormatted = formatInputName(nameToEditInput.value);
+    // Return category icon based on selected category
+    const newCategoryIcon = getCategoryIcon(categoryToEditSelect.value);
+    // Return the monetary amount of the transaction
+    const newAmountFormatted = formatCurrency(amountToEditInput.value);
+    // Create an object representing the new transaction
+    const newTransaction = {
+      name: newNameFormatted,
+      categoryIcon: newCategoryIcon,
+      amount: newAmountFormatted
+    };
+    // Get the index of the transaction to be edited in `moneyArray` based on its id
+    const matchingTransactionIndex = getTransactionIndex(transactionId);
+    // Edit the matching transaction in `moneyArray`
+    moneyArray.splice(matchingTransactionIndex, 1, newTransaction);
+    // Save the updated `moneyArray` to Local Storage
+    saveToStorage();
+    // Re-render the transactions
+    renderTransactions();
     // Close the edition panel
     closePanel(editionPanel, inputs);
   }
 }
 
 const deleteTransaction = (transactionId) => {
-  // Get the transaction to be deleted
-  const transactionToDelete = document.querySelector(`[data-id="${transactionId}"]`);
-  // Remove the transaction from the DOM
-  transactionToDelete.classList.contains("transactions__item--income")
-    ? incomesList.removeChild(transactionToDelete.parentElement) // `transactionToDelete` is a direct child of `incomesList` or `expensesList`, hence the `.parentElement` part
-    : expensesList.removeChild(transactionToDelete.parentElement);
-  // Get the transaction to be removed from `moneyArray` based on its transaction id
-  let matchingTransaction;
-
-  moneyArray.forEach((transaction, index) => {
-    if (index + 1 === transactionId) matchingTransaction = transaction;
-  });
-  // Get the index of the matching transaction
-  const matchingTransactionIndex = moneyArray.indexOf(matchingTransaction);
+  // Get the index of the transaction to be removed from `moneyArray` based on its id
+  const matchingTransactionIndex = getTransactionIndex(transactionId); 
   // Remove `matchingTransaction` from `moneyArray`
   moneyArray.splice(matchingTransactionIndex, 1);
   // Save the updated `moneyArray` to Local Storage

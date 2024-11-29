@@ -26,13 +26,13 @@ export let transactionPanel;
 export let nameInput;
 export let amountInput;
 export let categorySelect;
-let closePanelBtn;
+let closePanelXmark;
 // Transaction edition panel
 export let editionPanel;
 export let nameToEditInput;
 export let amountToEditInput;
 export let categoryToEditSelect;
-let closeEditionPanelBtn;
+let closeEditionPanelXmark; 
 // Confirmation modal
 export let confirmationModal;
 let cancelDeletionButton;
@@ -68,13 +68,13 @@ const getElements = () => {
   nameInput = transactionPanel.querySelector("#name");
   amountInput = transactionPanel.querySelector("#amount");
   categorySelect = transactionPanel.querySelector("#category");
-  closePanelBtn = transactionPanel.querySelector(".transaction-panel__xmark");
+  closePanelXmark = transactionPanel.querySelector(".transaction-panel__xmark");
   // Transaction edition panel
   editionPanel = document.querySelector(".transaction-panel--edit");
   nameToEditInput = editionPanel.querySelector("#name-to-edit");
   amountToEditInput = editionPanel.querySelector("#amount-to-edit");
   categoryToEditSelect = editionPanel.querySelector("#category-to-edit");
-  closeEditionPanelBtn = editionPanel.querySelector(".transaction-panel__xmark"); 
+  closeEditionPanelXmark = editionPanel.querySelector(".transaction-panel__xmark"); 
   // Confirmation modal
   confirmationModal = document.querySelector(".confirmation-modal");
   cancelDeletionButton = document.querySelector(".confirmation-modal__button--cancel");
@@ -84,8 +84,8 @@ const addEventListeners = () => {
   addTransactionBtn.addEventListener("click", openTransactionPanel);
   deleteAllBtn.addEventListener("click", openConfirmationModal);
   cancelDeletionButton.addEventListener("click", closeConfirmationModal);
-  closePanelBtn.addEventListener("click", () => closePanel(transactionPanel, [nameInput, amountInput, categorySelect]));
-  closeEditionPanelBtn.addEventListener("click", () => closePanel(editionPanel, [nameToEditInput, amountToEditInput, categoryToEditSelect]));
+  closePanelXmark.addEventListener("click", () => closePanel(transactionPanel, [nameInput, amountInput, categorySelect]));
+  closeEditionPanelXmark.addEventListener("click", () => closePanel(editionPanel, [nameToEditInput, amountToEditInput, categoryToEditSelect]));
   lightCircle.addEventListener("click", switchToLightMode); 
   darkCircle.addEventListener("click", switchToDarkMode);
 }

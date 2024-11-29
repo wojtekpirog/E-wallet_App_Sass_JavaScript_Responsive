@@ -15,6 +15,7 @@ export const openTransactionPanel = () => {
 }
 
 export const openEditionPanel = (transactionId) => {
+  console.log("Edit transaction with ID:", transactionId, "...");
   // Group the inputs into an array
   const inputs = [nameToEditInput, amountToEditInput, categoryToEditSelect];
   // Show the edition panel
