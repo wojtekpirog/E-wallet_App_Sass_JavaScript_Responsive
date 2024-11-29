@@ -1,5 +1,6 @@
 import {transactionPanel, editionPanel, nameInput, nameToEditInput, amountInput, amountToEditInput, categorySelect, categoryToEditSelect} from "../main.js";
 import {createNewTransaction, editTransaction} from "../data/transactions.js";
+import {getCategoryByIcon} from "../utils/category.js";
 
 export const openTransactionPanel = () => {
   // Group the inputs into an array
@@ -24,9 +25,13 @@ export const openEditionPanel = (transactionId) => {
   const transaction = document.querySelector(`[data-id="${transactionId}"]`);
   const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
   const transactionAmount = transaction.querySelector(".transactions__item-amount-text").textContent.trim();
-  // Fill the inputs with values from `transactionName` and `transactionAmount`
+  const transactionIcon = transaction.querySelector(".transactions__item-name > i").classList[1];
+  // Get the transaction category's name by category icon
+  const transactionCategory = getCategoryByIcon(transactionIcon);
+  // Fill the inputs with values from `transactionName`, `transactionAmount` and `transactionCategory`
   editionPanel.querySelector(".transaction-panel__input--name").value = transactionName;
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
+  editionPanel.querySelector(".transaction-panel__select").value = transactionCategory;
   // Add event listeners on the `Apply` and `Cancel` buttons
   editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, transactionId, editionPanel, inputs));
   editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, inputs));

@@ -1,7 +1,7 @@
 import {availableMoney, incomesList, expensesList, confirmationModal} from "../main.js";
 import {openEditionPanel, closePanel} from "../panel/transaction_panel.js";
 import handleFormSubmit from "../panel/form_validation.js";
-import getCategoryIcon from "../utils/category.js";
+import {getCategoryIcon} from "../utils/category.js";
 import formatInputName from "../utils/input_name.js";
 import formatCurrency from "../utils/money.js";
 import calculateBalance from "../utils/balance.js";

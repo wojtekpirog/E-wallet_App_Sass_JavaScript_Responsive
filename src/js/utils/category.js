@@ -1,4 +1,4 @@
-const getCategoryIcon = (selectedCategory) => {
+export const getCategoryIcon = (selectedCategory) => {
   switch (selectedCategory) {
     case "salary":
       return `<i class="fa-solid fa-wallet"></i>`;
@@ -26,4 +26,29 @@ const getCategoryIcon = (selectedCategory) => {
   }
 };
 
-export default getCategoryIcon;
+export const getCategoryByIcon = (transactionIcon) => {
+  switch (transactionIcon) {
+    case "fa-wallet":
+      return "salary";
+    case "fa-chart-line":
+      return "investment";
+    case "fa-briefcase":
+      return "freelance";
+    case "fa-house":
+      return "rent";
+    case "fa-cart-shopping":
+      return "shopping";
+    case "fa-utensils":
+      return "food";
+    case "fa-credit-card":
+      return "bills";
+    case "fa-film":
+      return "cinema";
+    case "fa-glass-cheers":
+      return "leisure";
+    case "fa-pen":
+      return "other";
+    default: // Handle an unknown icon
+      console.warn(`Unknown icon: ${transactionIcon}`);
+  }
+}
