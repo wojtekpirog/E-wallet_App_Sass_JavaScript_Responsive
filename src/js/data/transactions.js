@@ -8,6 +8,8 @@ import calculateBalance from "../utils/balance.js";
 import getTransactionIndex from "../utils/transaction.js";
 // Array to store information about transactions
 export let moneyArray = [];
+// Transaction Id
+export let transactionId = 0;
 
 // Function to save data in Local Storage
 const saveToStorage = () => {
@@ -33,21 +35,20 @@ export const renderTransactions = () => {
   // Render transactions from `moneyArray`, if there are any
   if (moneyArray.length > 0) {
     // Render HTML for each transaction in `moneyArray`
-    moneyArray.forEach((transaction, index) => {
+    moneyArray.forEach((transaction) => {
       // Create a list item
       const listItem = document.createElement("li");
       // Create a container for a new transaction
       const transactionContainer = document.createElement("div");
       // Give the new transaction a unique id as a data attribute
-      const transactionId = index + 1;
-      transactionContainer.dataset.id = transactionId;
+      transactionContainer.dataset.id = transaction.id;
       // Get a copy of the document fragment from template
       const transactionElement = document.querySelector(".transaction__template").content.cloneNode(true);
       // Fill in the transaction's data
       transactionElement.querySelector(".transactions__item-name").innerHTML = `${transaction.categoryIcon} ${transaction.name}`;
       transactionElement.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${transaction.amount}`;
-      transactionElement.querySelector(".transactions__item-amount-button--edit").addEventListener("click", () => openEditionPanel(transactionId));
-      transactionElement.querySelector(".transactions__item-amount-button--delete").addEventListener("click", () => deleteTransaction(transactionId));
+      transactionElement.querySelector(".transactions__item-amount-button--edit").addEventListener("click", () => openEditionPanel(transaction.id));
+      transactionElement.querySelector(".transactions__item-amount-button--delete").addEventListener("click", () => deleteTransaction(transaction.id));
       // Put the new transaction inside its container
       transactionContainer.appendChild(transactionElement);
       // Put the new transaction's container inside the list item (li) tag
@@ -67,11 +68,12 @@ export const renderTransactions = () => {
 }
 
 export const createNewTransaction = (event, transactionPanel, inputs) => {
-  console.log("Kliknięto w przycisk 'Zapisz' ...");
   // Return whether the form validation resulted in erros or not
   const errorsOccurred = handleFormSubmit(event, inputs);
   // If there are no errors, create a new transaction
   if (!errorsOccurred) {
+    // Increment the transaction id
+    transactionId++;
     // Destructure the `inputs` array
     const [nameInput, amountInput, categorySelect] = inputs;
     // Return the formatted transaction's name
@@ -82,6 +84,7 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
     const amountFormatted = formatCurrency(amountInput.value);
     // Create a new transaction as an object
     moneyArray.push({
+      id: transactionId,
       name: nameFormatted,
       categoryIcon: categoryIcon,
       amount: amountFormatted
@@ -96,8 +99,7 @@ export const createNewTransaction = (event, transactionPanel, inputs) => {
 }
 
 export const editTransaction = (event, transactionId, editionPanel, inputs) => {
-  console.log("Edit transaction with ID:", transactionId, "...");
-  console.log("Kliknięto w przycisk 'Edytuj' ...");
+  console.log(`Edytuję transakcje z ID: ${transactionId}`);
   // Return whether the form validation resulted in erros or not
   const errorsOccured = handleFormSubmit(event, inputs);
   // If there are no errors, edit the transaction
@@ -110,16 +112,17 @@ export const editTransaction = (event, transactionId, editionPanel, inputs) => {
     const newCategoryIcon = getCategoryIcon(categoryToEditSelect.value);
     // Return the monetary amount of the transaction
     const newAmountFormatted = formatCurrency(amountToEditInput.value);
-    // Create an object representing the new transaction
-    const newTransaction = {
-      name: newNameFormatted,
-      categoryIcon: newCategoryIcon,
-      amount: newAmountFormatted
-    };
     // Get the index of the transaction to be edited in `moneyArray` based on its id
-    const matchingTransactionIndex = getTransactionIndex(transactionId);
-    // Edit the matching transaction in `moneyArray`
-    moneyArray.splice(matchingTransactionIndex, 1, newTransaction);
+    const oldTransactionIndex = getTransactionIndex(transactionId);
+    // Edit the old transaction in `moneyArray`
+    if (oldTransactionIndex !== -1) {
+      moneyArray.splice(oldTransactionIndex, 1, {
+        id: transactionId,
+        name: newNameFormatted,
+        categoryIcon: newCategoryIcon,
+        amount: newAmountFormatted
+      });
+    }
     // Save the updated `moneyArray` to Local Storage
     saveToStorage();
     // Re-render the transactions
@@ -139,44 +142,6 @@ const deleteTransaction = (transactionId) => {
   // Re-render the transactions
   renderTransactions();
 }
-
-// export const editTransaction = (event, editionPanel, inputs, transaction, transactionAmount) => {
-//   // Return whether the form validation resulted in erros or not
-//   const errorsOccured = handleFormSubmit(event, inputs);
-//   // If there are no errors, edit the transaction
-//   if (!errorsOccured) {
-//     // Destructure the `inputs` array
-//     const [nameInput, amountInput, categorySelect] = inputs;
-//     // Return category icon based on selected category
-//     checkCategory(categorySelect);
-//     // // Get the old amount and turn it into a floating-point number
-//     const oldAmount = parseFloat(transactionAmount);
-//     // // Get the index of the old amount from `moneyArray`
-//     const oldAmountIndex = moneyArray.indexOf(oldAmount);
-//     // // Return the monetary value of the transaction
-//     const newAmountFormatted = formatCurrency(amountInput.value);
-//     // // Set the new transactions name and category icon
-//     transaction.querySelector(".transactions__item-name").innerHTML = `${categoryIcon} ${formatInputName(nameInput.value)}`;
-//     // Set the new transaction amount
-//     transaction.querySelector(".transactions__item-amount-text").innerHTML = `<i class="fa-solid fa-dollar-sign"></i> ${newAmountFormatted}`;
-//     // Remove the classes that identify the transaction as an income or expense
-//     transaction.classList.remove("transactions__item--income", "transactions__item--expense");
-//     // If the new amount is positive, turn the transaction into an income, otherwise turn it into an expense
-//     if (parseFloat(newAmountFormatted) > 0) {
-//       transaction.classList.remove("transactions__item--expense");
-//       transaction.classList.add("transactions__item--income");
-//     } else {
-//       transaction.classList.remove("transactions__item--income");
-//       transaction.classList.add("transactions__item--expense");
-//     }
-//     // Replace the old amount with the new amount
-//     moneyArray.splice(oldAmountIndex, 1, parseFloat(newAmountFormatted));
-//     // Recalculate the balance
-//     calculateBalance(moneyArray);
-//     // Close the panel
-//     closePanel(editionPanel, inputs);
-//   }
-// }
 
 export const deleteAllTransactions = () => {
   // Remove all transactions from `moneyArray`

@@ -1,27 +1,25 @@
-import {transactionPanel, editionPanel, nameInput, nameToEditInput, amountInput, amountToEditInput, categorySelect, categoryToEditSelect} from "../main.js";
-import {createNewTransaction, editTransaction} from "../data/transactions.js";
+import {transactionPanel, editionPanel, nameToEditInput, amountToEditInput, categoryToEditSelect} from "../main.js";
+import {editTransaction} from "../data/transactions.js";
 import {getCategoryByIcon} from "../utils/category.js";
 
+// Store a reference to the last transaction edition function added as an event listener, in a variable
+let currentEditTransaction;
+
 export const openTransactionPanel = () => {
-  // Group the inputs into an array
-  const inputs = [nameInput, amountInput, categorySelect];
-  // Show the transaction panel
+  // Open the transaction panel
   transactionPanel.classList.add("transaction-panel--open");
   // Put focus on the name input
   transactionPanel.querySelector(".transaction-panel__input--name").focus();
-  // Add event listeners on the `Save` and `Cancel` buttons
-  transactionPanel.querySelector(".transaction-panel__button--save").addEventListener("click", (event) => createNewTransaction(event, transactionPanel, inputs));
-  transactionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(transactionPanel, inputs));
 }
 
 export const openEditionPanel = (transactionId) => {
-  console.log("Edit transaction with ID:", transactionId, "...");
-  // Group the inputs into an array
-  const inputs = [nameToEditInput, amountToEditInput, categoryToEditSelect];
-  // Show the edition panel
+  console.log(`Otwieram panel edycji transakcji z ID: ${transactionId}`);
+  // Open the edition panel
   editionPanel.classList.add("transaction-panel--open");
   // Put focus on the name input
   editionPanel.querySelector(".transaction-panel__input--name").focus();
+  // Get the inputs
+  const editionPanelInputs = [nameToEditInput, amountToEditInput, categoryToEditSelect];
   // Get the transaction and its details
   const transaction = document.querySelector(`[data-id="${transactionId}"]`);
   const transactionName = transaction.querySelector(".transactions__item-name").textContent.trim();
@@ -33,9 +31,14 @@ export const openEditionPanel = (transactionId) => {
   editionPanel.querySelector(".transaction-panel__input--name").value = transactionName;
   editionPanel.querySelector(".transaction-panel__input--amount").value = transactionAmount;
   editionPanel.querySelector(".transaction-panel__select").value = transactionCategory;
-  // Add event listeners on the `Apply` and `Cancel` buttons
-  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", (event) => editTransaction(event, transactionId, editionPanel, inputs));
-  editionPanel.querySelector(".transaction-panel__button--cancel").addEventListener("click", () => closePanel(editionPanel, inputs));
+  // Remove the old event listener if it exists (the function plugged into the new listener must have the same reference as the function plugged into the old listener)
+  if (currentEditTransaction) {
+    editionPanel.querySelector(".transaction-panel__button--edit").removeEventListener("click", currentEditTransaction);
+  }
+  // Create a new event listener and save a reference to it in `currentEditTransaction`
+  currentEditTransaction = (event) => editTransaction(event, transactionId, editionPanel, editionPanelInputs);
+  // Add a new event listener
+  editionPanel.querySelector(".transaction-panel__button--edit").addEventListener("click", currentEditTransaction);
 }
 
 export const clearInputs = (inputs) => {
