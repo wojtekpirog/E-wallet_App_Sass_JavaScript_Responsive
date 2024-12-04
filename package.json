@@ -4,7 +4,7 @@
   "description": "Wallet - a fast and reliable household budget calculator",
   "main": "main.js",
   "scripts": {
-    "build": "webpack"
+    "deploy": "gh-pages -d docs"
   },
   "keywords": [
     "e-wallet",
@@ -13,6 +13,7 @@
     "finance",
     "money"
   ],
+  "homepage": "https://wojtekpirog.github.io/E-wallet_App_Sass_JavaScript_Responsive",
   "author": "Wojciech Piróg (https://github.com/wojtekpirog)",
   "license": "ISC",
   "devDependencies": {
@@ -30,5 +31,8 @@
     "sass": "^1.79.4",
     "webpack": "^5.95.0",
     "webpack-stream": "^7.0.0"
+  },
+  "dependencies": {
+    "gh-pages": "^6.2.0"
   }
 }
